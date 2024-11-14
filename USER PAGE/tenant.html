@@ -19,7 +19,6 @@
             <a href="javascript:void(0);" onclick="loadPage('tNotifications.html', this)" aria-label="Notifications">
                 <i class='bx bx-bell icon'></i>
                 <span class="notification-badge">5</span> <!-- Number of notifications -->
-                <span class="notification-dot"></span> <!-- Red dot -->
             </a>
             <a href="javascript:void(0);" onclick="loadPage('tSupport.html', this)" aria-label="About Us"><i class='bx bx-support icon'></i></a>
             <a href="login.html" aria-label="Logout"><i class='bx bx-log-out icon'></i></a>
@@ -49,22 +48,31 @@
     <script src="calendar.js"></script>
 
     <script>
+        // Function to load the target page into the iframe and update active link
         function loadPage(page, linkElement) {
             // Change iframe source to the clicked page
             var iframe = document.getElementById("content-iframe");
-            iframe.src = page; 
-
+            iframe.src = page;
+    
             // Remove 'active' class from all links
             var navLinks = document.querySelectorAll('.navigator a');
             navLinks.forEach(link => link.classList.remove('active'));
-
+    
             // Add 'active' class to the clicked link
             linkElement.classList.add('active');
         }
-        
+    
+        // Set the initial page and active link on window load
         window.onload = function() {
-            loadPage('tDashboard.html', document.querySelector('a[href="javascript:void(0);"]:first-child'));
+            // Get the first navigation link
+            var firstNavLink = document.querySelector('.navigator a');
+            // Set the initial page and mark it as active
+            if (firstNavLink) {
+                loadPage('tDashboard.html', firstNavLink);
+            }
         };
     </script>
+    
+
 </body>
 </html>
