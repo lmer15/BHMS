@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USER DASHBOARD</title>
+    <link rel="stylesheet" href="styletDashboard.css">
+    <script src="../imported_links.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Navigation Bar -->
+        <nav class="navigator">
+            <a href="javascript:void(0);" onclick="loadPage('tDashboard.html', this)" aria-label="Home"><i class='bx bx-home icon'></i></a>
+            <a href="javascript:void(0);" onclick="loadPage('tProfile.html', this)" aria-label="Profile"><i class='bx bx-user icon'></i></a>
+            <a href="javascript:void(0);" onclick="loadPage('ttPayments.html', this)" aria-label="Payments"><i class='bx bx-wallet icon'></i></a>
+            <a href="javascript:void(0);" onclick="loadPage('tMaintenance.html', this)" aria-label="Maintenance"><i class='bx bx-wrench icon'></i></a>
+            <a href="javascript:void(0);" onclick="loadPage('tNotifications.html', this)" aria-label="Notifications">
+                <i class='bx bx-bell icon'></i>
+                <span class="notification-badge">5</span> <!-- Number of notifications -->
+                <span class="notification-dot"></span> <!-- Red dot -->
+            </a>
+            <a href="javascript:void(0);" onclick="loadPage('tSupport.html', this)" aria-label="About Us"><i class='bx bx-support icon'></i></a>
+            <a href="login.html" aria-label="Logout"><i class='bx bx-log-out icon'></i></a>
+        </nav>        
+
+        <!-- Main Content Section -->
+        <div class="main-content">
+            <header class="header">
+                <div class="search">
+                    <input type="search" name="search" placeholder="Search..." />
+                    <i class='bx bx-search icon'></i>
+                </div>
+                <div class="right-side">
+                    <span>Hi! Welcome, <span class="username">Elmer</span></span>
+                    <div class="profile">
+                        <img src="image/DP.png" alt="Profile Image" />
+                    </div>
+                </div>
+            </header>
+
+            <div id="content-container">
+                <iframe id="content-iframe" src="tDashboard.html" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+    
+    <script src="calendar.js"></script>
+
+    <script>
+        function loadPage(page, linkElement) {
+            // Change iframe source to the clicked page
+            var iframe = document.getElementById("content-iframe");
+            iframe.src = page; 
+
+            // Remove 'active' class from all links
+            var navLinks = document.querySelectorAll('.navigator a');
+            navLinks.forEach(link => link.classList.remove('active'));
+
+            // Add 'active' class to the clicked link
+            linkElement.classList.add('active');
+        }
+        
+        window.onload = function() {
+            loadPage('tDashboard.html', document.querySelector('a[href="javascript:void(0);"]:first-child'));
+        };
+    </script>
+</body>
+</html>
