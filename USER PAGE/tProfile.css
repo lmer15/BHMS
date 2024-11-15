@@ -251,73 +251,123 @@ body {
     background-color: #45a049;
 }
 
-/* Room Details Section Styling */
+/* General Styling for Room Details Section */
 #roomDetails {
-    display: block;
+    background-color: #2c2c2c;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    gap: 20px;
+    max-height: 800px;
+    width: 100%;
+    overflow: hidden;
 }
 
-.room-info {
+#roomDetails h1, #roomDetails h2 {
+    font-size: 1rem;
     margin-bottom: 20px;
+    color: white; 
+    font-weight: 600;
+    border-bottom: 1px solid #0e7c3d;
+    padding-bottom: 5px;
 }
 
+.room-detail-container {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
+
+/* Image Styling (Left side) */
+.room-image {
+    width: 50%; 
+    height: auto;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 22px;
+}
+
+.room-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Room Info, Amenities, and Room Conditions (Right side) */
+.room-info, .ami, .room-conditions {
+    width: 600px;
+    background-color: #444;
+    box-shadow: 0 2px 6px rgba(43, 41, 41, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    height: 235px;
+}
+
+/* Room Details Section */
 .room-detail {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
-    font-size: 16px;
+    font-size: 0.8rem;
+    color: #f0f0f0;
+    border-bottom: 1px solid #444;
+    padding-bottom: 10px;
 }
 
 .room-detail span:first-child {
     font-weight: bold;
-    color: #333;
+    color: #0e7c3d;
 }
 
 .room-detail span:last-child {
-    color: #555;
+    color: #ccc;
 }
 
-#roomDetails h1, #roomDetails h2 {
-    font-size: 24px;
-    margin-bottom: 15px;
-    color: #007bff;
-}
-
-.amenities-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.amenities-list li {
+/* Adjustments for the Amenities Section */
+.ami {
+    background-color: #444;
+    box-shadow: 0 2px 6px rgba(43, 41, 41, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    overflow: hidden;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow-y: auto;
+}
+
+/* For paragraphs inside .ami to wrap text */
+.ami p {
+    font-size: 0.8rem;
+    color: #ccc;
+    line-height: 1.5;
+    white-space: normal; 
+    margin-bottom: 30px;
+    overflow: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+
+/* Room Conditions Section */
+.room-condition {
+    display: flex;
+    justify-content: space-between;
     margin-bottom: 10px;
-    font-size: 16px;
 }
 
-.amenities-list li i {
-    margin-right: 10px;
-    color: #007bff;
-}
-
-.additional-info {
-    margin-top: 20px;
-}
-
-.additional-info .room-detail {
-    margin-bottom: 10px;
-}
-
-.additional-info span:first-child {
+.room-condition span:first-child {
+    font-size: 0.8rem;
     font-weight: bold;
-    color: #333;
+    color: #0e7c3d;
 }
 
-.additional-info span:last-child {
-    color: #555;
+.room-condition span:last-child {
+    font-size: 0.8rem;
+    color: #ccc;
 }
-
-/* Change Password */
 
 /* Styling for the Change Password section */
 .change-pass {
@@ -400,4 +450,52 @@ body {
     color: red;
     font-size: 14px;
     margin-top: 10px;
+}
+
+/* Lease Agreement Section */
+.lease-agreement {
+    background-color: #2c2c2c;
+    padding: 20px;
+    border-radius: 10px;
+    flex: 1;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-height: 800px;
+    width: 100%;
+}
+
+.lease-agreement h1 {
+    font-size: 22px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.lease-agreement p {
+    font-size: 16px;
+    margin-bottom: 15px;
+    color: #756f6f;
+    margin-top: 250px;
+}
+
+.lease-agreement p, .lease-agreement a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.download-link {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #0e7c3d;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.download-link:hover {
+    background-color: white;
+    color: #0e7c3d;
 }

@@ -16,12 +16,11 @@
             <div class="navigator">
             <span>GENERAL</span>
             <a href="">Personal Information</a>
-            <a href="#" id="changePasswordLink"><i class="fas fa-key"></i> Change Password</a>
+            <a href="#" id="changePasswordLink">Change Password</a>
 
             <span>DOCUMENTS</span>
-            <a href="">Room Details</a>
-            <a href="">Lease Agreement</a>
-            <a href="">Agreement</a>
+            <a href="#" id="roomDetailsLink">Room Details</a>
+            <a href="" id="leaseLink">Lease Agreement</a>
 
             </div>  
 
@@ -114,61 +113,75 @@
                 
             </div>
 
+            <!-- Room Details Section -->
+            <div id="roomDetails" class="info-section" style="display: none;">                
+                <div class="room-detail-container">
+                    <!-- Room Image -->
+                    <div class="room-image">
+                        <img src="../ADVERTISEMENT/images/RM2.jpg" alt="Room RM0031" style="width: 100%; border-radius: 8px;">
+                    </div>
 
-        </div>
+                    <!-- Room Details -->
+                    <div class="room-details">
+                        <div class="room-info">
+                            <h1>Room Details</h1>
+                            <div class="room-detail">
+                                <span>Room Number:</span>
+                                <span>RM0031</span>
+                            </div>
+                            <div class="room-detail">
+                                <span>Room Type:</span>
+                                <span>Double-Deck</span>
+                            </div>
+                            <div class="room-detail">
+                                <span>Date of Check-In:</span>
+                                <span>December 16, 2024</span>
+                            </div>
+                            <div class="room-detail">
+                                <span>Check-In Time:</span>
+                                <span>7:35 AM</span>
+                            </div>
+                            <div class="room-detail">
+                                <span>Room Size:</span>
+                                <span>25 m²</span>
+                            </div>
+                        </div>
 
-        <!-- Room Details Section -->
-        <div id="roomDetails" class="info-section" style="display: none;">
-            <h1>ROOM DETAILS</h1>
-            <div class="room-info">
-                <div class="room-detail">
-                    <span>Room Number:</span>
-                    <span>RM0031</span>
-                </div>
-                <div class="room-detail">
-                    <span>Room Type:</span>
-                    <span>Family</span>
-                </div>
-                <div class="room-detail">
-                    <span>Date Check-In:</span>
-                    <span>December 16, 2024</span>
-                </div>
-                <div class="room-detail">
-                    <span>Time Check-In:</span>
-                    <span>7:35 AM</span>
+                        <!-- Amenities Section -->
+                         <div class="ami">
+                            <h2>Amenities</h2>
+                            <p>Air-conditioning, Mini-Kitchen, Own Bathroom, Wi-Fi, Daily Cleaning, Own Water Counter, Television, Heater. </p>
+                        </div>
+
+                        <!-- Room Conditions -->
+                        <div class="room-conditions">
+                            <h2>Room Conditions</h2>
+                            <div class="room-condition">
+                                <span>Deposit Amount:</span>
+                                <span>₱2,000.00</span>
+                            </div>
+                            <div class="room-condition">
+                                <span>Payment Frequency:</span>
+                                <span>Monthly</span>
+                            </div>
+                            <div class="room-condition">
+                                <span>Deposit Rate:</span>
+                                <span>₱5,000.00</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <h2>Amenities</h2>
-            <ul class="amenities-list">
-                <li><i class="fas fa-wifi"></i> Wi-Fi</li>
-                <li><i class="fas fa-air-conditioner"></i> Air Conditioning</li>
-                <li><i class="fas fa-tv"></i> Television</li>
-                <li><i class="fas fa-bed"></i> Comfortable Bed</li>
-                <li><i class="fas fa-shower"></i> Hot Shower</li>
-                <li><i class="fas fa-tint"></i> Water Heater</li>
-                <li><i class="fas fa-broom"></i> Daily Room Cleaning</li>
-            </ul>
 
-            <h2>Additional Information</h2>
-            <div class="additional-info">
-                <div class="room-detail">
-                    <span>Max Occupancy:</span>
-                    <span>4 People</span>
-                </div>
-                <div class="room-detail">
-                    <span>Price per Night:</span>
-                    <span>$50</span>
-                </div>
-                <div class="room-detail">
-                    <span>Room Size:</span>
-                    <span>25 m²</span>
-                </div>
-                <div class="room-detail">
-                    <span>Availability:</span>
-                    <span>Available</span>
-                </div>
+            <div class="lease-agreement" id="leaseAgreement" style="display: none;">
+                <h1>Lease Agreement</h1>
+                <p>Please download your lease agreement by clicking the link below:</p>
+                <a href="image/BHMS.png" download class="download-link">
+                    <i class="fas fa-file-pdf"></i> Download Lease Agreement
+                </a>
             </div>
+
         </div>
 
         <!-- Update Personal Details Modal -->
