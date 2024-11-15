@@ -16,7 +16,7 @@
             <div class="navigator">
             <span>GENERAL</span>
             <a href="">Personal Information</a>
-            <a href="">Change Password</a>
+            <a href="#" id="changePasswordLink"><i class="fas fa-key"></i> Change Password</a>
 
             <span>DOCUMENTS</span>
             <a href="">Room Details</a>
@@ -44,6 +44,9 @@
                     <h1>PERSONAL DETAILS</h1>
                     <span>Name</span>
                     <span>Elmer Solitario Rapon</span>
+
+                    <span>Gender</span>
+                    <span>Male</span>
 
                     <span>Email Address</span>
                     <span>raponelmer15@gmail.com</span>
@@ -85,8 +88,33 @@
 
                 </div>
 
+                <div class="change-pass" style="display: none;">
+                    <h2>Change Password</h2>
+                    <form id="updatePass">
+                        <label for="oldPassword">Old Password</label>
+                        <div class="password-field">
+                            <input type="password" id="oldPassword" name="oldPassword">
+                        </div>
+                
+                        <label for="newPassword">New Password</label>
+                        <div class="password-field">
+                            <input type="password" id="newPassword" name="newPassword">
+                        </div>
+                
+                        <label for="confirmPassword">Confirm New Password</label>
+                        <div class="password-field">
+                            <input type="password" id="confirmPassword" name="confirmPassword">
+                        </div>
+                
+                        <button type="submit">Save Changes</button>
+                    </form>
+                </div>
+                
+
                 
             </div>
+
+
         </div>
 
         <!-- Room Details Section -->
@@ -143,8 +171,6 @@
             </div>
         </div>
 
-
-
         <!-- Update Personal Details Modal -->
         <div id="updateModal" class="modal">
             <div class="modal-content">
@@ -153,6 +179,12 @@
                 <form id="updateForm">
                     <label for="name">Name:</label>
                     <input type="text" id="name" name="name" value="Elmer Solitario Rapon">
+  
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender">
+                        <option value="male" selected>Male</option>
+                        <option value="female">Female</option>
+                    </select>
 
                     <label for="email">Email Address:</label>
                     <input type="email" id="email" name="email" value="raponelmer15@gmail.com">
@@ -175,34 +207,10 @@
         </div>
 
 
+
     </div>
 
-    <script>
-        // JavaScript to handle modal display
-        document.addEventListener("DOMContentLoaded", function() {
-            const modal = document.getElementById("updateModal");
-            const updateLink = document.getElementById("updateLink"); // The update link
-            const closeModal = document.querySelector(".modal .close");
-
-            // Open the modal when the "Update Personal Details" link is clicked
-            updateLink.addEventListener("click", function(event) {
-                event.preventDefault();
-                modal.style.display = "block";
-            });
-
-            // Close the modal when the close button (x) is clicked
-            closeModal.addEventListener("click", function() {
-                modal.style.display = "none";
-            });
-
-            // Close the modal when clicking outside the modal content
-            window.addEventListener("click", function(event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                }
-            });
-        });
-    </script>
+    <script src="tenantjs.js"></script>
     
 
 </body>
