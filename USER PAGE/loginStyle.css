@@ -90,7 +90,7 @@ body {
 
 /* Right form section (login form) */
 .right-form {
-    width: 50%;
+    width: 100%;
     max-width: 600px;
     background-color: rgba(0, 0, 0, 0.7); 
     padding: 40px;
@@ -128,7 +128,7 @@ body {
 
 .login-container input {
     width: 100%;
-    padding: 12px 50px; /* Adjust for icon space */
+    padding: 12px 50px;
     border: 1px solid #ccc;
     border-radius: 5px;
     height: 45px;
@@ -160,10 +160,9 @@ body {
 }
 
 /* Login button styling */
-.login-button {
+button {
     display: inline-block;
     text-align: center;
-    margin-top: 70px;
     background-color: #12a15f;
     border: none;
     border-radius: 5px;
@@ -174,12 +173,17 @@ body {
     padding: 10px; 
     text-decoration: none;
     transition: background-color 0.3s;
+    margin-top: 20px;
 }
 
-.login-button:hover{
+button:hover{
     background-color: white;
     color: #0f8e47;
     border: #0f8e47;
+}
+
+.error{
+    margin-top: 10px;
 }
 
 .right-form a{
@@ -189,6 +193,11 @@ body {
 
 .right-form span:hover{
     color: #0f8e47;
+}
+
+form{
+    display: flex;
+    width: 50%;
 }
 
 /* Media Query for responsiveness */

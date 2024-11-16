@@ -6,6 +6,8 @@
     <title>REGISTRATION FORM</title>
     <link rel="stylesheet" href="StyleForm.css">
     <script src="../imported_links.js" defer></script>
+    <link href="https://unpkg.com/boxicons/css/boxicons.min.css" rel="stylesheet">
+</head>
 <body>
     <section id="wrapper">
         <div class="header">
@@ -41,39 +43,84 @@
                     <a href="#"><img src="images/x.png" alt="X"></a>
                     <a href="#"><img src="images/instagram.png" alt="Instagram"></a>
                     <a href="#"><img src="images/pinterest.png" alt="Pinterest"></a>
-                    <a href="#"><img src="images//tiktok.png" alt="TikTok"></a>
-
+                    <a href="#"><img src="images/tiktok.png" alt="TikTok"></a>
                 </div>
             </div>
 
             <div class="login-section">
                 <h1>REGISTRATION FORM</h1>
-                <div class="logform">
-                    <div class="input-container">
-                        <i class='bx bxs-user icon'></i>
-                        <input type="text" name="FName" id="FName" placeholder="First Name" required>
+                <form method="POST" action="back-end/register.php" id="RegForm">
+                    <div class="logform">
+                        <div class="input-container">
+                            <i class='bx bxs-user icon'></i>
+                            <input type="text" name="fname" id="FName" placeholder="First Name" required>
+                        </div>
+                        <div class="input-container">
+                            <i class='bx bxs-user icon'></i>
+                            <input type="text" name="lname" id="LName" placeholder="Last Name" required>
+                        </div>
+                        <div class="input-container">
+                            <i class='bx bxs-phone icon'></i>
+                            <input type="number" name="contact_number" id="ConNum" placeholder="Contact Number" required>
+                        </div>
+                        <div class="input-container">
+                            <i class='bx bxs-envelope icon'></i>
+                            <input type="email" name="email" id="Email" placeholder="Email Address" required>
+                        </div>
+                        <div class="input-container">
+                            <input type="password" name="password" id="Password" placeholder="Password" required>
+                            <i class='bx bx-hide icon' id="togglePassword1"></i>
+                        </div>
+                        <div class="input-container">
+                            <input type="password" name="confirm_password" id="ConfirmPassword" placeholder="Confirm password" required>
+                            <i class='bx bx-hide icon' id="togglePassword2"></i>
+                        </div>
+
+                        <!-- Error Message, initially hidden -->
+                        <p id="error-message" style="color: red; display: none; font-size: small; font-weight: 500;">Invalid username or password. Please try again.</p> 
+                        <p id="signup-error-message" style="color: red; display: none; font-size: small; font-weight: 500;"></p>
+
+                        <a href=""><button type="submit">REGISTER</button></a>
                     </div>
-                    <div class="input-container">
-                        <i class='bx bxs-user icon'></i>
-                        <input type="text" name="LName" id="LName" placeholder="Last Name" required>
-                    </div>
-                    <div class="input-container">
-                        <i class='bx bxs-phone icon'></i>
-                        <input type="tel" name="Contact Number" id="ConNum" placeholder="Contact Number" required>
-                    </div>
-                    <div class="input-container">
-                        <i class='bx bxs-envelope icon'></i>
-                        <input type="email" name="Email" id="Email" placeholder="Email Address" required>
-                    </div>
-                </div>
-                <a href="rooms.html"><button>REGISTER</button></a>
+                </form>
             </div>
-            
-
         </section>
-
-
-
     </section>
+
+    <script>
+        // JavaScript to toggle password visibility for both password fields
+        const togglePassword1 = document.getElementById("togglePassword1");
+        const passwordField1 = document.getElementById("Password");
+        const togglePassword2 = document.getElementById("togglePassword2");
+        const passwordField2 = document.getElementById("ConfirmPassword");
+
+        // Toggle password visibility for the password field
+        togglePassword1.addEventListener("click", function() {
+            if (passwordField1.type === "password") {
+                passwordField1.type = "text";
+                togglePassword1.classList.remove("bx-hide");
+                togglePassword1.classList.add("bx-show");
+            } else {
+                passwordField1.type = "password";
+                togglePassword1.classList.remove("bx-show");
+                togglePassword1.classList.add("bx-hide");
+            }
+        });
+
+        // Toggle password visibility for the confirm password field
+        togglePassword2.addEventListener("click", function() {
+            if (passwordField2.type === "password") {
+                passwordField2.type = "text";
+                togglePassword2.classList.remove("bx-hide");
+                togglePassword2.classList.add("bx-show");
+            } else {
+                passwordField2.type = "password";
+                togglePassword2.classList.remove("bx-show");
+                togglePassword2.classList.add("bx-hide");
+            }
+        });
+    </script>
+
+    <script src="back-end/error-handler.js"></script>
 </body>
 </html>

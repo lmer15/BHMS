@@ -74,3 +74,63 @@ document.addEventListener("DOMContentLoaded", function() {
         leaseAgreement.style.display = "block";
     });
 });
+
+
+// Get the elements for profile picture and modal
+const profilePicture = document.querySelector(".dp img");
+const plusIcon = document.querySelector(".dp .icon");
+const updateModal = document.getElementById("updateModal");
+const closeModalButton = document.querySelector(".close");
+const updateLink = document.getElementById("updateLink");
+const updateForm = document.getElementById("updateForm");
+const updateButton = document.querySelector("#updateForm button");
+
+// Open the update modal when clicking the edit link
+updateLink.addEventListener("click", (event) => {
+    event.preventDefault(); // Prevent page reload
+    updateModal.style.display = "flex"; // Show the modal
+});
+
+// Close the modal when clicking the close button
+closeModalButton.addEventListener("click", () => {
+    updateModal.style.display = "none"; // Hide the modal
+});
+
+// Close the modal if the user clicks outside the modal content
+window.addEventListener("click", (event) => {
+    if (event.target === updateModal) {
+        updateModal.style.display = "none"; // Close if clicked outside
+    }
+});
+
+// Open the file input for updating profile picture when clicking the plus icon
+plusIcon.addEventListener("click", () => {
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = "image/*";
+    
+    // When a new image is selected, update the profile picture
+    fileInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                profilePicture.src = event.target.result; // Update profile picture
+            };
+            reader.readAsDataURL(file); // Read the selected file as a data URL
+        }
+    });
+    
+    fileInput.click(); // Open file input dialog
+});
+
+// Handle form submission to update user details
+updateForm.addEventListener("submit", (event) => {
+    event.preventDefault(); // Prevent form submission to server
+    
+    // Here you can add code to save the form data or send it to a server
+    
+    // For now, just close the modal after saving the form data
+    updateModal.style.display = "none";
+    alert("Profile updated successfully!");
+});

@@ -25,9 +25,6 @@
                     <a href="about-us.html">ABOUT US</a>
                     <a href="contact-us.html">CONTACT US</a>
                 </div>
-                <div class="login">
-                    <a href="register-form.html">LOG IN</a> 
-                </div>
             </div>
             <div class="body">
                 <div class="left">
@@ -37,10 +34,21 @@
                         Enjoy a relaxing stay in our thoughtfully designed rooms, complemented by
                         top-notch amenities and a warm, inviting atmosphere.
                     </p>
-                    <a href="rooms.html" class="inquire-button"> <i class='bx bxs-bookmark'></i> INQUIRE ROOM NOW!</a>
+                    <a href="rooms.html" class="inquire-button" id="login-link"> <i class='bx bxs-bookmark'></i> INQUIRE ROOM NOW!</a>
                 </div>
                 <div class="right"><img src="images/BH_PIC.png" alt=""></div>
             </div>
     </section>
+
+    <script>
+        // Check the URL for the query parameter success=true
+        const urlParams = new URLSearchParams(window.location.search);
+        const success = urlParams.get('success');
+
+        if (success === 'true') {
+            const loginLink = document.getElementById('login-link');
+            loginLink.style.display = 'none';
+        }
+    </script>
 </body>
 </html>
