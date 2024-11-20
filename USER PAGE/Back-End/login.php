@@ -19,6 +19,9 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 
         // Verify the password with the hashed password in the database
         if (password_verify($password, $user['password'])) {
+            // Regenerate session ID to prevent session hijacking
+            session_regenerate_id(true);
+            
             $_SESSION['ad_ID'] = $user['ad_ID'];
             $_SESSION['fname'] = $user['fname'];
             $_SESSION['lname'] = $user['lname'];
@@ -26,17 +29,15 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 
             // Check if "Remember Me" is checked
             if (isset($_POST['rememberMe']) && $_POST['rememberMe'] == 'on') {
-                // Set cookies for the user (expiry of 30 days)
-                setcookie("remember_username", $lusername, time() + (30 * 24 * 60 * 60), "/");  // 30 days
-                setcookie("remember_password", $lpassword, time() + (30 * 24 * 60 * 60), "/");  // 30 days
+                // Set cookie for username (avoid storing password in cookie)
+                setcookie("remember_username", $email, time() + (30 * 24 * 60 * 60), "/");  // 30 days
             } else {
                 // Clear cookies if "Remember Me" is not checked
                 setcookie("remember_username", "", time() - 3600, "/");
-                setcookie("remember_password", "", time() - 3600, "/");
             }
 
             // Redirect to dashboard
-            header("Location: ../tenant.html");
+            header("Location: ../tenant.php");
             exit();
         } else {
             // Invalid password

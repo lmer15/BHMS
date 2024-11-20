@@ -40,8 +40,7 @@ body {
 
 /* Left form section (image, title) */
 .form-left {
-    width: 50%; 
-    max-width: 600px;
+    flex: 1;
     border-radius: 5px 0 0 5px;
     display: flex;
     flex-direction: column;
@@ -90,8 +89,7 @@ body {
 
 /* Right form section (login form) */
 .right-form {
-    width: 100%;
-    max-width: 600px;
+    flex: 1;
     background-color: rgba(0, 0, 0, 0.7); 
     padding: 40px;
     border-radius: 0 5px 5px 0;
@@ -99,6 +97,7 @@ body {
     flex-direction: column;
     align-items: center;
     color: white;
+    justify-content: left;
 }
 
 .right-form h1 {
@@ -154,6 +153,17 @@ body {
     color: #12a15f;
 }
 
+label[for="rememberMe"]:hover {
+    color: #0f8e47;
+}
+
+#rememberMe {
+    left: 0;
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+}
+
 .login-container input:focus {
     outline: none;
     border: 2px solid #12a15f;
@@ -193,11 +203,6 @@ button:hover{
 
 .right-form span:hover{
     color: #0f8e47;
-}
-
-form{
-    display: flex;
-    width: 50%;
 }
 
 /* Media Query for responsiveness */

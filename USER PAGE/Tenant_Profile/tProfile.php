@@ -28,9 +28,8 @@
                 
                 <div class="detpro">
                     <div class="dp">
-                        <img src="../image/DP.png" alt="Profile Picture">
-                        <!-- Plus sign icon from Boxicons -->
-                        <i class="bx bx-plus icon"></i>
+                        <img id="profilePicture" src="../image/DP.png" alt="Profile Picture">
+                        <i class="bx bx-plus icon" onclick="triggerFileInput()"></i>
                     </div>
                 
                     <div class="name-user">
@@ -89,24 +88,43 @@
 
                 </div>
 
-                <div class="change-pass" style="display: none;">
+                <div class="change-pass" style="display: block;">
                     <h2>Change Password</h2>
-                    <form id="updatePass">
+                    
+                    <!-- Show error message if exists -->
+                    <?php if (!empty($errorMessage)): ?>
+                    <p class="error" style="color: red; font-size: small; font-weight: 500;"><?php echo $errorMessage; ?></p>
+                    <?php endif; ?>
+
+                    <!-- Show success message if exists -->
+                    <?php if (!empty($successMessage)): ?>
+                    <p class="success" style="color: green; font-size: small; font-weight: 500;"><?php echo $successMessage; ?></p>
+                    <script>
+                        // Show a pop-up after success
+                        alert("Password changed successfully!");
+                        // Redirect to profile page after 2 seconds
+                        setTimeout(function() {
+                            window.location.href = '../tProfile.php';
+                        }, 2000);
+                    </script>
+                    <?php endif; ?>
+
+                    <form id="updatePass" method="post" action="">
                         <label for="oldPassword">Old Password</label>
                         <div class="password-field">
                             <input type="password" id="oldPassword" name="oldPassword">
                         </div>
-                
+
                         <label for="newPassword">New Password</label>
                         <div class="password-field">
                             <input type="password" id="newPassword" name="newPassword">
                         </div>
-                
+
                         <label for="confirmPassword">Confirm New Password</label>
                         <div class="password-field">
                             <input type="password" id="confirmPassword" name="confirmPassword">
                         </div>
-                
+
                         <button type="submit">Save Changes</button>
                     </form>
                 </div>
@@ -221,12 +239,16 @@
             </div>
         </div>
 
-
+        <!-- Hidden Form for Image Upload -->
+        <form id="uploadForm" method="POST" action="upload.php" enctype="multipart/form-data" style="display: none;">
+            <input type="file" name="profileImage" id="profileImageInput" accept="image/*" onchange="previewImage(event)">
+            <input type="submit" value="Upload Profile Picture">
+        </form>
 
     </div>
 
     <script src="tenantjs.js"></script>
-    
+    <script src="../Back-End/errorhandlers.js"></script>
 
 </body>
 </html>

@@ -76,8 +76,7 @@
                             <i class='bx bx-hide icon' id="togglePassword2"></i>
                         </div>
 
-                        <!-- Error Message, initially hidden -->
-                        <p id="error-message" style="color: red; display: none; font-size: small; font-weight: 500;">Invalid username or password. Please try again.</p> 
+                        <p id="error-message" style="color: red; display: none; font-size: small; font-weight: 500;">Invalid username or password. Please try again.</p>
                         <p id="signup-error-message" style="color: red; display: none; font-size: small; font-weight: 500;"></p>
 
                         <a href=""><button type="submit">REGISTER</button></a>
@@ -88,13 +87,25 @@
     </section>
 
     <script>
+        // Check for 'hideNavigator' flag in localStorage and hide the navigation if set
+        document.addEventListener("DOMContentLoaded", () => {
+            if (localStorage.getItem('hideNavigator') === 'true') {
+                const navigator = document.getElementsByClassName(".header");
+                if (navigator) {
+                    navigator.style.display = "none"; // Hide navigation
+                }
+
+                // Clear the localStorage flag after use (optional)
+                localStorage.removeItem('hideNavigator');
+            }
+        });
+        
         // JavaScript to toggle password visibility for both password fields
         const togglePassword1 = document.getElementById("togglePassword1");
         const passwordField1 = document.getElementById("Password");
         const togglePassword2 = document.getElementById("togglePassword2");
         const passwordField2 = document.getElementById("ConfirmPassword");
 
-        // Toggle password visibility for the password field
         togglePassword1.addEventListener("click", function() {
             if (passwordField1.type === "password") {
                 passwordField1.type = "text";
@@ -107,7 +118,6 @@
             }
         });
 
-        // Toggle password visibility for the confirm password field
         togglePassword2.addEventListener("click", function() {
             if (passwordField2.type === "password") {
                 passwordField2.type = "text";

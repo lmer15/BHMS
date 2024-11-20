@@ -40,15 +40,5 @@
             </div>
     </section>
 
-    <script>
-        // Check the URL for the query parameter success=true
-        const urlParams = new URLSearchParams(window.location.search);
-        const success = urlParams.get('success');
-
-        if (success === 'true') {
-            const loginLink = document.getElementById('login-link');
-            loginLink.style.display = 'none';
-        }
-    </script>
 </body>
 </html>

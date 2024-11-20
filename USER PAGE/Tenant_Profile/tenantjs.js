@@ -103,34 +103,38 @@ window.addEventListener("click", (event) => {
     }
 });
 
-// Open the file input for updating profile picture when clicking the plus icon
-plusIcon.addEventListener("click", () => {
-    const fileInput = document.createElement("input");
-    fileInput.type = "file";
-    fileInput.accept = "image/*";
-    
-    // When a new image is selected, update the profile picture
-    fileInput.addEventListener("change", (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function (event) {
-                profilePicture.src = event.target.result; // Update profile picture
-            };
-            reader.readAsDataURL(file); // Read the selected file as a data URL
-        }
-    });
-    
-    fileInput.click(); // Open file input dialog
-});
+// Trigger the file input for selecting the image
+function triggerFileInput() {
+    document.getElementById('profileImageInput').click();
+}
 
-// Handle form submission to update user details
-updateForm.addEventListener("submit", (event) => {
-    event.preventDefault(); // Prevent form submission to server
-    
-    // Here you can add code to save the form data or send it to a server
-    
-    // For now, just close the modal after saving the form data
-    updateModal.style.display = "none";
-    alert("Profile updated successfully!");
+// Preview the selected image before upload
+function previewImage(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            document.getElementById('profilePicture').src = e.target.result; // Update the image preview
+        };
+        reader.readAsDataURL(file); // Read the file as a Data URL
+    }
+}
+
+// Handle the form submission to upload the profile picture
+document.getElementById('uploadForm').addEventListener('submit', function(event) {
+    event.preventDefault();  // Prevent the form from submitting normally
+
+    const formData = new FormData(this);
+
+    fetch('upload.php', {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => response.text())
+    .then(data => {
+        alert(data); // Show success or error message
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 });

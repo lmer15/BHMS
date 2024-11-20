@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Mapping error types to messages
         const errorMessages = {
             'empty_fields': 'Please fill in all fields.',
-            'invalid_password': 'Invalid username or password. Please try again.',
+            'invalid_password': 'Invalid password. Please try again.',
             'user_not_found': 'User not found. Please check your username.',
             'password_mismatch': 'Passwords do not match.',
             'username_exists': 'Username already exists.',
@@ -21,7 +21,13 @@ document.addEventListener('DOMContentLoaded', () => {
             'server_error': 'A server error occurred. Please try again later.',
             'invalid_email_format': 'Please enter a valid email address.',
             'email_not_found': 'Email not found. Please check the email address.',
-            'missing_data': 'Please enter both username and password.'
+            'missing_data': 'Please enter both username and password.',
+            'password_too_short' : 'Password too short. Password must be 8 character long',
+            'not_logged_in' : 'Wrong Password',
+            'error=update_failed' : 'Error while updating your password.',
+            'invalid_old_password' : 'Invalid old password.',
+            'missing_pass' : 'Enter correct data'
+
         };
 
         // Get the error message based on the error parameter
