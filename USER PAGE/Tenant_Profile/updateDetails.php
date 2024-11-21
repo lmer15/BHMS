@@ -1,56 +1,57 @@
 <?php
-require_once '../../DATABASE/dbConnector.php';
+// Ensure this file includes the database connection
+require_once '../../DATABASE/dbConnector.php'; // Ensure this file connects to the database properly
 session_start();
 
+$response = ['error' => '', 'success' => false];
+
+// Check if it's a POST request
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Collect form data
+    // Ensure the session is still active
+    if (!isset($_SESSION['tc_id'])) {
+        $response['error'] = 'Session expired. Please log in again.';
+        echo json_encode($response);
+        exit();
+    }
+
+    // Get the session ID and form inputs
     $tc_id = $_SESSION['tc_id'];
-    $fname = mysqli_real_escape_string($conn, $_POST['fname']);
-    $lname = mysqli_real_escape_string($conn, $_POST['lname']);
-    $gender = mysqli_real_escape_string($conn, $_POST['gender']);
-    $email_address = mysqli_real_escape_string($conn, $_POST['email_address']);
-    $contact_number = mysqli_real_escape_string($conn, $_POST['contact_number']);
-    $religion = mysqli_real_escape_string($conn, $_POST['religion']);
-    $nationality = mysqli_real_escape_string($conn, $_POST['nationality']);
-    $occupation = mysqli_real_escape_string($conn, $_POST['occupation']);
+    $name = $_POST['name'] ?? '';
+    $gender = $_POST['gender'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $contact = $_POST['contact'] ?? '';
+    $religion = $_POST['religion'] ?? '';
+    $nationality = $_POST['nationality'] ?? '';
+    $occupation = $_POST['occupation'] ?? '';
 
-    // Validate email format
-    if (!filter_var($email_address, FILTER_VALIDATE_EMAIL)) {
-        header("Location: ../updateDetails.php?error=invalid_email");
-        exit();
-    }
+    // Validate required fields
+    if (empty($name) || empty($email) || empty($contact)) {
+        $response['error'] = 'Please fill all required fields.';
+    } else {
+        // Update user details in the database
+        try {
+            $stmt = $pdo->prepare("UPDATE tenant_users SET name = ?, gender = ?, email = ?, contact_number = ?, religion = ?, nationality = ?, occupation = ? WHERE tc_id = ?");
+            if ($stmt->execute([$name, $gender, $email, $contact, $religion, $nationality, $occupation, $tc_id])) {
+                // Update session variables
+                $_SESSION['fname'] = explode(" ", $name)[0];
+                $_SESSION['lname'] = explode(" ", $name)[1];
+                $_SESSION['gender'] = $gender;
+                $_SESSION['email_address'] = $email;
+                $_SESSION['contact_number'] = $contact;
+                $_SESSION['religion'] = $religion;
+                $_SESSION['nationality'] = $nationality;
+                $_SESSION['occupation'] = $occupation;
 
-    // Check if email already exists in the database
-    $query = "SELECT email_address FROM tenant_accounts WHERE email_address = ? AND tc_id != ?";
-    $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, "si", $email_address, $tc_id);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-
-    if (mysqli_num_rows($result) > 0) {
-        header("Location: ../updateDetails.php?error=email_taken");
-        exit();
-    }
-
-    // Prepare the SQL query for updating personal details
-    $updateQuery = "UPDATE tenant_accounts SET fname = ?, lname = ?, gender = ?, email_address = ?, contact_number = ?, religion = ?, nationality = ?, occupation = ? WHERE tc_id = ?";
-    $stmt = mysqli_prepare($conn, $updateQuery);
-    mysqli_stmt_bind_param($stmt, "ssssssssi", $fname, $lname, $gender, $email_address, $contact_number, $religion, $nationality, $occupation, $tc_id);
-
-    try {
-        if (mysqli_stmt_execute($stmt)) {
-            header("Location: ../Tenant_Profile/tProfile.php?success=true");
-            exit();
-        } else {
-            header("Location: ../updateDetails.php?error=server_error");
-            exit();
+                $response['success'] = true;
+            } else {
+                $response['error'] = 'Failed to update details. Please try again.';
+            }
+        } catch (Exception $e) {
+            $response['error'] = 'An error occurred: ' . $e->getMessage();
         }
-    } catch (mysqli_sql_exception $e) {
-        header("Location: ../updateDetails.php?error=server_error");
-        exit();
     }
-
-    mysqli_stmt_close($stmt);
-    mysqli_close($conn);
 }
+
+// Return the response in JSON format
+echo json_encode($response);
 ?>

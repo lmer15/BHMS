@@ -1,59 +1,46 @@
 <?php
-require_once '../../DATABASE/dbConnector.php';
 session_start();
+require_once '../../DATABASE/dbConnector.php';
+
+$response = ['error' => '', 'success' => false];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Collect form data
-    $oldPassword = mysqli_real_escape_string($conn, $_POST['oldPassword']);
-    $newPassword = mysqli_real_escape_string($conn, $_POST['newPassword']);
-    $confirmPassword = $_POST['confirmPassword'];
-    $userId = $_SESSION['tc_id'];
-
-    // Validate passwords
-    if ($newPassword !== $confirmPassword) {
-        header("Location: ../changePass.php?error=password_mismatch");
+    if (!isset($_SESSION['tc_id'])) {
+        $response['error'] = 'Session expired. Please log in again.';
+        echo json_encode($response);
         exit();
     }
 
-    if (strlen($newPassword) < 8) {
-        header("Location: ../changePass.php?error=password_length");
-        exit();
-    }
+    $tc_id = $_SESSION['tc_id'];
+    $oldPassword = $_POST['oldPassword'] ?? '';
+    $newPassword = $_POST['newPassword'] ?? '';
+    $confirmPassword = $_POST['confirmPassword'] ?? '';
 
-    // Retrieve the current password from the database
-    $query = "SELECT password FROM tenant_accounts WHERE tc_id = ?";
-    $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, "i", $userId);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-    $user = mysqli_fetch_assoc($result);
+    // Validate the passwords
+    if (empty($oldPassword) || empty($newPassword) || empty($confirmPassword)) {
+        $response['error'] = 'Please fill in all fields.';
+    } elseif ($newPassword !== $confirmPassword) {
+        $response['error'] = 'Passwords do not match.';
+    } else {
+        // Check if old password is correct
+        $stmt = $pdo->prepare("SELECT password FROM tenant_users WHERE tc_id = ?");
+        $stmt->execute([$tc_id]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (!$user || !password_verify($oldPassword, $user['password'])) {
-        header("Location: ../changePass.php?error=incorrect_old_password");
-        exit();
-    }
-
-    // Hash the new password and update the database
-    $hashedNewPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-
-    $updateQuery = "UPDATE tenant_accounts SET password = ? WHERE tc_id = ?";
-    $stmt = mysqli_prepare($conn, $updateQuery);
-    mysqli_stmt_bind_param($stmt, "si", $hashedNewPassword, $userId);
-
-    try {
-        if (mysqli_stmt_execute($stmt)) {
-            header("Location: ../tProfile.php?success=true");
-            exit();
+        if ($user && password_verify($oldPassword, $user['password'])) {
+            // Update the password
+            $newPasswordHash = password_hash($newPassword, PASSWORD_DEFAULT);
+            $updateStmt = $pdo->prepare("UPDATE tenant_users SET password = ? WHERE tc_id = ?");
+            if ($updateStmt->execute([$newPasswordHash, $tc_id])) {
+                $response['success'] = true;
+            } else {
+                $response['error'] = 'Failed to change password. Please try again.';
+            }
         } else {
-            header("Location: ../changePass.php?error=server_error");
-            exit();
+            $response['error'] = 'Old password is incorrect.';
         }
-    } catch (mysqli_sql_exception $e) {
-        header("Location: ../changePass.php?error=server_error");
-        exit();
     }
-
-    mysqli_stmt_close($stmt);
-    mysqli_close($conn);
 }
+
+echo json_encode($response);
 ?>
