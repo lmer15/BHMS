@@ -1,3 +1,14 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['tc_id']) || !isset($_SESSION['email_address'])) {
+    // If not logged in, redirect the user to the login page
+    header("Location: login.php");
+    exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,13 +32,12 @@
                 <span class="notification-badge">5</span> <!-- Number of notifications -->
             </a>
             <a href="javascript:void(0);" onclick="loadPage('tSupport.html', this)" aria-label="About Us"><i class='bx bx-support icon'></i></a>
-            <a href="login.html" aria-label="Logout"><i class='bx bx-log-out icon'></i></a>
+            <a href="Back-End/logout.php" aria-label="Logout"><i class='bx bx-log-out icon'></i></a>
         </nav>        
 
         <!-- Main Content Section -->
         <div class="main-content">
             <header class="header">
-
                 <!-- Date and Time Container -->
                 <div class="date-time" id="date-time">
                     <div class="date"></div>
@@ -41,7 +51,7 @@
                 </div>
 
                 <div class="right-side">
-                    <span>Hi! Welcome, <span class="username">Elmer</span></span>
+                    <span>Hi! Welcome, <span class="username"><?php echo $_SESSION['fname']; ?></span></span>
                     <div class="profile">
                         <img src="image/DP.png" alt="Profile Image" />
                     </div>
@@ -49,7 +59,7 @@
             </header>
 
             <div id="content-container">
-                <iframe id="content-iframe" src="tDashboard.html" frameborder="0"></iframe>
+                <iframe id="content-iframe" frameborder="0"></iframe>
             </div>
         </div>
     </div>
@@ -73,53 +83,29 @@
     
         // Set the initial page and active link on window load
         window.onload = function() {
-            // Get the first navigation link
             var firstNavLink = document.querySelector('.navigator a');
-            // Set the initial page and mark it as active
             if (firstNavLink) {
                 loadPage('tDashboard.html', firstNavLink);
             }
-
-            // Call the function to display the current date and time
             updateDateTime();
             setInterval(updateDateTime, 1000); // Update every second
         };
 
         // Function to update date and time
         function updateDateTime() {
-            const dateTimeElement = document.getElementById("date-time");
-
-            // Get current date and time
-            const now = new Date();
-            const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
-            const date = now.toLocaleDateString('en-US', options);
-            const time = now.toLocaleTimeString('en-US', { hour12: false });
-
-            // Display the date and time
-            dateTimeElement.textContent = `${date} ${time}`;
-        }
-
-        // Function to update date and time
-        function updateDateTime() {
             const dateElement = document.querySelector('.date-time .date');
             const timeElement = document.querySelector('.date-time .time');
 
-            // Get current date and time
             const now = new Date();
             const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
             const date = now.toLocaleDateString('en-US', options);
             const time = now.toLocaleTimeString('en-US', { hour12: true });
 
-            // Update the date and time
             dateElement.textContent = date;
             timeElement.textContent = time;
         }
-
-        // Call the function to display the current date and time
-        updateDateTime();
-        setInterval(updateDateTime, 1000); // Update every second
-
     </script>
 
 </body>
 </html>
+

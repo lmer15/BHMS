@@ -26,7 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
             'not_logged_in' : 'Wrong Password',
             'error=update_failed' : 'Error while updating your password.',
             'invalid_old_password' : 'Invalid old password.',
-            'missing_pass' : 'Enter correct data'
+            'missing_pass' : 'Enter correct data',
+            'password_length' : 'Password must be 8 characters long.'
 
         };
 

@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -87,50 +91,32 @@
                     <span style="color: rgb(228, 31, 31);">₱4,455.00</span>
 
                 </div>
-
-                <div class="change-pass" style="display: block;">
-                    <h2>Change Password</h2>
-                    
-                    <!-- Show error message if exists -->
-                    <?php if (!empty($errorMessage)): ?>
-                    <p class="error" style="color: red; font-size: small; font-weight: 500;"><?php echo $errorMessage; ?></p>
-                    <?php endif; ?>
-
-                    <!-- Show success message if exists -->
-                    <?php if (!empty($successMessage)): ?>
-                    <p class="success" style="color: green; font-size: small; font-weight: 500;"><?php echo $successMessage; ?></p>
-                    <script>
-                        // Show a pop-up after success
-                        alert("Password changed successfully!");
-                        // Redirect to profile page after 2 seconds
-                        setTimeout(function() {
-                            window.location.href = '../tProfile.php';
-                        }, 2000);
-                    </script>
-                    <?php endif; ?>
-
-                    <form id="updatePass" method="post" action="">
+                                
+                
+                <!-- Form for password change -->
+                <form id="updatePass" method="POST" action="changePass.php">
+                    <div class="change-pass" style="display:none;">
+                        <h2>Change Password</h2>
                         <label for="oldPassword">Old Password</label>
                         <div class="password-field">
-                            <input type="password" id="oldPassword" name="oldPassword">
+                            <input type="password" id="oldPassword" name="oldPassword" required>
                         </div>
 
                         <label for="newPassword">New Password</label>
                         <div class="password-field">
-                            <input type="password" id="newPassword" name="newPassword">
+                            <input type="password" id="newPassword" name="newPassword" required>
                         </div>
 
                         <label for="confirmPassword">Confirm New Password</label>
                         <div class="password-field">
-                            <input type="password" id="confirmPassword" name="confirmPassword">
+                            <input type="password" id="confirmPassword" name="confirmPassword" required>
                         </div>
-
+                        <p class="error" id="error-message" style="color: red; display: none; font-size: small; font-weight: 500;">Invalid password. Please try again.</p>
+                        <p class="error" id="password-mismatch" style="color: red; display: none; font-size: small; font-weight: 500;">Passwords do not match. Please try again.</p>
                         <button type="submit">Save Changes</button>
-                    </form>
-                </div>
-                
+                    </div>
+`               </form>
 
-                
             </div>
 
             <!-- Room Details Section -->
@@ -204,40 +190,45 @@
 
         </div>
 
-        <!-- Update Personal Details Modal -->
-        <div id="updateModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Update Personal Information</h2>
-                <form id="updateForm">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" value="Elmer Solitario Rapon">
-  
-                    <label for="gender">Gender:</label>
-                    <select id="gender" name="gender">
-                        <option value="male" selected>Male</option>
-                        <option value="female">Female</option>
-                    </select>
+            <!-- Update Personal Details Modal -->
+            <div id="updateModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Update Personal Information</h2>
+                    <p class="error" id="error-message" style="color: red; display: none; font-size: small; font-weight: 500;">Invalid password. Please try again.</p>
+                    <p class="error" id="password-mismatch" style="color: red; display: none; font-size: small; font-weight: 500;">Passwords do not match. Please try again.</p>
+                    <form id="updateForm" method="post" action="updateDetails.php">
+                        <!-- Using PHP to echo session values for pre-filling -->
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" value="<?php echo isset($_SESSION['fname']) && isset($_SESSION['lname']) ? $_SESSION['fname'] . ' ' . $_SESSION['lname'] : ''; ?>" >
 
-                    <label for="email">Email Address:</label>
-                    <input type="email" id="email" name="email" value="raponelmer15@gmail.com">
+                        <label for="gender">Gender:</label>
+                        <select id="gender" name="gender">
+                            <option value="male" <?php echo (isset($_SESSION['gender']) && $_SESSION['gender'] == 'male') ? 'selected' : ''; ?>>Male</option>
+                            <option value="female" <?php echo (isset($_SESSION['gender']) && $_SESSION['gender'] == 'female') ? 'selected' : ''; ?>>Female</option>
+                        </select>
 
-                    <label for="contact">Contact Number:</label>
-                    <input type="tel" id="contact" name="contact" value="+03 906 838 7448">
+                        <label for="email">Email Address:</label>
+                        <input type="email" id="email" name="email" value="<?php echo isset($_SESSION['email_address']) ? $_SESSION['email_address'] : ''; ?>">
 
-                    <label for="religion">Religion:</label>
-                    <input type="text" id="religion" name="religion" value="Roman Catholic">
+                        <label for="contact">Contact Number:</label>
+                        <input type="tel" id="contact" name="contact" value="<?php echo isset($_SESSION['contact_number']) ? $_SESSION['contact_number'] : ''; ?>">
 
-                    <label for="nationality">Nationality:</label>
-                    <input type="text" id="nationality" name="nationality" value="Filipino">
+                        <label for="religion">Religion:</label>
+                        <input type="text" id="religion" name="religion" value="<?php echo isset($_SESSION['religion']) ? $_SESSION['religion'] : ''; ?>">
 
-                    <label for="occupation">Occupation:</label>
-                    <input type="text" id="occupation" name="occupation" value="Software Engineer">
+                        <label for="nationality">Nationality:</label>
+                        <input type="text" id="nationality" name="nationality" value="<?php echo isset($_SESSION['nationality']) ? $_SESSION['nationality'] : ''; ?>">
 
-                    <button type="submit">Save Changes</button>
-                </form>
+                        <label for="occupation">Occupation:</label>
+                        <input type="text" id="occupation" name="occupation" value="<?php echo isset($_SESSION['occupation']) ? $_SESSION['occupation'] : ''; ?>">
+
+                        <button type="submit">Save Changes</button>
+                    </form>
+                </div>
             </div>
-        </div>
+
+
 
         <!-- Hidden Form for Image Upload -->
         <form id="uploadForm" method="POST" action="upload.php" enctype="multipart/form-data" style="display: none;">

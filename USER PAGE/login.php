@@ -28,7 +28,8 @@
                     <div class="login-container">
                         <div class="icon-container">
                             <i class='bx bxs-envelope icon'></i>
-                            <input type="email" name="email" id="Email" placeholder="Email Address" required>
+                            <input type="email" name="email" id="Email" placeholder="Email Address" required 
+                            value="<?php echo isset($_COOKIE['remember_username']) ? $_COOKIE['remember_username'] : ''; ?>">
                         </div>
                     </div>
 
@@ -41,7 +42,7 @@
                     </div>
 
                     <label for="rememberMe">
-                        <input type="checkbox" name="rememberMe" id="rememberMe"> Remember Me
+                        <input type="checkbox" name="rememberMe" id="rememberMe" <?php echo isset($_COOKIE['remember_username']) ? 'checked' : ''; ?>> Remember Me
                     </label>
                     
                     <button class="login-button">LOG IN</button>

@@ -4,7 +4,7 @@ require_once '../../DATABASE/dbConnector.php';  // Database connection
 
 // Check if form is submitted
 if (isset($_POST['email']) && isset($_POST['password'])) {
-    $email = trim($_POST['email']);  
+    $email = htmlspecialchars(trim($_POST['email']));  
     $password = trim($_POST['password']);  
 
     // Use prepared statements to prevent SQL injection
@@ -21,11 +21,13 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
         if (password_verify($password, $user['password'])) {
             // Regenerate session ID to prevent session hijacking
             session_regenerate_id(true);
-            
-            $_SESSION['ad_ID'] = $user['ad_ID'];
+
+            $_SESSION['tc_id'] = $user['tc_id'];
             $_SESSION['fname'] = $user['fname'];
             $_SESSION['lname'] = $user['lname'];
-            $_SESSION['email'] = $user['email'];
+            $_SESSION['email_address'] = $user['email_address'];
+            $_SESSION['gender'] = $user['gender'];
+            $_SESSION['contact_number'] = $user['contact_number'];
 
             // Check if "Remember Me" is checked
             if (isset($_POST['rememberMe']) && $_POST['rememberMe'] == 'on') {
@@ -36,22 +38,25 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                 setcookie("remember_username", "", time() - 3600, "/");
             }
 
-            // Redirect to dashboard
+            // Redirect to the dashboard
             header("Location: ../tenant.php");
             exit();
         } else {
             // Invalid password
-            header("Location: ../login.html?error=invalid_password");
+            $_SESSION['error'] = "Invalid credentials, please try again.";
+            header("Location: ../login.php");
             exit();
         }
     } else {
         // Email not found
-        header("Location: ../login.html?error=email_not_found");
+        $_SESSION['error'] = "Invalid credentials, please try again.";
+        header("Location: ../login.php");
         exit();
     }
 } else {
     // Missing data (username or password)
-    header("Location: ../login.html?error=missing_data");
+    $_SESSION['error'] = "Please fill in both fields.";
+    header("Location: ../login.php");
     exit();
 }
 ?>
