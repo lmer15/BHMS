@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 21, 2024 at 05:57 AM
+-- Generation Time: Nov 23, 2024 at 06:40 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -46,8 +46,8 @@ CREATE TABLE `tenant_accounts` (
 --
 
 INSERT INTO `tenant_accounts` (`tc_id`, `fname`, `lname`, `gender`, `email_address`, `contact_number`, `password`, `religion`, `nationality`, `occupation`, `status`) VALUES
-(23, 'Elmer', 'Rapon', '', 'raponelmer15@gmail.com', '09107998581', '$2y$10$p4C8KqdAW7lji294FV1WROqWd4wCOe1Zd5DsLIK2LXfCcF1fhsMsm', '', '', '', 'reservee'),
-(24, 'SANDRIA', 'CADUSALE', '', 'sandriacadusale@gmail.com', '09438284163', '$2y$10$CAa6e539JzGQ7ZHpQvgdNeu5n.4zrhWRPB9Wii9SoRw2G7or7SNLq', '', '', '', 'reservee');
+(24, 'SANDRIA', 'CADUSALE', 'male', 'sandriacadusale@gmail.com', '09438284163', '$2y$10$dxXXXvWl9y9K3/zIwLuVZuQ5HEhm.4j29TlKyvLVl64KNoQ7bbzP.', 'Catholic', 'Filipino', 'Businesswoman', 'reservee'),
+(26, 'Elmer', ' Rapon', 'male', 'raponelmer15@gmail.com', '09107998581', '$2y$10$z.khVpkqG8NaIUBkC2LAQeNuxXK0BNPHeJwIZdKVITFrGUDzvwDnW', 'Roman Catholic', 'Filipino Citizen', 'IT', 'reservee');
 
 -- --------------------------------------------------------
 
@@ -88,7 +88,7 @@ ALTER TABLE `tenant_profile`
 -- AUTO_INCREMENT for table `tenant_accounts`
 --
 ALTER TABLE `tenant_accounts`
-  MODIFY `tc_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `tc_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `tenant_profile`

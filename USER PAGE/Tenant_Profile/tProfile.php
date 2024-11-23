@@ -18,13 +18,13 @@ session_start();
         <div class="profile-container">
 
             <div class="navigator">
-            <span>GENERAL</span>
-            <a href="">Personal Information</a>
-            <a href="#" id="changePasswordLink">Change Password</a>
+                <span>GENERAL</span>
+                <a href="">Personal Information</a>
+                <a href="#" id="changePasswordLink">Change Password</a>
 
-            <span>DOCUMENTS</span>
-            <a href="#" id="roomDetailsLink">Room Details</a>
-            <a href="" id="leaseLink">Lease Agreement</a>
+                <span>DOCUMENTS</span>
+                <a href="#" id="roomDetailsLink">Room Details</a>
+                <a href="" id="leaseLink">Lease Agreement</a>
 
             </div>  
 
@@ -240,6 +240,7 @@ session_start();
 
     <script src="tenantjs.js"></script>
     <script src="../Back-End/errorhandlers.js"></script>
+    <script src="update.js"></script>
 
 </body>
 </html>

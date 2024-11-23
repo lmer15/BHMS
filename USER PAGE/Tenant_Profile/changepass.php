@@ -1,46 +1,61 @@
 <?php
 session_start();
-require_once '../../DATABASE/dbConnector.php';
+require_once '../../DATABASE/dbConnector.php';  // Database connection
 
-$response = ['error' => '', 'success' => false];
+// Check if the user is logged in
+if (!isset($_SESSION['tc_id'])) {
+    echo json_encode(['success' => false, 'message' => 'You must be logged in to change your password.']);
+    exit();
+}
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (!isset($_SESSION['tc_id'])) {
-        $response['error'] = 'Session expired. Please log in again.';
-        echo json_encode($response);
+// Check if the form is submitted
+if (isset($_POST['oldPassword'], $_POST['newPassword'], $_POST['confirmPassword'])) {
+    $oldPassword = trim($_POST['oldPassword']);
+    $newPassword = trim($_POST['newPassword']);
+    $confirmPassword = trim($_POST['confirmPassword']);
+
+    // Check if the new password and confirm password match
+    if ($newPassword !== $confirmPassword) {
+        echo json_encode(['success' => false, 'message' => 'New password and confirmation password do not match.']);
         exit();
     }
 
-    $tc_id = $_SESSION['tc_id'];
-    $oldPassword = $_POST['oldPassword'] ?? '';
-    $newPassword = $_POST['newPassword'] ?? '';
-    $confirmPassword = $_POST['confirmPassword'] ?? '';
+    // Get the current hashed password from the database
+    $query = "SELECT password FROM tenant_accounts WHERE tc_id = ?";
+    $stmt = mysqli_prepare($conn, $query);
+    mysqli_stmt_bind_param($stmt, 'i', $_SESSION['tc_id']);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
 
-    // Validate the passwords
-    if (empty($oldPassword) || empty($newPassword) || empty($confirmPassword)) {
-        $response['error'] = 'Please fill in all fields.';
-    } elseif ($newPassword !== $confirmPassword) {
-        $response['error'] = 'Passwords do not match.';
-    } else {
-        // Check if old password is correct
-        $stmt = $pdo->prepare("SELECT password FROM tenant_users WHERE tc_id = ?");
-        $stmt->execute([$tc_id]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (mysqli_num_rows($result) > 0) {
+        $user = mysqli_fetch_assoc($result);
 
-        if ($user && password_verify($oldPassword, $user['password'])) {
-            // Update the password
-            $newPasswordHash = password_hash($newPassword, PASSWORD_DEFAULT);
-            $updateStmt = $pdo->prepare("UPDATE tenant_users SET password = ? WHERE tc_id = ?");
-            if ($updateStmt->execute([$newPasswordHash, $tc_id])) {
-                $response['success'] = true;
+        // Verify the current password with the stored hashed password
+        if (password_verify($oldPassword, $user['password'])) {
+            // Hash the new password
+            $hashedNewPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+
+            // Update the password in the database
+            $updateQuery = "UPDATE tenant_accounts SET password = ? WHERE tc_id = ?";
+            $updateStmt = mysqli_prepare($conn, $updateQuery);
+            mysqli_stmt_bind_param($updateStmt, 'si', $hashedNewPassword, $_SESSION['tc_id']);
+
+            if (mysqli_stmt_execute($updateStmt)) {
+                echo json_encode(['success' => true, 'message' => 'Your password has been updated successfully.']);
+                exit();
             } else {
-                $response['error'] = 'Failed to change password. Please try again.';
+                echo json_encode(['success' => false, 'message' => 'Failed to update password, please try again.']);
+                exit();
             }
         } else {
-            $response['error'] = 'Old password is incorrect.';
+            echo json_encode(['success' => false, 'message' => 'Current password is incorrect.']);
+            exit();
         }
+    } else {
+        echo json_encode(['success' => false, 'message' => 'User not found.']);
+        exit();
     }
+} else {
+    echo json_encode(['success' => false, 'message' => 'Please fill in all fields.']);
+    exit();
 }
-
-echo json_encode($response);
-?>

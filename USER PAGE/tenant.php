@@ -23,11 +23,11 @@ if (!isset($_SESSION['tc_id']) || !isset($_SESSION['email_address'])) {
     <div class="wrapper">
         <!-- Navigation Bar -->
         <nav class="navigator">
-            <a href="javascript:void(0);" onclick="loadPage('tDashboard.html', this)" aria-label="Home"><i class='bx bx-home icon'></i></a>
+            <a href="javascript:void(0);" onclick="loadPage('Tenant_Dashboard/tDashboard.html', this)" aria-label="Home"><i class='bx bx-home icon'></i></a>
             <a href="javascript:void(0);" onclick="loadPage('Tenant_Profile/tProfile.php', this)" aria-label="Profile"><i class='bx bx-user icon'></i></a>
             <a href="javascript:void(0);" onclick="loadPage('ttPayments.html', this)" aria-label="Payments"><i class='bx bx-wallet icon'></i></a>
-            <a href="javascript:void(0);" onclick="loadPage('tMaintenance.html', this)" aria-label="Maintenance"><i class='bx bx-wrench icon'></i></a>
-            <a href="javascript:void(0);" onclick="loadPage('tNotifications.html', this)" aria-label="Notifications">
+            <a href="javascript:void(0);" onclick="loadPage('Tenant_Maintenance/maintenance.html', this)" aria-label="Maintenance"><i class='bx bx-wrench icon'></i></a>
+            <a href="javascript:void(0);" onclick="loadPage('Tenant_Notification/notif.html', this)" aria-label="Notifications">
                 <i class='bx bx-bell icon'></i>
                 <span class="notification-badge">5</span> <!-- Number of notifications -->
             </a>
@@ -63,8 +63,6 @@ if (!isset($_SESSION['tc_id']) || !isset($_SESSION['email_address'])) {
             </div>
         </div>
     </div>
-    
-    <script src="calendar.js"></script>
 
     <script>
         // Function to load the target page into the iframe and update active link

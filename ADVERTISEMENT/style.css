@@ -20,13 +20,21 @@ body {
 }
 
 #wrapper{
-    width: 100%;
+    width: 100vw;
     max-width: 1920px;
     min-width: 370px;
-    margin: auto    ;
+    margin: auto;
     height: auto;
     overflow: hidden;
     background-color: black;
+}
+
+#content-iframe {
+    width: 100vw; 
+    height: 100vh; 
+    border: none;
+    margin: 0;
+    padding: 0;
 }
 
 .header{

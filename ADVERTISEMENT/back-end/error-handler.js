@@ -16,7 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
             'duplicate_email': 'Email already exists. Please use a different email.',
             'server_error': 'A server error occurred. Please try again later.',
             'invalid_email_format': 'Please enter a valid email address.',
-            'email_not_found': 'Email not found.'
+            'email_not_found': 'Email not found.',
+            'email_exists' : 'Email already exist. Use another one!'
         };
 
         const errorMessageText = errorMessages[error] || 'An unknown error occurred.';

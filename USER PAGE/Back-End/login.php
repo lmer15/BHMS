@@ -42,21 +42,15 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
             header("Location: ../tenant.php");
             exit();
         } else {
-            // Invalid password
-            $_SESSION['error'] = "Invalid credentials, please try again.";
-            header("Location: ../login.php");
+            header("Location: ../login.php?error=invalid_password");
             exit();
         }
     } else {
-        // Email not found
-        $_SESSION['error'] = "Invalid credentials, please try again.";
-        header("Location: ../login.php");
+        header("Location: ../login.php?error=email_not_found");
         exit();
     }
 } else {
-    // Missing data (username or password)
-    $_SESSION['error'] = "Please fill in both fields.";
-    header("Location: ../login.php");
+    header("Location: ../login.php?error=missing_data");
     exit();
 }
 ?>
