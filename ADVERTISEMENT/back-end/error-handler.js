@@ -18,7 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
             'invalid_email_format': 'Please enter a valid email address.',
             'email_not_found': 'Email not found.',
             'email_exists' : 'Email already exist. Use another one!',
-            'username_exists' : 'Username already exist'
+            'username_exists' : 'Username already exist',
+            'connection-error' : 'Connection error.',
+            'error_upload' : 'Error uploading images'
         };
 
         const errorMessageText = errorMessages[error] || 'An unknown error occurred.';
