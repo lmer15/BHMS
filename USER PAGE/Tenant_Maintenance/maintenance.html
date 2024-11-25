@@ -12,12 +12,12 @@
     <div class="wrapper">
 
         <div class="navigator">
-            <a href="#">Dashboard</a>
-            <a href="#">Send Request</a>
+            <a href="#" id="dashboard">Dashboard</a>
+            <a href="#" id="send-request">Send Request</a>
         </div>
 
+        <!-- Dashboard Section -->
         <div class="dashboard">
-
             <div class="nav">
                 <div class="nav-con">
                     <h1>45</h1>
@@ -38,29 +38,40 @@
                     <h1>25</h1>
                     <span>Declined</span>
                 </div>
-
             </div>
+
+            <!-- Maintenance Table -->
+            <div class="maintenance-table">
+                <div class="maintenance-table-header">
+                    <div class="maintenance-header-item">Date Requested</div>
+                    <div class="maintenance-header-item">Maintenance Requested</div>
+                    <div class="maintenance-header-item">Details</div>
+                    <div class="maintenance-header-item">Status</div>
+                </div>
+                <div class="maintenance-table-row">
+                    <div class="maintenance-item">October 17, 2024</div>
+                    <div class="maintenance-item">Wall</div>
+                    <div class="maintenance-item">The wall is broken, I need a repair as soon as possible.</div>
+                    <div class="maintenance-item">Pending</div>
+                </div>
+            </div>
+            
         </div>
 
-        <div class="send-request">
-
+        <!-- Send Maintenance Request Section -->
+        <div class="send_maintenance_request" style="display: none;">
             <form action="post">
-
                 <h1>Request Form</h1>
-                <label for="Item-Name">Item to be Fixed</label>
-                <input type="text" id="Item-Name">
+                <label for="Item-Name">Item to be Fixed:</label>
+                <input type="text" id="Item-Name" required>
 
-                <label for="Item-Desc">Add Brief Description</label>
-                <input type="text" id="Item-Desc">
-                
+                <label for="Item-Desc">Add Brief Description:</label>
+                <textarea id="Item-Desc" required></textarea>
+                <button type="submit">Submit Request</button>
             </form>
         </div>
-
-
-
     </div>
 
-
-
+    <script src="maintenancejs.js"></script>
 </body>
 </html>

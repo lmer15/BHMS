@@ -154,9 +154,15 @@ session_start();
                         </div>
 
                         <!-- Amenities Section -->
-                         <div class="ami">
-                            <h2>Amenities</h2>
-                            <p>Air-conditioning, Mini-Kitchen, Own Bathroom, Wi-Fi, Daily Cleaning, Own Water Counter, Television, Heater. </p>
+                        <div class="ami">
+                            <div class="amin">
+                                <h2>Amenities</h2>
+                                <p>Air-conditioning, Mini-Kitchen, Own Bathroom, Wi-Fi, Daily Cleaning, Own Water Counter, Television, Heater. </p>
+                            </div>
+                            <div class="uti">
+                                <h2>Utilites</h2>
+                                <p>Electricity, Gas, Water, Sewage, Trash, Recycling</p>
+                            </div>
                         </div>
 
                         <!-- Room Conditions -->

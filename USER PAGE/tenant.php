@@ -1,11 +1,11 @@
 <?php
-session_start();
+    session_start();
 
-if (!isset($_SESSION['tc_id']) || !isset($_SESSION['email_address'])) {
-    // If not logged in, redirect the user to the login page
-    header("Location: login.php");
-    exit();
-}
+    if (!isset($_SESSION['tc_id']) || !isset($_SESSION['email_address'])) {
+        // If not logged in, redirect the user to the login page
+        header("Location: login.php");
+        exit();
+    }
 
 ?>
 
@@ -15,7 +15,7 @@ if (!isset($_SESSION['tc_id']) || !isset($_SESSION['email_address'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>USER DASHBOARD</title>
-    <link rel="stylesheet" href="styletDashboard.css">
+    <link rel="stylesheet" href="Tenant_Dashboard/styletDashboard.css">
     <script src="../imported_links.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -31,7 +31,7 @@ if (!isset($_SESSION['tc_id']) || !isset($_SESSION['email_address'])) {
                 <i class='bx bx-bell icon'></i>
                 <span class="notification-badge">5</span> <!-- Number of notifications -->
             </a>
-            <a href="javascript:void(0);" onclick="loadPage('tSupport.html', this)" aria-label="About Us"><i class='bx bx-support icon'></i></a>
+            <a href="javascript:void(0);" onclick="loadPage('../ADVERTISEMENT/contact-us.html', this)" aria-label="About Us"><i class='bx bx-support icon'></i></a>
             <a href="Back-End/logout.php" aria-label="Logout"><i class='bx bx-log-out icon'></i></a>
         </nav>        
 
@@ -83,7 +83,7 @@ if (!isset($_SESSION['tc_id']) || !isset($_SESSION['email_address'])) {
         window.onload = function() {
             var firstNavLink = document.querySelector('.navigator a');
             if (firstNavLink) {
-                loadPage('tDashboard.html', firstNavLink);
+                loadPage('Tenant_Dashboard/tDashboard.html', firstNavLink);
             }
             updateDateTime();
             setInterval(updateDateTime, 1000); // Update every second

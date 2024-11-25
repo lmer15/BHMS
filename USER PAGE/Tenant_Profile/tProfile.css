@@ -359,14 +359,17 @@ body {
 
 /* Adjustments for the Amenities Section */
 .ami {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.amin, .uti{
     background-color: #444;
     box-shadow: 0 2px 6px rgba(43, 41, 41, 0.1);
     padding: 20px;
     border-radius: 10px;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
     overflow-y: auto;
 }
 

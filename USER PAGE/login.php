@@ -19,7 +19,6 @@
                 <img src="../IMAGES/GREEN_LOGO.png" alt="LOGO">
                 <h1>BHMS</h1>
             </div>
-
             <form method="POST" action="Back-End/login.php">
                 <div class="right-form">
                     <h1>LOG IN</h1>
@@ -27,9 +26,8 @@
 
                     <div class="login-container">
                         <div class="icon-container">
-                            <i class='bx bxs-envelope icon'></i>
-                            <input type="email" name="email" id="Email" placeholder="Email Address" required 
-                            value="<?php echo isset($_COOKIE['remember_username']) ? $_COOKIE['remember_username'] : ''; ?>">
+                            <i class='bx bxs-user icon'></i>
+                            <input type="text" name="username_or_email" id="UsernameOrEmail" placeholder="Username or Email Address" required>
                         </div>
                     </div>
 
@@ -41,13 +39,8 @@
                         </div>
                     </div>
 
-                    <label for="rememberMe">
-                        <input type="checkbox" name="rememberMe" id="rememberMe" <?php echo isset($_COOKIE['remember_username']) ? 'checked' : ''; ?>> Remember Me
-                    </label>
-                    
                     <button class="login-button">LOG IN</button>
-                    <!-- Error Message, initially hidden -->
-                    <p class="error" id="error-message" style="color: red; display: none; font-size: small; font-weight: 500;">Invalid password. Please try again.</p>
+                    <p class="error" id="error-message" style="color: red; display: none; font-size: small; font-weight: 500;">Invalid username or password. Please try again.</p>
                     <p class="error" id="signup-error-message" style="color: red; display: none; font-size: small; font-weight: 300;"></p>
                     <span>Forgot Password?</span>
                 </div>

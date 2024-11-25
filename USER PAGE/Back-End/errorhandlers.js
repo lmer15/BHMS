@@ -27,8 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
             'error=update_failed' : 'Error while updating your password.',
             'invalid_old_password' : 'Invalid old password.',
             'missing_pass' : 'Enter correct data',
-            'password_length' : 'Password must be 8 characters long.'
-
+            'password_length' : 'Password must be 8 characters long.',
+            'reservee_account' : 'Your account have not yet approved. Contact the management.',
+            'email_or_username_not_found' : 'Username or Email Address not found.'
         };
 
         // Get the error message based on the error parameter
