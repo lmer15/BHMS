@@ -638,39 +638,63 @@ body {
     }
 }
 
-.add {
+.add, 
+.add-services, 
+.add-aminities {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 20px;
     border: solid 2px #0f8e47;
-    width: 450px;
     padding: 20px;
     border-radius: 20px;
-    min-height: 500px; 
     box-sizing: border-box;
     align-self: stretch;
     transition: all 0.3s ease;
 }
 
-.add:hover {
-    border-color: #0f8e47; 
-    background-color: rgba(15, 142, 71, 0.1); 
+.add {
+    width: 450px;
+    min-height: 500px;
+    margin: 20px;
 }
 
-.add i {
-    font-size: 100px;   
-    color: #0f8e47; 
+.add-services {
+    width: 350px;
+    height: 300px;
+    margin-top: 40px;
+    border-radius: 10px;
+}
+
+.add-aminities {
+    width: 400px;
+    min-height: 450px;
+    margin-top: 40px;
+}
+
+.add:hover, 
+.add-services:hover, 
+.add-aminities:hover {
+    border-color: #0f8e47; 
+    background-color: rgba(15, 142, 71, 0.1);
+}
+
+.add i, 
+.add-services i, 
+.add-aminities i {
+    font-size: 100px;
+    color: #0f8e47;
     text-align: center;
     transition: color 0.3s ease;
 }
 
-.add:hover i {
-    color: #ffffff; 
+.add:hover i, 
+.add-services:hover i, 
+.add-aminities:hover i {
+    color: #ffffff;
 }
 
 .icon-add {
-    display: flex; 
-    align-items: center; 
+    display: flex;
+    align-items: center;
     justify-content: center;
 }
