@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
     session_start();
 
     if (!isset($_SESSION['tc_id']) || !isset($_SESSION['email_address'])) {
@@ -7,7 +7,7 @@
         exit();
     }
 
-?>
+?> -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +15,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>USER DASHBOARD</title>
-    <link rel="stylesheet" href="Tenant_Dashboard/styletDashboard.css">
+    <link rel="stylesheet" href="management.css">
     <script src="../imported_links.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -23,7 +23,7 @@
     <div class="wrapper">
         <!-- Navigation Bar -->
         <nav class="navigator">
-            <a href="javascript:void(0);" onclick="loadPage('Tenant_Dashboard/tDashboard.html', this)" aria-label="Home"><i class='bx bx-home icon'></i></a>
+            <a href="javascript:void(0);" onclick="loadPage('Dashboard/manDash.html', this)" aria-label="Home"><i class='bx bx-home icon'></i></a>
             <a href="javascript:void(0);" onclick="loadPage('Tenant_Profile/tProfile.php', this)" aria-label="Profile"><i class='bx bx-user icon'></i></a>
             <a href="javascript:void(0);" onclick="loadPage('ttPayments.html', this)" aria-label="Payments"><i class='bx bx-wallet icon'></i></a>
             <a href="javascript:void(0);" onclick="loadPage('Tenant_Maintenance/maintenance.html', this)" aria-label="Maintenance"><i class='bx bx-wrench icon'></i></a>
@@ -51,9 +51,9 @@
                 </div>
 
                 <div class="right-side">
-                    <span>Hi! Welcome, <span class="username"><?php echo $_SESSION['fname']; ?></span></span>
+                    <span class="name">BHMS</span>
                     <div class="profile">
-                        <img src="image/DP.png" alt="Profile Image" />
+                        <img src="../IMAGES/GREEN_LOGO.png" alt="Profile Image" />
                     </div>
                 </div>
             </header>
@@ -83,7 +83,7 @@
         window.onload = function() {
             var firstNavLink = document.querySelector('.navigator a');
             if (firstNavLink) {
-                loadPage('Tenant_Dashboard/tDashboard.html', firstNavLink);
+                loadPage('Dashboard/manDash.html', firstNavLink);
             }
             updateDateTime();
             setInterval(updateDateTime, 1000); // Update every second
