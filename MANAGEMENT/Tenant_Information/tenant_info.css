@@ -1,0 +1,124 @@
+/* Universal Styles */
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* Body and Background */
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: #1a1a1a;
+    color: #f0f0f0;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.wrapper {
+    background-color: #2c2c2c;
+    margin-top: 20px;
+    margin-left: 100px; 
+    width: calc(100% - 120px); 
+    height: calc(100vh - 80px);
+    border-radius: 10px 10px 0 0; 
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.navigator {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    gap: 20px;
+    display: flex;
+}
+
+.navigator a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 10px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Table Styling */
+.table-container, .table-container2{
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px 10px 0 0; 
+}
+
+thead {
+    background-color: #383636;
+    color: #fff;
+    border-radius: 10px 10px 0 0; 
+    position: sticky; 
+    top: 0; 
+    z-index: 1; 
+}
+
+th, td {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #12a15f;
+}
+
+th {
+    font-weight: bold;
+}
+
+td {
+    border-radius: 0;
+}
+
+td button {
+    background-color: #12a15f;
+    color: white;
+    border: none;
+    border-radius: 3px; 
+    padding: 8px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s; 
+}
+
+td button:last-child {
+    background-color: red; 
+}
+
+button:hover {
+    background-color: white;
+    color: #12a15f;
+}
+
+.status {
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.navigator a.active {
+    text-decoration: underline;
+    color: #12a15f;
+}
+
+.active-tenant {
+    display: none;
+}
+
+.active-tenant img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; 
+    object-fit: cover; 
+    border: 2px solid #12a15f;
+}
