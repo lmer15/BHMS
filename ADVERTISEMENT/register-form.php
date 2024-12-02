@@ -1,10 +1,15 @@
+<?php
+// Get the room number from the URL
+$room_number = isset($_GET['room_number']) ? $_GET['room_number'] : '';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>REGISTRATION FORM</title>
-    <link rel="stylesheet" href="StyleForm.css">
+    <link rel="stylesheet" href="StyleForm.css?v=1.2">
     <script src="../imported_links.js" defer></script>
     <link href="https://unpkg.com/boxicons/css/boxicons.min.css" rel="stylesheet">
 </head>
@@ -36,55 +41,69 @@
                 <h1>BOOKING FORM</h1>
                 <form method="POST" action="back-end/register.php" id="RegForm">
                     <div class="logform">
+                        <!-- Room Number Display -->
                         <div class="input-container">
-                            <i class='bx bxs-home icon'></i>
-                            <select name="room_number" id="RoomNumber" required>
-                                <option value="">Select Room</option>
-                                <?php
-                                    include '../DATABASE/dbConnector.php'; // Includes $conn
-                                    include_once 'CLASSES/RoomFetcher';
-
-                                    // Pass the existing connection
-                                    $roomFetcher = new RoomFetcher($conn);
-
-                                    // Fetch available rooms
-                                    $availableRooms = $roomFetcher->getAvailableRooms();
-                                    if (!empty($availableRooms)) {
-                                        foreach ($availableRooms as $roomNumber) {
-                                            echo "<option value='" . htmlspecialchars($roomNumber) . "'>" . htmlspecialchars($roomNumber) . "</option>";
-                                        }
-                                    } else {
-                                        echo "<option value=''>No Available Rooms</option>";
-                                    }
-                                ?>
-                            </select>
+                            <i class='bx bxs-bed icon'></i>
+                            <input type="text" name="room_number" id="RoomNumber" value="<?php echo htmlspecialchars($room_number); ?>" readonly>
                         </div>
+
+                        <!-- Number of Occupants -->
+                        <div class="input-container">
+                            <i class='bx bxs-group icon'></i>
+                            <input type="number" name="num_occupants" id="NumOccupants" placeholder="Number of Occupants" required min="1">
+                        </div>
+
+                        <!-- Booking Date -->
+                        <div class="input-container">
+                            <i class='bx bxs-calendar icon'></i>
+                            <input type="date" name="booking_date" id="BookingDate" value="<?php echo date('Y-m-d'); ?>" readonly>
+                        </div>
+
+                        <!-- Moving-In Date -->
+                        <div class="input-container">
+                            <i class='bx bxs-calendar-check icon'></i>
+                            <input type="date" name="moving_in_date" id="MovingInDate" placeholder="Moving-in Date" required>
+                        </div>
+
+                        <!-- First Name -->
                         <div class="input-container">
                             <i class='bx bxs-user icon'></i>
                             <input type="text" name="fname" id="FName" placeholder="First Name" required>
                         </div>
+
+                        <!-- Last Name -->
                         <div class="input-container">
                             <i class='bx bxs-user icon'></i>
                             <input type="text" name="lname" id="LName" placeholder="Last Name" required>
                         </div>
+
+                        <!-- Contact Number -->
                         <div class="input-container">
                             <i class='bx bxs-phone icon'></i>
                             <input type="number" name="contact_number" id="ConNum" placeholder="Contact Number" required>
                         </div>
+
+                        <!-- Email -->
                         <div class="input-container">
                             <i class='bx bxs-envelope icon'></i>
                             <input type="email" name="email" id="Email" placeholder="Email Address" required>
                         </div>
+
+                        <!-- Username -->
                         <div class="input-container">
                             <i class='bx bxs-user icon'></i>
                             <input type="text" name="username" id="Username" placeholder="Username" required>
                         </div>
+
+                        <!-- Password -->
                         <div class="input-container">
                             <input type="password" name="password" id="Password" placeholder="Password" required>
                             <i class='bx bx-hide icon' id="togglePassword1"></i>
                         </div>
+
+                        <!-- Confirm Password -->
                         <div class="input-container">
-                            <input type="password" name="confirm_password" id="ConfirmPassword" placeholder="Confirm password" required>
+                            <input type="password" name="confirm_password" id="ConfirmPassword" placeholder="Confirm Password" required>
                             <i class='bx bx-hide icon' id="togglePassword2"></i>
                         </div>
 
@@ -94,24 +113,12 @@
                         <a href=""><button type="submit">REGISTER</button></a>
                     </div>
                 </form>
+
             </div>
         </section>
     </section>
 
     <script>
-        // Check for 'hideNavigator' flag in localStorage and hide the navigation if set
-        document.addEventListener("DOMContentLoaded", () => {
-            if (localStorage.getItem('hideNavigator') === 'true') {
-                const navigator = document.getElementsByClassName(".header");
-                if (navigator) {
-                    navigator.style.display = "none"; // Hide navigation
-                }
-
-                // Clear the localStorage flag after use (optional)
-                localStorage.removeItem('hideNavigator');
-            }
-        });
-        
         // JavaScript to toggle password visibility for both password fields
         const togglePassword1 = document.getElementById("togglePassword1");
         const passwordField1 = document.getElementById("Password");

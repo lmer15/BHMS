@@ -33,7 +33,7 @@ body {
 
 #content-iframe {
     width: 100vw; 
-    height: auto; 
+    height: 100vh; 
     border: none;
     margin: 0;
     padding: 0;
@@ -223,7 +223,7 @@ body {
     width: 450px;
     padding: 20px;
     border-radius: 20px;
-    min-height: 500px;
+    max-height: 750px;
     justify-content: space-between;
     box-sizing: border-box;
     overflow: hidden;
@@ -237,12 +237,22 @@ body {
     transition: transform 0.3s ease;
 }
 
+.room-image-wrapper{
+    width: 100%;
+    height: 100%;
+}
+
 .room-details {
     padding: 20px;
     color: white;
     text-align: left;
     box-sizing: border-box;
     margin-top: 10px;
+    max-height: 300px;
+    overflow-y: auto; 
+    word-wrap: break-word; 
+    overflow-wrap: break-word;  
+    white-space: normal;
 }
 
 .room-details p {
@@ -320,6 +330,25 @@ body {
     font-size: 2em;
     margin-bottom: 20px;
 }
+
+.room-details::-webkit-scrollbar {
+    width: 0; 
+    height: 0; 
+}
+
+.room-details:hover::-webkit-scrollbar {
+    width: 3px; 
+}
+
+.room-details::-webkit-scrollbar-thumb {
+    background: #0f8e47;
+    border-radius: 5px;
+}
+
+.room-details::-webkit-scrollbar-thumb:hover {
+    background: #0c6a37;
+}
+
 
 #aminities{
     padding: 20px;

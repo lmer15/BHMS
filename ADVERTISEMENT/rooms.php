@@ -41,7 +41,7 @@
             echo '</div>'; 
             
             echo '<div class="btn">';
-            echo '<a href="booking_form.php?room_number=' . urlencode($room['room_number']) . '"> <i class="bx bxs-bookmark-star"></i>BOOK</a>';
+            echo '<a href="register-form.php?room_number=' . urlencode($room['room_number']) . '"> <i class="bx bxs-bookmark-star"></i>BOOK</a>';
             echo '</div>';
             echo '</div>';
         }
