@@ -22,7 +22,7 @@
             <form method="POST" action="Back-End/login.php">
                 <div class="right-form">
                     <h1>LOG IN</h1>
-                    <p>Got a problem with logging in? <a href="../ADVERTISEMENT/register-form.html" id="clickHereLink">Click Here!</a></p>
+                    <p>Got a problem with logging in? <a href="../ADVERTISEMENT/register-form.php" id="clickHereLink">Click Here!</a></p>
 
                     <div class="login-container">
                         <div class="icon-container">

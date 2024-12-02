@@ -10,6 +10,8 @@ body {
     margin: 0;
     font-family: "Poppins", sans-serif;
     font-optical-sizing: auto;
+    overflow: hidden;
+    color: white;
 }
 
 /* CSS Reset */
@@ -25,16 +27,17 @@ body {
     min-width: 370px;
     margin: auto;
     height: auto;
-    overflow: hidden;
     background-color: black;
+    overflow: hidden;
 }
 
 #content-iframe {
     width: 100vw; 
-    height: 100vh; 
+    height: auto; 
     border: none;
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
 
 .header{
@@ -184,16 +187,14 @@ body {
     height: auto; 
 }
 
-/* ROOMS SECTION */
-
+/* Rooms Section */
 #room {
-    padding: 20px;
     display: flex;
     flex-wrap: wrap;
-    margin-top: 80px;
-    align-items: center;
     justify-content: center;
-    width: 100%;
+    padding: 20px;
+    max-height: calc(100vh - 90px);
+    overflow-y: auto;
 }
 
 .rhead {
@@ -209,10 +210,11 @@ body {
     font-size: 3rem;
     color: white;
     text-align: center;
-    width: 100%; 
+    width: 100%;
 }
 
 .each-room {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -222,23 +224,38 @@ body {
     padding: 20px;
     border-radius: 20px;
     min-height: 500px;
-    justify-content: space-between; 
+    justify-content: space-between;
     box-sizing: border-box;
-    align-self: stretch;
+    overflow: hidden;
 }
 
 .each-room img {
-    height: 50%;
-    max-width: 100%;
+    width: 100%;
     height: auto;
-    border-radius: 10px; 
-    margin-bottom: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
+
+.room-details {
+    padding: 20px;
+    color: white;
+    text-align: left;
+    box-sizing: border-box;
+    margin-top: 10px;
+}
+
+.room-details p {
+    margin: 10px 0;
+    color: white;
+    font-size: 1rem; 
+    line-height: 1.5;
 }
 
 .price {
-    color: white;
+    color: rgb(204, 51, 51);
     margin: 0;
-    color: #d12929;
+    color: white;
     font-size: 0.8rem;
 }
 
@@ -260,7 +277,6 @@ body {
 .filter-container label {
     margin-right: 10px;
     font-size: 1.2rem;
-    color: #333;
 }
 
 .filter-container select {
@@ -273,6 +289,7 @@ body {
 }
 
 .btn {
+    padding-top: 10px;
     display: flex;
     gap: 10px; 
 }
@@ -697,4 +714,19 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+select:focus {
+    border-color: #007BFF;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }

@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Function to set the active navigation link
     function setActiveLink(link) {
         const links = document.querySelectorAll('.navigator a');
-        links.forEach(link => link.classList.remove('active')); // Remove active class from all links
+        links.forEach(link => link.classList.remove('active'));
         link.classList.add('active'); // Add active class to the clicked link
     }
 

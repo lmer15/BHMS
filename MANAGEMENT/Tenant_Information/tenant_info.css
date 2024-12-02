@@ -19,15 +19,18 @@ body {
 }
 
 .wrapper {
-    background-color: #2c2c2c;
     margin-top: 20px;
-    margin-left: 100px; 
-    width: calc(100% - 120px); 
-    height: calc(100vh - 80px);
-    border-radius: 10px 10px 0 0; 
+    margin-bottom: 50px;
+    margin-left: 100px;
+    margin-right: 20px; 
     padding: 20px;
     display: flex;
     flex-direction: column;
+    background-color: #2c2c2c;
+    border-radius: 10px;
+    width: calc(100% - 120px); 
+    height: calc(100vh - 70px);
+    overflow: hidden;
 }
 
 .navigator {
@@ -49,7 +52,9 @@ body {
 /* Table Styling */
 .table-container, .table-container2{
     width: 100%;
-    overflow-x: auto;
+    max-height: 80vh; 
+    overflow-y: auto;
+    padding-bottom: 10px ;
 }
 
 table {
@@ -60,7 +65,7 @@ table {
 }
 
 thead {
-    background-color: #383636;
+    background-color: #1f1d1d;
     color: #fff;
     border-radius: 10px 10px 0 0; 
     position: sticky; 
@@ -71,7 +76,7 @@ thead {
 th, td {
     text-align: center;
     padding: 10px;
-    border: 1px solid #12a15f;
+    border-bottom: solid 1px #12a15f;
 }
 
 th {
@@ -80,6 +85,8 @@ th {
 
 td {
     border-radius: 0;
+    font-size: 1rem;
+    padding: 5px;
 }
 
 td button {
@@ -121,4 +128,6 @@ button:hover {
     border-radius: 50%; 
     object-fit: cover; 
     border: 2px solid #12a15f;
+    align-items: center;
+    justify-content: center;
 }

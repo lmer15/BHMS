@@ -1,0 +1,36 @@
+<?php
+// Get the room number from the URL
+$room_number = isset($_GET['room_number']) ? $_GET['room_number'] : '';
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Form</title>
+    <link rel="stylesheet" href="style.css?v=1.1">
+</head>
+<body>
+    <h1>Booking Form</h1>
+    <section id="booking-form">
+        <h2>Room Number: <?php echo htmlspecialchars($room_number); ?></h2>
+        <form action="submit_booking.php" method="POST">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <!-- Add any other fields you want to include -->
+
+            <input type="hidden" name="room_number" value="<?php echo htmlspecialchars($room_number); ?>">
+
+            <input type="submit" value="Submit Booking">
+        </form>
+    </section>
+</body>
+</html>

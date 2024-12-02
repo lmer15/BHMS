@@ -4,11 +4,8 @@ include_once '../../DATABASE/dbConnector.php';
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Check the connection
-if ($conn->connect_error) {
-    error_log("Connection failed: " . $conn->connect_error);
-    die("Connection failed: " . $conn->connect_error);
-}
+$errors = []; // To store error messages
+$successMessage = ''; // To store success message
 
 // Check if form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -22,16 +19,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $uniqueImageName = uniqid() . "_" . basename($imageFileName);
         $targetFilePath = $imageDir . $uniqueImageName;
 
-        // Check file size limit (5MB)
+        // Validate file size
         $maxFileSize = 5 * 1024 * 1024; // 5MB
         if ($_FILES['roomImage']['size'] > $maxFileSize) {
-            error_log("Error: File is too large.");
-            header("Location: ../addRoom.html?error=file_too_large");
-            exit();
+            $errors[] = "File is too large. Maximum size is 5MB.";
         }
 
-        // Try uploading the file
-        if (move_uploaded_file($imageTmpName, $targetFilePath)) {
+        // Validate file type
+        $allowedFileTypes = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif'];
+        if (!in_array($_FILES['roomImage']['type'], $allowedFileTypes)) {
+            $errors[] = "Invalid file type. Allowed types are JPG, PNG, GIF.";
+        }
+
+        // Try uploading the file if no errors
+        if (empty($errors) && move_uploaded_file($imageTmpName, $targetFilePath)) {
             // Collect form data
             $roomNumber = mysqli_real_escape_string($conn, $_POST['roomNumber']);
             $roomType = mysqli_real_escape_string($conn, $_POST['roomType']);
@@ -39,30 +40,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $roomAmenities = mysqli_real_escape_string($conn, $_POST['amenities']);
             $roomUtilities = mysqli_real_escape_string($conn, $_POST['utilities']);
             $rentalRates = (float)$_POST['rentalRates'];  // Ensure float
-            $paymentFrequency = mysqli_real_escape_string($conn, $_POST['paymentFrequency']);
             $depositRate = (float)$_POST['depositRate'];  // Ensure float
 
-            // SQL Insert query
-            $sql = "INSERT INTO room (room_image, room_number, room_type, room_size, room_aminities, room_utilities, rental_rates, room_payfre, room_deporate, room_status)
-                    VALUES ('$uniqueImageName', '$roomNumber', '$roomType', '$roomSize', '$roomAmenities', '$roomUtilities', '$rentalRates', '$paymentFrequency', '$depositRate', 'available')";
-
-            // Check if the query executes successfully
-            if ($conn->query($sql) === TRUE) {
-                header("Location: ../rooms.html");
-                exit();
-            } else {
-                error_log("SQL Error: " . $conn->error);
-                header("Location: ../addRoom.html?error=sql_error");
-                exit();
+            // Check if room number already exists
+            $checkSql = "SELECT COUNT(*) AS count FROM room WHERE room_number = '$roomNumber'";
+            $result = $conn->query($checkSql);
+            $row = $result->fetch_assoc();
+            
+            if ($row['count'] > 0) {
+                $errors[] = "Room number already exists. Please use a unique room number.";
             }
-        } else {
-            error_log("Error uploading image.");
-            header("Location: ../addRoom.html?error=image_upload_failed");
-            exit();
+
+            // Insert the data if no errors
+            if (empty($errors)) {
+                $sql = "INSERT INTO room (room_image, room_number, room_type, room_size, room_aminities, room_utilities, rental_rates, room_deporate, room_status)
+                        VALUES ('$uniqueImageName', '$roomNumber', '$roomType', '$roomSize', '$roomAmenities', '$roomUtilities', '$rentalRates', '$depositRate', 'available')";
+
+                if ($conn->query($sql) === TRUE) {
+                    $successMessage = "Room added successfully!";
+                    echo json_encode(['success' => $successMessage]);  // Return success response as JSON
+                    exit;  // End execution after success
+                } else {
+                    $errors[] = "SQL Error: " . $conn->error;
+                }
+            }
+        } else if (empty($errors)) {
+            $errors[] = "Error uploading image.";
         }
     } else {
-        error_log("No image uploaded or there was an error with the image.");
-        header("Location: ../addRoom.html?error=no_image");
+        $errors[] = "No image uploaded or there was an error with the image.";
+    }
+
+    // If errors exist, return them as JSON
+    if (!empty($errors)) {
+        echo json_encode(['errors' => $errors]);
+        exit;  // End execution after errors
     }
 }
 

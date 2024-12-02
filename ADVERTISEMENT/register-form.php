@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REGISTRATION FORM</title>
+    <link rel="stylesheet" href="StyleForm.css">
+    <script src="../imported_links.js" defer></script>
+    <link href="https://unpkg.com/boxicons/css/boxicons.min.css" rel="stylesheet">
+</head>
+<body>
+    <section id="wrapper">
+        <section id="forms-section">
+            <div class="left-picture">
+                <img src="images/BHMS LOGO.png" alt="LOGO">
+                <p>
+                    Welcome to BHMS, where comfort meets community! Whether you’re a student, 
+                    a professional, a corporate worker or simply in need of a cozy place to stay, 
+                    our boarding house offers a welcoming environment with all the amenities you need. 
+                    Enjoy spacious rooms, communal spaces, and a friendly atmosphere that feels like home. 
+                    Just a little types and click, and enjoy the environment of our boarding house.
+                </p>
+                <div class="cont">
+                    <span>You Can Connect Us Through Here!</span>
+                </div>
+                <div class="icons">
+                    <a href="#"><img src="images/facebook.png" alt="Facebook"></a>
+                    <a href="#"><img src="images/x.png" alt="X"></a>
+                    <a href="#"><img src="images/instagram.png" alt="Instagram"></a>
+                    <a href="#"><img src="images/pinterest.png" alt="Pinterest"></a>
+                    <a href="#"><img src="images/tiktok.png" alt="TikTok"></a>
+                </div>
+            </div>
+
+            <div class="login-section">
+                <h1>BOOKING FORM</h1>
+                <form method="POST" action="back-end/register.php" id="RegForm">
+                    <div class="logform">
+                        <div class="input-container">
+                            <i class='bx bxs-home icon'></i>
+                            <select name="room_number" id="RoomNumber" required>
+                                <option value="">Select Room</option>
+                                <?php
+                                    include '../DATABASE/dbConnector.php'; // Includes $conn
+                                    include_once 'CLASSES/RoomFetcher';
+
+                                    // Pass the existing connection
+                                    $roomFetcher = new RoomFetcher($conn);
+
+                                    // Fetch available rooms
+                                    $availableRooms = $roomFetcher->getAvailableRooms();
+                                    if (!empty($availableRooms)) {
+                                        foreach ($availableRooms as $roomNumber) {
+                                            echo "<option value='" . htmlspecialchars($roomNumber) . "'>" . htmlspecialchars($roomNumber) . "</option>";
+                                        }
+                                    } else {
+                                        echo "<option value=''>No Available Rooms</option>";
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="input-container">
+                            <i class='bx bxs-user icon'></i>
+                            <input type="text" name="fname" id="FName" placeholder="First Name" required>
+                        </div>
+                        <div class="input-container">
+                            <i class='bx bxs-user icon'></i>
+                            <input type="text" name="lname" id="LName" placeholder="Last Name" required>
+                        </div>
+                        <div class="input-container">
+                            <i class='bx bxs-phone icon'></i>
+                            <input type="number" name="contact_number" id="ConNum" placeholder="Contact Number" required>
+                        </div>
+                        <div class="input-container">
+                            <i class='bx bxs-envelope icon'></i>
+                            <input type="email" name="email" id="Email" placeholder="Email Address" required>
+                        </div>
+                        <div class="input-container">
+                            <i class='bx bxs-user icon'></i>
+                            <input type="text" name="username" id="Username" placeholder="Username" required>
+                        </div>
+                        <div class="input-container">
+                            <input type="password" name="password" id="Password" placeholder="Password" required>
+                            <i class='bx bx-hide icon' id="togglePassword1"></i>
+                        </div>
+                        <div class="input-container">
+                            <input type="password" name="confirm_password" id="ConfirmPassword" placeholder="Confirm password" required>
+                            <i class='bx bx-hide icon' id="togglePassword2"></i>
+                        </div>
+
+                        <p id="error-message" style="color: red; display: none; font-size: small; font-weight: 500;">Invalid username or password. Please try again.</p>
+                        <p id="signup-error-message" style="color: red; display: none; font-size: small; font-weight: 500;"></p>
+
+                        <a href=""><button type="submit">REGISTER</button></a>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </section>
+
+    <script>
+        // Check for 'hideNavigator' flag in localStorage and hide the navigation if set
+        document.addEventListener("DOMContentLoaded", () => {
+            if (localStorage.getItem('hideNavigator') === 'true') {
+                const navigator = document.getElementsByClassName(".header");
+                if (navigator) {
+                    navigator.style.display = "none"; // Hide navigation
+                }
+
+                // Clear the localStorage flag after use (optional)
+                localStorage.removeItem('hideNavigator');
+            }
+        });
+        
+        // JavaScript to toggle password visibility for both password fields
+        const togglePassword1 = document.getElementById("togglePassword1");
+        const passwordField1 = document.getElementById("Password");
+        const togglePassword2 = document.getElementById("togglePassword2");
+        const passwordField2 = document.getElementById("ConfirmPassword");
+
+        togglePassword1.addEventListener("click", function() {
+            if (passwordField1.type === "password") {
+                passwordField1.type = "text";
+                togglePassword1.classList.remove("bx-hide");
+                togglePassword1.classList.add("bx-show");
+            } else {
+                passwordField1.type = "password";
+                togglePassword1.classList.remove("bx-show");
+                togglePassword1.classList.add("bx-hide");
+            }
+        });
+
+        togglePassword2.addEventListener("click", function() {
+            if (passwordField2.type === "password") {
+                passwordField2.type = "text";
+                togglePassword2.classList.remove("bx-hide");
+                togglePassword2.classList.add("bx-show");
+            } else {
+                passwordField2.type = "password";
+                togglePassword2.classList.remove("bx-show");
+                togglePassword2.classList.add("bx-hide");
+            }
+        });
+    </script>
+
+    <script src="back-end/error-handler.js"></script>
+</body>
+</html>
