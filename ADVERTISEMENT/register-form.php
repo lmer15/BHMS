@@ -9,7 +9,7 @@ $room_number = isset($_GET['room_number']) ? $_GET['room_number'] : '';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>REGISTRATION FORM</title>
-    <link rel="stylesheet" href="StyleForm.css?v=1.2">
+    <link rel="stylesheet" href="StyleForm.css?v=1.4">
     <script src="../imported_links.js" defer></script>
     <link href="https://unpkg.com/boxicons/css/boxicons.min.css" rel="stylesheet">
 </head>

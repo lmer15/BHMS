@@ -1,0 +1,11 @@
+TENANT
+Email: sb-kr6ta34546100@personal.example.com
+Password: hz*WT6k?
+
+MANAGEMENT
+Email: sb-yfwdl34323841@business.example.com
+Password: QN!BV6sE
+
+APP NAME: BHMS
+Client ID: AYRLJm_vimKMK9UpA20P1lwhZX0w3g3RS2iyopGh_b8hw4-w26dHVjG0rkNZq-ignVqJajBNmerzTpXT
+Secret Key: EMnSxccdgVlDPUZTa7jLGd6SbdKALNjJ_UJtoJcYzaBQOmBD4Rw1oX7eZm1KHR-pSANjthBrjzUVZTA7
