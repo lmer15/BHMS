@@ -35,7 +35,7 @@
             echo '<p><strong>Room Size:</strong> ' . htmlspecialchars($roomDetails['room_size']) . ' m²</p>';
             echo '<p><strong>Amenities:</strong> ' . htmlspecialchars($roomDetails['room_aminities']) . '</p>';
             echo '<p><strong>Utilities:</strong> ' . htmlspecialchars($roomDetails['room_utilities']) . '</p>';
-            echo '<p><strong>Payment Frequency:</strong> ' . htmlspecialchars($roomDetails['room_payfre']) . '</p>';
+            echo '<p><strong>Payment Frequently:</strong> ' . htmlspecialchars($roomDetails['room_payfre']) . '</p>';
             echo '<p><strong>Deposit Rate:</strong> ₱' . number_format($roomDetails['room_deporate'], 2) . '</p>';
             echo '</div>'; 
             echo '</div>'; 

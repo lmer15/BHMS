@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Room</title>
     <script src="../../imported_links.js" defer></script>
-    <link rel="stylesheet" href="styleAdd.css?v=1.3">
+    <link rel="stylesheet" href="styleAdd.css?v=1.1">
 </head>
 <body>
     <div class="wrapper">
