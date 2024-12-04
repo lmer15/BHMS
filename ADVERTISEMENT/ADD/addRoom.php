@@ -27,7 +27,7 @@
                         <option value="" disabled selected>Select Room Type</option>
                         <option value="Single">Single</option>
                         <option value="Double">Double</option>
-                        <option value="Suite">Family</option>
+                        <option value="Family">Family</option>
                     </select>
 
                     <label for="roomSize">Room Size:</label>

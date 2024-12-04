@@ -28,7 +28,7 @@
             echo '<span class="room-number">' . htmlspecialchars($room['room_number']) . '</span>';
             echo '<span class="price">Price: ₱' . number_format($room['rental_rates'], 2) . ' monthly rental</span>';
             echo '<div class="room-image-wrapper">';
-            echo '<img src="ADD/uploads/' . htmlspecialchars($room['room_image']) . '" alt="' . htmlspecialchars($room['room_number']) . '" class="room-image">';
+            echo '<img src="ADD/uploads/' . htmlspecialchars($room['room_image']) . '" alt="' . htmlspecialchars($room['room_number']) . '" class="room-image" loading="lazy">';
             
             echo '<div class="room-details">';
             echo '<p><strong>Room Type:</strong> ' . htmlspecialchars($roomDetails['room_type']) . '</p>';
