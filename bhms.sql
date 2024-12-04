@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 03, 2024 at 02:12 AM
+-- Generation Time: Dec 04, 2024 at 01:15 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -48,13 +48,6 @@ CREATE TABLE `booking` (
   `booking_end_date` date NOT NULL,
   `status` enum('Booked','Completed','Cancelled') DEFAULT 'Booked'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `booking`
---
-
-INSERT INTO `booking` (`booking_id`, `tenant_id`, `room_id`, `booking_start_date`, `booking_end_date`, `status`) VALUES
-(21, 53, 19, '2024-12-03', '2024-12-03', 'Booked');
 
 -- --------------------------------------------------------
 
@@ -138,7 +131,7 @@ INSERT INTO `room` (`room_id`, `room_image`, `room_number`, `room_type`, `room_s
 (16, '674cf979ab697_RM5.jpg', 'RM205', 'Double', 25, 'TRHFGKGHOLTUG', 'FYIJKYHJIOLYUIOLIHO', 3454.00, 'Monthly', 5676.00, 'available'),
 (17, '674cfe664a85f_RM6.jpg', 'RM206', 'Single', 40, 't5tydtryftikygukhjlho', 'fykfiljfhdfm/lgh/', 5000.00, 'Monthly', 5666.00, 'available'),
 (18, '674d5b4aa5723_RM7.jpg', 'RM207', 'Single', 80, 'KJHSRGKHIOYRTUYHUYT7IKKYLTYDYTAJKDRHTNEK;EARGIMDKLFHMG;LDRPJIORHYJMF;TUKT;LKRYUK[', 'RTYOKHTRYHLR[PIORPYKRE[\'PTKOOWEUJWEOINHDFKLGMDYJM;DYHRTHF;KGEW', 5000.00, 'Monthly', 6000.00, 'available'),
-(19, '674dc241c887d_RM8.jpg', 'RM208', 'Suite', 25, 'euhsdffzxczxcvxcvxcvnmxcvnmdfcdjksdfjksdfjkdfjifioeuiowehioiotuweruwrejiohjklerjklgtrlgtr', 'rghleoprweriopweriorj;jklgrjklgtrjkltrjio;iujoptopttykkpk', 50000.00, 'Monthly', 700000.00, 'reserved');
+(19, '674dc241c887d_RM8.jpg', 'RM208', 'Suite', 25, 'euhsdffzxczxcvxcvxcvnmxcvnmdfcdjksdfjksdfjkdfjifioeuiowehioiotuweruwrejiohjklerjklgtrlgtr', 'rghleoprweriopweriorj;jklgrjklgtrjkltrjio;iujoptopttykkpk', 50000.00, 'Monthly', 700000.00, 'available');
 
 -- --------------------------------------------------------
 
@@ -160,13 +153,6 @@ CREATE TABLE `tenant_details` (
   `occupation` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `tenant_details`
---
-
-INSERT INTO `tenant_details` (`tc_id`, `id`, `fname`, `lname`, `gender`, `number_of_occupants`, `email_address`, `contact_number`, `religion`, `nationality`, `occupation`) VALUES
-(53, 22, '', '', '', 10, 'raponelmer15@gmail.com', '09107998581', '', '', '');
-
 -- --------------------------------------------------------
 
 --
@@ -180,13 +166,6 @@ CREATE TABLE `user_accounts` (
   `status` varchar(50) NOT NULL,
   `type` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `user_accounts`
---
-
-INSERT INTO `user_accounts` (`id`, `username`, `password`, `status`, `type`) VALUES
-(22, 'lmer16', '$2y$10$XKeevgp.pTXS85dBCsxz.u1P0bHIu/u1y1e5haayZFBXwX7GE/jg.', 'pending', 'tenant');
 
 --
 -- Indexes for dumped tables
@@ -262,7 +241,7 @@ ALTER TABLE `aminities_services`
 -- AUTO_INCREMENT for table `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `notifications`
@@ -292,13 +271,13 @@ ALTER TABLE `room`
 -- AUTO_INCREMENT for table `tenant_details`
 --
 ALTER TABLE `tenant_details`
-  MODIFY `tc_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `tc_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT for table `user_accounts`
 --
 ALTER TABLE `user_accounts`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- Constraints for dumped tables

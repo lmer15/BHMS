@@ -9,7 +9,7 @@ $room_number = isset($_GET['room_number']) ? $_GET['room_number'] : '';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>REGISTRATION FORM</title>
-    <link rel="stylesheet" href="StyleForm.css?v=1.4">
+    <link rel="stylesheet" href="StyleForm.css?v=1.1">
     <script src="../imported_links.js" defer></script>
     <link href="https://unpkg.com/boxicons/css/boxicons.min.css" rel="stylesheet">
 </head>
@@ -150,6 +150,44 @@ $room_number = isset($_GET['room_number']) ? $_GET['room_number'] : '';
         });
     </script>
 
-    <script src="back-end/error-handler.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('RegForm');
+            const signUpErrorMessage = document.getElementById('signup-error-message');
+            signUpErrorMessage.style.display = 'none';
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const formData = new FormData(form);
+
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'error') {
+                        signUpErrorMessage.textContent = data.message;
+                        signUpErrorMessage.style.display = 'block';
+                    } else if (data.status === 'success') {
+                        // Show success message
+                        alert(data.message);
+
+                        // Check if redirection is required and tenant_id is available
+                        if (data.redirect_after_ok && data.tenant_id) {
+                            // Redirect to receipt.php with tenant_id in the URL
+                            window.location.href = `back-end/receipt.php?tenant_id=${data.tenant_id}`;
+                        }
+                    }
+                })
+                .catch(() => {
+                    signUpErrorMessage.textContent = 'An unexpected error occurred. Please try again.';
+                    signUpErrorMessage.style.display = 'block';
+                });
+            });
+        });
+
+    </script>
 </body>
 </html>
