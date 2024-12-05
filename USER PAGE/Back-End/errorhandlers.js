@@ -22,13 +22,13 @@ document.addEventListener('DOMContentLoaded', () => {
             'invalid_email_format': 'Please enter a valid email address.',
             'email_not_found': 'Email not found. Please check the email address.',
             'missing_data': 'Please enter both username and password.',
-            'password_too_short' : 'Password too short. Password must be 8 character long',
-            'not_logged_in' : 'Wrong Password',
-            'error=update_failed' : 'Error while updating your password.',
+            'password_too_short' : 'Password too short. Password must be 8 characters long.',
+            'not_logged_in' : 'Wrong Password.',
+            'update_failed' : 'Error while updating your password.',
             'invalid_old_password' : 'Invalid old password.',
-            'missing_pass' : 'Enter correct data',
+            'missing_pass' : 'Enter correct data.',
             'password_length' : 'Password must be 8 characters long.',
-            'reservee_account' : 'Your account have not yet approved. Contact the management.',
+            'reservee_account' : 'Your account has not yet been approved. Verify your booking payment.',
             'email_or_username_not_found' : 'Username or Email Address not found.'
         };
 

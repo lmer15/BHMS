@@ -175,6 +175,12 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
+.roominfo{
+    height: 400px;
+    overflow: auto;
+
+}
+
 .descpro h1, .roominfo h1 {
     grid-column: span 2;
     font-size: 1.3rem;
@@ -192,6 +198,24 @@ body {
 .descpro span:nth-child(odd), .roominfo span:nth-child(odd) {
     color: #0e7c3d; 
     font-weight: bold;
+}
+
+.roominfo::-webkit-scrollbar {
+    width: 0; 
+    height: 0; 
+}
+
+.roominfo:hover::-webkit-scrollbar {
+    width: 2px; 
+}
+
+.roominfo::-webkit-scrollbar-thumb {
+    background: #0f8e47;
+    border-radius: 5px;
+}
+
+.roominfo::-webkit-scrollbar-thumb:hover {
+    background: #0c6a37;
 }
 
 /* Edit link styling */
@@ -338,6 +362,9 @@ body {
     height: 235px;
 }
 
+
+
+
 /* Room Details Section */
 .room-detail {
     display: flex;
@@ -371,6 +398,28 @@ body {
     border-radius: 10px;
     overflow: hidden;
     overflow-y: auto;
+}
+
+.amin::-webkit-scrollbar, 
+.uti::-webkit-scrollbar {
+    width: 0; 
+    height: 0; 
+}
+
+.amin:hover::-webkit-scrollbar,
+.uti:hover::-webkit-scrollbar {
+    width: 1px; 
+}
+
+.amin::-webkit-scrollbar-thumb,
+.uti::-webkit-scrollbar-thumb {
+    background: #0f8e47;
+    border-radius: 5px;
+}
+
+.amin::-webkit-scrollbar-thumb:hover,
+.uti::-webkit-scrollbar-thumb:hover {
+    background: #0c6a37;
 }
 
 /* For paragraphs inside .ami to wrap text */

@@ -63,7 +63,7 @@ if ($row = mysqli_fetch_assoc($result)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Receipt - BHMS</title>
-    <link rel="stylesheet" href="receipt.css?v=1.10">
+    <link rel="stylesheet" href="receipt.css?v=1.0">
     <script src="../../imported_links.js" defer></script>
 
     <script>

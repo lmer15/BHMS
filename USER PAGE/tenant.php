@@ -6,7 +6,6 @@
         header("Location: login.php");
         exit();
     }
-
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +28,9 @@
             <a href="javascript:void(0);" onclick="loadPage('Tenant_Maintenance/maintenance.html', this)" aria-label="Maintenance"><i class='bx bx-wrench icon'></i></a>
             <a href="javascript:void(0);" onclick="loadPage('Tenant_Notification/notif.html', this)" aria-label="Notifications">
                 <i class='bx bx-bell icon'></i>
-                <span class="notification-badge">5</span> <!-- Number of notifications -->
+                <span class="notification-badge">
+                    <?php echo isset($_SESSION['notification_count']) ? $_SESSION['notification_count'] : '0'; ?>
+                </span>
             </a>
             <a href="javascript:void(0);" onclick="loadPage('../ADVERTISEMENT/contact-us.html', this)" aria-label="About Us"><i class='bx bx-support icon'></i></a>
             <a href="Back-End/logout.php" aria-label="Logout"><i class='bx bx-log-out icon'></i></a>
@@ -51,9 +52,9 @@
                 </div>
 
                 <div class="right-side">
-                    <span>Hi! Welcome, <span class="username"><?php echo $_SESSION['fname']; ?></span></span>
+                    <span>Hi! Welcome, <span class="username"><?php echo $_SESSION['fname'] . ' ' . $_SESSION['lname']; ?></span></span>
                     <div class="profile">
-                        <img src="image/DP.png" alt="Profile Image" />
+                        <img src="<?php echo isset($_SESSION['profile_picture']) ? $_SESSION['profile_picture'] : 'image/DP.png'; ?>" alt="Profile Image" onerror="this.src='image/DP.png';" />
                     </div>
                 </div>
             </header>
@@ -67,18 +68,15 @@
     <script>
         // Function to load the target page into the iframe and update active link
         function loadPage(page, linkElement) {
-            // Change iframe source to the clicked page
             var iframe = document.getElementById("content-iframe");
             iframe.src = page;
-    
-            // Remove 'active' class from all links
+
             var navLinks = document.querySelectorAll('.navigator a');
             navLinks.forEach(link => link.classList.remove('active'));
-    
-            // Add 'active' class to the clicked link
+
             linkElement.classList.add('active');
         }
-    
+
         // Set the initial page and active link on window load
         window.onload = function() {
             var firstNavLink = document.querySelector('.navigator a');
@@ -86,7 +84,7 @@
                 loadPage('Tenant_Dashboard/tDashboard.html', firstNavLink);
             }
             updateDateTime();
-            setInterval(updateDateTime, 1000); // Update every second
+            setInterval(updateDateTime, 1000);
         };
 
         // Function to update date and time
@@ -106,4 +104,3 @@
 
 </body>
 </html>
-

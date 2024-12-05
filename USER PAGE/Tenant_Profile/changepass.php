@@ -3,7 +3,7 @@ session_start();
 require_once '../../DATABASE/dbConnector.php';  // Database connection
 
 // Check if the user is logged in
-if (!isset($_SESSION['tc_id'])) {
+if (!isset($_SESSION['id'])) {
     echo json_encode(['success' => false, 'message' => 'You must be logged in to change your password.']);
     exit();
 }
@@ -21,9 +21,9 @@ if (isset($_POST['oldPassword'], $_POST['newPassword'], $_POST['confirmPassword'
     }
 
     // Get the current hashed password from the database
-    $query = "SELECT password FROM tenant_accounts WHERE tc_id = ?";
+    $query = "SELECT password FROM user_accounts WHERE id = ?";
     $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, 'i', $_SESSION['tc_id']);
+    mysqli_stmt_bind_param($stmt, 'i', $_SESSION['id']);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
 
@@ -36,9 +36,9 @@ if (isset($_POST['oldPassword'], $_POST['newPassword'], $_POST['confirmPassword'
             $hashedNewPassword = password_hash($newPassword, PASSWORD_DEFAULT);
 
             // Update the password in the database
-            $updateQuery = "UPDATE tenant_accounts SET password = ? WHERE tc_id = ?";
+            $updateQuery = "UPDATE user_accounts SET password = ? WHERE id = ?";
             $updateStmt = mysqli_prepare($conn, $updateQuery);
-            mysqli_stmt_bind_param($updateStmt, 'si', $hashedNewPassword, $_SESSION['tc_id']);
+            mysqli_stmt_bind_param($updateStmt, 'si', $hashedNewPassword, $_SESSION['id']);
 
             if (mysqli_stmt_execute($updateStmt)) {
                 echo json_encode(['success' => true, 'message' => 'Your password has been updated successfully.']);
