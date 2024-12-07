@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 04, 2024 at 01:15 AM
+-- Generation Time: Dec 07, 2024 at 05:57 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -49,6 +49,31 @@ CREATE TABLE `booking` (
   `status` enum('Booked','Completed','Cancelled') DEFAULT 'Booked'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `booking`
+--
+
+INSERT INTO `booking` (`booking_id`, `tenant_id`, `room_id`, `booking_start_date`, `booking_end_date`, `status`) VALUES
+(91, 123, 27, '2024-12-05', '2024-12-11', 'Booked');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `maintenance_requests`
+--
+
+CREATE TABLE `maintenance_requests` (
+  `request_id` int(11) NOT NULL,
+  `tenant_id` int(11) DEFAULT NULL,
+  `room_id` varchar(20) DEFAULT NULL,
+  `issue_description` text DEFAULT NULL,
+  `request_date` datetime DEFAULT current_timestamp(),
+  `status` enum('Pending','In Progress','Completed','Cancelled') DEFAULT 'Pending',
+  `assigned_staff_id` int(11) DEFAULT NULL,
+  `resolution_notes` text DEFAULT NULL,
+  `completion_date` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 -- --------------------------------------------------------
 
 --
@@ -73,12 +98,27 @@ CREATE TABLE `notifications` (
 
 CREATE TABLE `payment_history` (
   `history_id` int(11) NOT NULL,
+  `payment_transactions` varchar(200) NOT NULL,
   `payment_id` int(11) NOT NULL,
   `tenant_id` int(11) NOT NULL,
   `payment_date` date NOT NULL,
   `payment_amount` decimal(10,2) NOT NULL,
   `balance` decimal(10,2) DEFAULT 0.00,
+  `payment_type` varchar(20) NOT NULL,
   `payment_status` enum('Paid','Pending') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `profile_picture`
+--
+
+CREATE TABLE `profile_picture` (
+  `pp_ID` int(20) NOT NULL,
+  `user_id` int(20) NOT NULL,
+  `image_path` varchar(200) NOT NULL,
+  `date_uploaded` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -124,14 +164,14 @@ CREATE TABLE `room` (
 --
 
 INSERT INTO `room` (`room_id`, `room_image`, `room_number`, `room_type`, `room_size`, `room_aminities`, `room_utilities`, `rental_rates`, `room_payfre`, `room_deporate`, `room_status`) VALUES
-(12, '674ce834f3a5d_RM2.jpg', 'RM201', 'Double', 25, 'fgdfthfyj', 'uigyuify', 6000.00, 'Monthly', 50000.00, 'available'),
-(13, '674ceace684df_RM3.jpg', 'RM202', 'Single', 25, 'RJKHSDGRBJKLNHJ', 'RGJGSO;ERIGJTHKLM', 25600.00, 'Monthly', 5000.00, 'available'),
-(14, '674ced6871dcb_RM4.jpg', 'RM203', 'Double', 25, 'RTHFTIT8YLO', '8TYOTUILHJLG', 3566.00, 'Monthly', 5676.00, 'available'),
-(15, '674cedfc5626a_RM5.jpg', 'RM204', 'Single', 25, 'RGDTRYGFUJFRYU', 'UIOIYHIYUILJIL', 5667.00, 'Monthly', 476577.00, 'available'),
-(16, '674cf979ab697_RM5.jpg', 'RM205', 'Double', 25, 'TRHFGKGHOLTUG', 'FYIJKYHJIOLYUIOLIHO', 3454.00, 'Monthly', 5676.00, 'available'),
-(17, '674cfe664a85f_RM6.jpg', 'RM206', 'Single', 40, 't5tydtryftikygukhjlho', 'fykfiljfhdfm/lgh/', 5000.00, 'Monthly', 5666.00, 'available'),
-(18, '674d5b4aa5723_RM7.jpg', 'RM207', 'Single', 80, 'KJHSRGKHIOYRTUYHUYT7IKKYLTYDYTAJKDRHTNEK;EARGIMDKLFHMG;LDRPJIORHYJMF;TUKT;LKRYUK[', 'RTYOKHTRYHLR[PIORPYKRE[\'PTKOOWEUJWEOINHDFKLGMDYJM;DYHRTHF;KGEW', 5000.00, 'Monthly', 6000.00, 'available'),
-(19, '674dc241c887d_RM8.jpg', 'RM208', 'Suite', 25, 'euhsdffzxczxcvxcvxcvnmxcvnmdfcdjksdfjksdfjkdfjifioeuiowehioiotuweruwrejiohjklerjklgtrlgtr', 'rghleoprweriopweriorj;jklgrjklgtrjkltrjio;iujoptopttykkpk', 50000.00, 'Monthly', 700000.00, 'available');
+(20, '674fd453c2c10_ROOM1.jpg', 'RM201', 'Family', 50, 'Bed, mattress, desk, chair, closet, shelving, mirror, curtains, trash bin, dining table, sofa, side table, wardrobe, wall hooks, bookshelf, bulletin board, rug, pillows, blanket.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 10000.00, 'Monthly', 12000.00, 'available'),
+(21, '674fd488a5ae4_ROOM2.jpg', 'RM202', 'Double', 25, 'Bed, mattress, desk, chair, closet, shelving, mirror, curtains, trash bin, dining table, sofa, side table, wardrobe, wall hooks, bookshelf, bulletin board, rug, pillows, blanket.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 5000.00, 'Monthly', 7000.00, 'available'),
+(22, '674fd4ca469ce_ROOM3.jfif', 'RM203', 'Double', 50, 'Bed, mattress, desk, chair, closet, shelving, mirror, curtains, trash bin, dining table, sofa, side table, wardrobe, wall hooks, bookshelf, bulletin board, rug, pillows, blanket.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 8000.00, 'Monthly', 10000.00, 'available'),
+(23, '674fd4f5837e4_ROOM4.jfif', 'RM204', 'Double', 60, 'Bed, mattress, desk, chair, closet, shelving, mirror, curtains, trash bin, dining table, sofa, side table, wardrobe, wall hooks, bookshelf, bulletin board, rug, pillows, blanket.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 8000.00, 'Monthly', 10000.00, 'available'),
+(24, '674fd54a351d8_ROOM5.jfif', 'RM205', 'Family', 70, 'Bed, mattress, desk, chair, closet, shelving, mirror, curtains, trash bin, dining table, sofa, side table, wardrobe, wall hooks, bookshelf, bulletin board, rug, pillows, blanket.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 12000.00, 'Monthly', 15000.00, 'available'),
+(25, '674fd5a376cd6_ROOM6.jfif', 'RM206', 'Single', 30, 'Bed, mattress, desk, chair, closet, shelving, mirror, curtains, trash bin, dining table, sofa, side table, wardrobe, wall hooks, bookshelf, bulletin board, rug, pillows, blanket.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 7000.00, 'Monthly', 7500.00, 'available'),
+(26, '674fd5e1e2774_ROOM7.jpg', 'RM207', 'Single', 20, 'Bed, mattress, desk, chair, closet, shelving, mirror, curtains, trash bin, dining table, sofa, side table, wardrobe, wall hooks, bookshelf, bulletin board, rug, pillows, blanket.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 5000.00, 'Monthly', 6000.00, 'available'),
+(27, '674fd60ff3e9b_ROOM8.jpg', 'RM208', 'Double', 40, 'Bed, mattress, desk, chair, closet, shelving, mirror, curtains, trash bin, dining table, sofa, side table, wardrobe, wall hooks, bookshelf, bulletin board, rug, pillows, blanket.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 7500.00, 'Monthly', 8300.00, 'reserved');
 
 -- --------------------------------------------------------
 
@@ -153,6 +193,13 @@ CREATE TABLE `tenant_details` (
   `occupation` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tenant_details`
+--
+
+INSERT INTO `tenant_details` (`tc_id`, `id`, `fname`, `lname`, `gender`, `number_of_occupants`, `email_address`, `contact_number`, `religion`, `nationality`, `occupation`) VALUES
+(123, 93, 'Elmer', 'Solitario Rapon Gwapo', 'male', 2, 'raponelmer15@gmail.com', '09068387448', 'Catholic', 'Filipino', 'Student');
+
 -- --------------------------------------------------------
 
 --
@@ -166,6 +213,13 @@ CREATE TABLE `user_accounts` (
   `status` varchar(50) NOT NULL,
   `type` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user_accounts`
+--
+
+INSERT INTO `user_accounts` (`id`, `username`, `password`, `status`, `type`) VALUES
+(93, 'lmer16', '$2y$10$DteacS/lwLkx7IIXg7fFFe2mcc7rrAIWZWjQMqFcpisG1qGd2xKe6', 'approved', 'tenant');
 
 --
 -- Indexes for dumped tables
@@ -186,6 +240,13 @@ ALTER TABLE `booking`
   ADD KEY `room_id` (`room_id`);
 
 --
+-- Indexes for table `maintenance_requests`
+--
+ALTER TABLE `maintenance_requests`
+  ADD PRIMARY KEY (`request_id`),
+  ADD KEY `tenant_id` (`tenant_id`);
+
+--
 -- Indexes for table `notifications`
 --
 ALTER TABLE `notifications`
@@ -199,6 +260,13 @@ ALTER TABLE `payment_history`
   ADD PRIMARY KEY (`history_id`),
   ADD KEY `payment_id` (`payment_id`),
   ADD KEY `tenant_id` (`tenant_id`);
+
+--
+-- Indexes for table `profile_picture`
+--
+ALTER TABLE `profile_picture`
+  ADD PRIMARY KEY (`pp_ID`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `rental_payments`
@@ -241,7 +309,13 @@ ALTER TABLE `aminities_services`
 -- AUTO_INCREMENT for table `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+
+--
+-- AUTO_INCREMENT for table `maintenance_requests`
+--
+ALTER TABLE `maintenance_requests`
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `notifications`
@@ -256,6 +330,12 @@ ALTER TABLE `payment_history`
   MODIFY `history_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `profile_picture`
+--
+ALTER TABLE `profile_picture`
+  MODIFY `pp_ID` int(20) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `rental_payments`
 --
 ALTER TABLE `rental_payments`
@@ -265,19 +345,19 @@ ALTER TABLE `rental_payments`
 -- AUTO_INCREMENT for table `room`
 --
 ALTER TABLE `room`
-  MODIFY `room_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `room_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `tenant_details`
 --
 ALTER TABLE `tenant_details`
-  MODIFY `tc_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+  MODIFY `tc_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
 
 --
 -- AUTO_INCREMENT for table `user_accounts`
 --
 ALTER TABLE `user_accounts`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 
 --
 -- Constraints for dumped tables
@@ -291,6 +371,12 @@ ALTER TABLE `booking`
   ADD CONSTRAINT `booking_ibfk_2` FOREIGN KEY (`room_id`) REFERENCES `room` (`room_id`);
 
 --
+-- Constraints for table `maintenance_requests`
+--
+ALTER TABLE `maintenance_requests`
+  ADD CONSTRAINT `maintenance_requests_ibfk_1` FOREIGN KEY (`tenant_id`) REFERENCES `tenant_details` (`tc_id`);
+
+--
 -- Constraints for table `notifications`
 --
 ALTER TABLE `notifications`
@@ -302,6 +388,12 @@ ALTER TABLE `notifications`
 ALTER TABLE `payment_history`
   ADD CONSTRAINT `payment_history_ibfk_1` FOREIGN KEY (`payment_id`) REFERENCES `rental_payments` (`payment_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `payment_history_ibfk_2` FOREIGN KEY (`tenant_id`) REFERENCES `tenant_details` (`tc_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `profile_picture`
+--
+ALTER TABLE `profile_picture`
+  ADD CONSTRAINT `profile_picture_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `tenant_details` (`tc_id`);
 
 --
 -- Constraints for table `rental_payments`

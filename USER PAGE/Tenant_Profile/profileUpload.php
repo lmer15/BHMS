@@ -2,54 +2,50 @@
 session_start();
 require_once '../../DATABASE/dbConnector.php'; 
 
-// Check if the user is logged in and the profile image is uploaded
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["profileImage"])) {
-    // Get the uploaded file details
     $file = $_FILES["profileImage"];
-    $uploadDir = "../Tenant Profile Image/"; // Directory where images will be uploaded
-    $userId = $_SESSION['user_id']; // Fetch user ID from the session
+    $uploadDir = "uploads/";
+    $userId = $_SESSION['tc_id'];
 
-    // Check if the file was uploaded successfully
     if ($file["error"] === UPLOAD_ERR_OK) {
-        // Check the file type
         $imageFileType = strtolower(pathinfo($file["name"], PATHINFO_EXTENSION));
         $validImageTypes = ["jpg", "jpeg", "png", "gif"];
 
-        // Validate if the file is an allowed image type
         if (in_array($imageFileType, $validImageTypes)) {
+            if ($file["size"] > 5 * 1024 * 1024) {
+                echo "Error: File size exceeds the limit of 5MB.";
+                exit;
+            }
+
             // Generate a unique name for the file to avoid conflicts
             $fileName = uniqid('profile_', true) . '.' . $imageFileType;
             $filePath = $uploadDir . $fileName;
 
-            // Check if the uploaded file is actually an image (extra security)
-            $mimeType = mime_content_type($file["tmp_name"]);
-            if (strpos($mimeType, "image") === false) {
-                echo "Uploaded file is not a valid image!";
-                exit;
-            }
-
-            // Attempt to move the uploaded file to the server
+            // Move the uploaded file to the server's file system
             if (move_uploaded_file($file["tmp_name"], $filePath)) {
-                // Prepare SQL query to update profile image in the database
-                $sql = "UPDATE tenant_profiles SET t_img = ?, t_dateUpload = NOW() WHERE tc_ID = ?";
+                // Insert the image path into the database
+                $sql = "INSERT INTO profile_pictures (user_id, image_path, date_uploaded) 
+                        VALUES (?, ?, NOW())";
                 $stmt = $conn->prepare($sql);
-                $stmt->bind_param("si", $filePath, $userId);
+                $stmt->bind_param("is", $userId, $filePath); 
 
-                // Execute the query and provide feedback
+                // Execute the query
                 if ($stmt->execute()) {
-                    echo "Profile picture updated successfully!";
+                    echo "Profile picture uploaded and saved to database successfully!";
                 } else {
-                    echo "Error updating profile picture: " . $stmt->error;
+                    echo "Error inserting image into database: " . $stmt->error;
                 }
             } else {
                 echo "Error moving uploaded file.";
             }
         } else {
-            echo "Only image files (JPG, JPEG, PNG, GIF) are allowed!";
+            echo "Error: Only image files (JPG, JPEG, PNG, GIF) are allowed!";
         }
     } else {
-        echo "Error: " . $file["error"];
+        echo "Error: There was an issue with the file upload. Error code: " . $file["error"];
     }
+} else {
+    echo "Error: No file was uploaded.";
 }
 
 // Close the database connection

@@ -18,6 +18,17 @@
     $tenant_result = mysqli_stmt_get_result($tenant_stmt);
     $tenant = mysqli_fetch_assoc($tenant_result);
     $number_of_occupants =$tenant['number_of_occupants'];
+    $fname = $tenant['fname'];
+    $lname = $tenant['lname'];
+    $gender = $tenant['gender'];
+    $email_address = $tenant['email_address'];
+    $contact_number = $tenant['contact_number'];
+    $religion = $tenant['religion'];
+    $nationality = $tenant['nationality'];
+    $occupation = $tenant['occupation'];
+    $fullname = $fname . ' ' . $lname;
+
+
 
     // Fetch user account details based on the tenant's user_id (foreign key) using MySQLi
     $user_query = "SELECT * FROM user_accounts WHERE id = ?";
@@ -58,7 +69,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TENANT PROFILE</title>
-    <link rel="stylesheet" href="tProfile.css?v=1.5">
+    <link rel="stylesheet" href="tProfile.css?v=1.10">
     <script src="../../imported_links.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -78,19 +89,27 @@
     </div>
 
     <div class="profile">
-
         <div class="detpro">
             <div class="dp">
                 <img id="profilePicture" src="../image/DP.png" alt="Profile Picture">
-                <i class="bx bx-plus icon" onclick="triggerFileInput()"></i>
+                <i class="bx bx-plus icon"></i>
+                <!-- The file input should be hidden and triggered by clicking the icon -->
+                <input type="file" id="profileImageInput" name="profileImage" accept="image/*" style="display: none;">
             </div>
 
-            <div class="name-user">
-                <span><?php echo htmlspecialchars($tenant['fname'] . ' ' . $tenant['lname']); ?></span>
-                <span>@<?php echo htmlspecialchars($user_account['username']); ?></span>
-            </div>
+            <!-- The upload form that will be triggered -->
+            <form id="uploadForm" action="profileUpload.php" method="POST" enctype="multipart/form-data" style="display:none;">
+                <input type="file" id="profileImageInput" name="profileImage" accept="image/*" />
+            </form>
 
-            <a href="" id="updateLink"><i class="fas fa-edit"></i></a>
+
+
+                <div class="name-user">
+                    <span><?php echo htmlspecialchars($tenant['fname'] . ' ' . $tenant['lname']); ?></span>
+                    <span>@<?php echo htmlspecialchars($user_account['username']); ?></span>
+                </div>
+
+                <a href="" id="updateLink"><i class="fas fa-edit"></i></a>
         </div>
 
         <div class="descpro">
@@ -249,57 +268,50 @@
 
         </div>
 
-        <!-- Update Personal Details Modal -->
-        <div id="updateModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Update Personal Information</h2>
-                <p class="error" id="error-message" style="color: red; display: none; font-size: small; font-weight: 500;">Invalid input. Please try again.</p>
-                <form id="updateForm" method="post" action="updateDetails.php">
-                    <!-- Using PHP to echo session values for pre-filling -->
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" value="<?php echo isset($_SESSION['fname']) && isset($_SESSION['lname']) ? $_SESSION['fname'] . ' ' . $_SESSION['lname'] : ''; ?>" >
+    <!-- Update Personal Details Modal -->
+    <div id="updateModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Update Personal Information</h2>
+            <p class="error" id="error-message" style="color: red; display: none; font-size: small; font-weight: 500;">Invalid input. Please try again.</p>
+            <form id="updateForm" method="post" action="updateDetails.php">
+                <!-- Using PHP to echo session values for pre-filling -->
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($fullname); ?>">
 
-                    <label for="gender">Gender:</label>
-                    <select id="gender" name="gender">
-                        <option value="male" <?php echo (isset($_SESSION['gender']) && $_SESSION['gender'] == 'male') ? 'selected' : ''; ?>>Male</option>
-                        <option value="female" <?php echo (isset($_SESSION['gender']) && $_SESSION['gender'] == 'female') ? 'selected' : ''; ?>>Female</option>
-                    </select>
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender">
+                    <option value="male" <?php echo ($gender === 'male') ? 'selected' : ''; ?>>Male</option>
+                    <option value="female" <?php echo ($gender === 'female') ? 'selected' : ''; ?>>Female</option>
+                </select>
 
-                    <label for="username">Username:</label>
-                    <input type="text" id="username" name="username" value="<?php echo isset($_SESSION['username']) ? $_SESSION['username'] : ''; ?>">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($user_account['username']); ?>">
 
-                    <label for="email">Email Address:</label>
-                    <input type="email" id="email" name="email" value="<?php echo isset($_SESSION['email_address']) ? $_SESSION['email_address'] : ''; ?>">
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($email_address); ?>">
 
-                    <label for="contact">Contact Number:</label>
-                    <input type="tel" id="contact" name="contact" value="<?php echo isset($_SESSION['contact_number']) ? $_SESSION['contact_number'] : ''; ?>">
+                <label for="contact">Contact Number:</label>
+                <input type="tel" id="contact" name="contact" value="<?php echo htmlspecialchars($contact_number); ?>">
 
-                    <label for="religion">Religion:</label>
-                    <input type="text" id="religion" name="religion" value="<?php echo isset($_SESSION['religion']) ? $_SESSION['religion'] : ''; ?>">
+                <label for="religion">Religion:</label>
+                <input type="text" id="religion" name="religion" value="<?php echo htmlspecialchars($religion); ?>">
 
-                    <label for="nationality">Nationality:</label>
-                    <input type="text" id="nationality" name="nationality" value="<?php echo isset($_SESSION['nationality']) ? $_SESSION['nationality'] : ''; ?>">
+                <label for="nationality">Nationality:</label>
+                <input type="text" id="nationality" name="nationality" value="<?php echo htmlspecialchars($nationality); ?>">
 
-                    <label for="occupation">Occupation:</label>
-                    <input type="text" id="occupation" name="occupation" value="<?php echo isset($_SESSION['occupation']) ? $_SESSION['occupation'] : ''; ?>">
+                <label for="occupation">Occupation:</label>
+                <input type="text" id="occupation" name="occupation" value="<?php echo htmlspecialchars($occupation); ?>">
 
-                    <button type="submit">Save Changes</button>
-                </form>
-            </div>
+                <button type="submit">Save Changes</button>
+            </form>
         </div>
+    </div>
 
-
-
-        <!-- Hidden Form for Image Upload -->
-        <form id="uploadForm" method="POST" action="upload.php" enctype="multipart/form-data" style="display: none;">
-            <input type="file" name="profileImage" id="profileImageInput" accept="image/*" onchange="previewImage(event)">
-            <input type="submit" value="Upload Profile Picture">
-        </form>
 
     </div>
 
-    <script src="tenantjs.js"></script>
+    <script src="tenantjs.js" defer></script>
     <script src="../Back-End/errorhandlers.js"></script>
     <script src="update.js"></script>
 

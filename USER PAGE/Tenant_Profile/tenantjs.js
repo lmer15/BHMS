@@ -19,7 +19,8 @@ document.addEventListener("DOMContentLoaded", function() {
     // Profile Picture Elements
     const profilePicture = document.querySelector(".dp img");
     const plusIcon = document.querySelector(".dp .icon");
-    const updateForm = document.getElementById("updateForm");
+    const profileImageInput = document.getElementById('profileImageInput');
+    const uploadForm = document.getElementById('uploadForm');
 
     // Handle opening of the update modal
     updateLink.addEventListener("click", function(event) {
@@ -86,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Trigger file input for profile picture upload
     plusIcon.addEventListener("click", function() {
-        document.getElementById('profileImageInput').click(); // Trigger file input click
+        profileImageInput.click(); // Trigger file input click
     });
 
     // Preview the selected image before uploading
@@ -95,19 +96,19 @@ document.addEventListener("DOMContentLoaded", function() {
         if (file) {
             const reader = new FileReader();
             reader.onload = function(e) {
-                document.getElementById('profilePicture').src = e.target.result; // Update image preview
+                profilePicture.src = e.target.result; // Update image preview
             };
             reader.readAsDataURL(file); // Read file as Data URL
         }
     }
 
     // Handle the profile picture upload form submission
-    document.getElementById('uploadForm').addEventListener('submit', function(event) {
+    uploadForm.addEventListener('submit', function(event) {
         event.preventDefault();  // Prevent normal form submission
 
         const formData = new FormData(this);
 
-        fetch('upload.php', {
+        fetch('profileUpload.php', {
             method: 'POST',
             body: formData,
         })
@@ -119,7 +120,7 @@ document.addEventListener("DOMContentLoaded", function() {
             console.error('Error:', error);
         });
     });
-});
 
-// Make sure to connect the file input's `onchange` to previewImage function
-document.getElementById('profileImageInput').addEventListener('change', previewImage);
+    // Connect the file input's `onchange` to previewImage function
+    profileImageInput.addEventListener('change', previewImage);
+});
