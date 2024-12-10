@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 07, 2024 at 05:57 AM
+-- Generation Time: Dec 11, 2024 at 12:01 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -55,6 +55,32 @@ CREATE TABLE `booking` (
 
 INSERT INTO `booking` (`booking_id`, `tenant_id`, `room_id`, `booking_start_date`, `booking_end_date`, `status`) VALUES
 (91, 123, 27, '2024-12-05', '2024-12-11', 'Booked');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `business_profiles`
+--
+
+CREATE TABLE `business_profiles` (
+  `id` int(11) NOT NULL,
+  `business_name` varchar(255) NOT NULL,
+  `business_acronym` varchar(255) NOT NULL,
+  `business_logo` varchar(255) NOT NULL,
+  `business_email` varchar(255) NOT NULL,
+  `business_phone` varchar(20) NOT NULL,
+  `business_address` text NOT NULL,
+  `business_description` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `business_profiles`
+--
+
+INSERT INTO `business_profiles` (`id`, `business_name`, `business_acronym`, `business_logo`, `business_email`, `business_phone`, `business_address`, `business_description`, `created_at`, `updated_at`) VALUES
+(4, 'Boarding House Managemnet System', 'BHMS', '../../uploads/business_logos/6758ab71d56e1_GREEN_LOGO.png', 'bhmsbusiness@gmail.com', '9068387448', '6QVV+VQF, Natalio B. Bacalso S National Hwy, Minglanilla, Cebu', 'BHMS is a trusted provider of safe and comfortable accommodations for individuals seeking a home away from home. Established in decade, we cater to students, professionals, and travelers by offering well-maintained facilities, convenient amenities, and a welcoming environment. Our mission is to provide affordable housing solutions while ensuring a sense of community and security for all our residents. Whether you\'re looking for short-term stays or long-term arrangements, BHMS is committed to making your stay a pleasant and hassle-free experience.', '2024-12-10 20:58:25', '2024-12-10 20:58:25');
 
 -- --------------------------------------------------------
 
@@ -198,7 +224,8 @@ CREATE TABLE `tenant_details` (
 --
 
 INSERT INTO `tenant_details` (`tc_id`, `id`, `fname`, `lname`, `gender`, `number_of_occupants`, `email_address`, `contact_number`, `religion`, `nationality`, `occupation`) VALUES
-(123, 93, 'Elmer', 'Solitario Rapon Gwapo', 'male', 2, 'raponelmer15@gmail.com', '09068387448', 'Catholic', 'Filipino', 'Student');
+(123, 93, 'Elmer', 'Solitario Rapon Gwapo', 'male', 2, 'raponelmer15@gmail.com', '09068387448', 'Catholic', 'Filipino', 'Student'),
+(124, 95, 'Elmer', 'Rapon', '', 0, 'raponelmer14@gmail.com', '09068387448', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -219,7 +246,8 @@ CREATE TABLE `user_accounts` (
 --
 
 INSERT INTO `user_accounts` (`id`, `username`, `password`, `status`, `type`) VALUES
-(93, 'lmer16', '$2y$10$DteacS/lwLkx7IIXg7fFFe2mcc7rrAIWZWjQMqFcpisG1qGd2xKe6', 'approved', 'tenant');
+(93, 'lmer16', '$2y$10$DteacS/lwLkx7IIXg7fFFe2mcc7rrAIWZWjQMqFcpisG1qGd2xKe6', 'approved', 'tenant'),
+(95, 'lmer14', '$2y$10$/0PMwvIFPHlcK1xCmXhn5OXrcgnUIGI/O7opE7K9odUhxTJrgJN/W', 'active', 'admin');
 
 --
 -- Indexes for dumped tables
@@ -238,6 +266,13 @@ ALTER TABLE `booking`
   ADD PRIMARY KEY (`booking_id`),
   ADD KEY `tenant_id` (`tenant_id`),
   ADD KEY `room_id` (`room_id`);
+
+--
+-- Indexes for table `business_profiles`
+--
+ALTER TABLE `business_profiles`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `business_email` (`business_email`);
 
 --
 -- Indexes for table `maintenance_requests`
@@ -312,6 +347,12 @@ ALTER TABLE `booking`
   MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 
 --
+-- AUTO_INCREMENT for table `business_profiles`
+--
+ALTER TABLE `business_profiles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `maintenance_requests`
 --
 ALTER TABLE `maintenance_requests`
@@ -351,13 +392,13 @@ ALTER TABLE `room`
 -- AUTO_INCREMENT for table `tenant_details`
 --
 ALTER TABLE `tenant_details`
-  MODIFY `tc_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
+  MODIFY `tc_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
 
 --
 -- AUTO_INCREMENT for table `user_accounts`
 --
 ALTER TABLE `user_accounts`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
 
 --
 -- Constraints for dumped tables
