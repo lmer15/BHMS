@@ -1,13 +1,12 @@
-<!-- <?php
-    session_start();
+<?php
+session_start();
 
-    if (!isset($_SESSION['tc_id']) || !isset($_SESSION['email_address'])) {
-        // If not logged in, redirect the user to the login page
-        header("Location: login.php");
-        exit();
-    }
+if (!isset($_SESSION['id']) || $_SESSION['type'] !== 'admin') {
+    header("Location: ../USER PAGE/login.php");
+    exit();
+}
+?>
 
-?> -->
 
 <!DOCTYPE html>
 <html lang="en">

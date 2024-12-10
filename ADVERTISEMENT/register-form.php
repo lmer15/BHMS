@@ -9,7 +9,7 @@ $room_number = isset($_GET['room_number']) ? $_GET['room_number'] : '';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>REGISTRATION FORM</title>
-    <link rel="stylesheet" href="StyleForm.css?v=1.1">
+    <link rel="stylesheet" href="StyleForm.css?v=1.0">
     <script src="../imported_links.js" defer></script>
     <link href="https://unpkg.com/boxicons/css/boxicons.min.css" rel="stylesheet">
 </head>
@@ -171,12 +171,8 @@ $room_number = isset($_GET['room_number']) ? $_GET['room_number'] : '';
                         signUpErrorMessage.textContent = data.message;
                         signUpErrorMessage.style.display = 'block';
                     } else if (data.status === 'success') {
-                        // Show success message
                         alert(data.message);
-
-                        // Check if redirection is required and tenant_id is available
                         if (data.redirect_after_ok && data.tenant_id) {
-                            // Redirect to receipt.php with tenant_id in the URL
                             window.location.href = `back-end/receipt.php?tenant_id=${data.tenant_id}`;
                         }
                     }

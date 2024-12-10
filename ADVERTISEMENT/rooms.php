@@ -1,3 +1,25 @@
+<?php
+session_start(); 
+include_once '../DATABASE/dbConnector.php';
+
+$isLoggedIn = isset($_SESSION['username']);
+$isAdmin = false; 
+
+if ($isLoggedIn) {
+    $username = $_SESSION['username'];
+    $query = "SELECT type FROM user_accounts WHERE username = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $stmt->bind_result($userType);
+    $stmt->fetch();
+    $stmt->close();
+
+    if ($userType === 'admin') {
+        $isAdmin = true;
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,15 +36,9 @@
     <section id="wrapper">
         <div id="room">
         <?php
-        // Include the RoomFetcher class
         include_once 'CLASESS/RoomFetcher.php';
-
-        // Fetch rooms using the fetchRooms method
         $rooms = RoomFetcher::fetchRooms();
-
-        // Loop through the rooms and display each room's details
         foreach ($rooms as $room) {
-            // Fetch additional details for each room
             $roomDetails = RoomFetcher::fetchRoomDetails($room['room_number']); 
             echo '<div class="each-room">';
             echo '<span class="room-number">' . htmlspecialchars($room['room_number']) . '</span>';
@@ -39,17 +55,26 @@
             echo '<p><strong>Deposit Rate:</strong> ₱' . number_format($roomDetails['room_deporate'], 2) . '</p>';
             echo '</div>'; 
             echo '</div>'; 
-            
+
             echo '<div class="btn">';
-            echo '<a href="register-form.php?room_number=' . urlencode($room['room_number']) . '"> <i class="bx bxs-bookmark-star"></i>BOOK</a>';
+            
+            if (!$isAdmin) {
+                echo '<a href="register-form.php?room_number=' . urlencode($room['room_number']) . '"> <i class="bx bxs-bookmark-star"></i>BOOK</a>';
+            }
+        
+            if ($isAdmin) {
+                echo '<a href="update_room.php?room_number=' . urlencode($room['room_number']) . '"> <i class="bx bxs-edit"></i>UPDATE</a>';
+            }
+            
             echo '</div>';
             echo '</div>';
         }
         ?>
-
-            <div class="add">
-                <a href="ADD/addRoom.php"><i class='bx bx-plus icon-add'></i></a>
-            </div>
+            <?php if ($isAdmin): ?>
+                <div class="add">
+                    <a href="ADD/addRoom.php"><i class='bx bx-plus icon-add'></i></a>
+                </div>
+            <?php endif; ?>
         </div>
     </section>
 </body>

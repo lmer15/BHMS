@@ -14,6 +14,7 @@ body {
     color: white;
 }
 
+
 /* CSS Reset */
 * {
     margin: 0;
@@ -26,9 +27,31 @@ body {
     max-width: 1920px;
     min-width: 370px;
     margin: auto;
-    height: auto;
+    height: 100vh;
     background-color: black;
-    overflow: hidden;
+    overflow: auto;
+}
+
+#wrapper::-webkit-scrollbar,
+#room::-webkit-scrollbar{
+    width: 0; 
+    height: 0; 
+}
+
+#wrapper:hover::-webkit-scrollbar,
+#room:hover::-webkit-scrollbar {
+    width: 1px; 
+}
+
+#wrapper::-webkit-scrollbar-thumb,
+#room::-webkit-scrollbar-thumb{
+    background: #0f8e47;
+    border-radius: 5px;
+}
+
+#wrapper::-webkit-scrollbar-thumb:hover,
+#room::-webkit-scrollbar-thumb:hover{
+    background: #0c6a37;
 }
 
 #content-iframe {
@@ -354,10 +377,11 @@ body {
     padding: 20px;
     display: flex;
     flex-wrap: wrap;
-    margin-top: 80px;
     align-items: center;
     justify-content: center;
     width: 100%;
+    height: auto;
+    padding-bottom: 100px;
 }
 
 .aminities-info{
@@ -403,7 +427,7 @@ body {
     padding: 20px;
     display: flex;
     flex-wrap: wrap;
-    margin-top: 80px;
+    margin-top: 50px;
     align-items: center;
     justify-content: center;
     width: 100%;
@@ -537,6 +561,8 @@ body {
 #contact {
     margin: 100px 0;
     background-color: black;
+    height: 100vh;
+    overflow-x: auto;
 }
 
 .contact-container{
@@ -546,7 +572,6 @@ body {
     border-top: 2px solid black; 
     display: block;
     margin: 0 auto;
-
 }
   
 
@@ -712,9 +737,18 @@ body {
 }
 
 .add-aminities {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    border: solid 2px #0f8e47;
     width: 400px;
+    padding: 20px;
+    border-radius: 20px;
     min-height: 450px;
-    margin-top: 40px;
+    justify-content: center; 
+    box-sizing: border-box;
+    align-self: stretch;
 }
 
 .add:hover, 
