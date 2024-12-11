@@ -1,5 +1,4 @@
 <?php
-// Get the room number from the URL
 $room_number = isset($_GET['room_number']) ? $_GET['room_number'] : '';
 ?>
 

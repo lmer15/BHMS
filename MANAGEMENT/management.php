@@ -30,8 +30,8 @@ if (!isset($_SESSION['id']) || $_SESSION['type'] !== 'admin') {
                 <i class='bx bx-bell icon'></i>
                 <span class="notification-badge">5</span> <!-- Number of notifications -->
             </a>
-            <a href="../ADVERTISEMENT/home.html" ><i class="bx bxs-briefcase icon"></i></a>
-            <a href="Back-End/logout.php" aria-label="Logout"><i class='bx bx-log-out icon'></i></a>
+            <a href="../ADVERTISEMENT/home.php" ><i class="bx bxs-briefcase icon"></i></a>
+            <a href="../USER PAGE/Back-End/logout.php" aria-label="Logout"><i class='bx bx-log-out icon'></i></a>
         </nav>        
 
         <!-- Main Content Section -->

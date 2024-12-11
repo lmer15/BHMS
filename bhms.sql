@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 11, 2024 at 12:01 AM
+-- Generation Time: Dec 11, 2024 at 01:32 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -33,6 +33,20 @@ CREATE TABLE `aminities_services` (
   `amiser_desc` text NOT NULL,
   `amiser_status` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `aminities_services`
+--
+
+INSERT INTO `aminities_services` (`amiser_id`, `amiser_title`, `amiser_desc`, `amiser_status`) VALUES
+(2, '24/7 Security', 'Round-the-clock security services to ensure the safety and peace of mind of all residents.', 'aminities'),
+(3, 'Common Kitchen', ' A fully equipped kitchen for residents to prepare their own meals with shared cooking facilities.', 'aminities'),
+(4, 'Hot and Cold Water Supply', 'Continuous supply of hot and cold water to all rooms and common areas for comfort and convenience.', 'aminities'),
+(5, 'Air Conditioning', 'Air-conditioned rooms to provide a comfortable living environment during hot weather.', 'aminities'),
+(6, 'Study Area', 'A quiet, well-lit area designed for students or professionals to focus on their studies or work.', 'aminities'),
+(7, 'Trash Disposal', 'Regular waste collection services to maintain cleanliness and hygiene in the building.', 'aminities'),
+(8, 'Room Cleaning Services', ' Regular cleaning of rooms and common areas to ensure a tidy and comfortable living space.', 'aminities'),
+(9, 'Fire Safety Equipment', 'Fire extinguishers, alarms, and other safety measures to ensure the safety of all residents in case of emergency.', 'aminities');
 
 -- --------------------------------------------------------
 
@@ -191,13 +205,13 @@ CREATE TABLE `room` (
 
 INSERT INTO `room` (`room_id`, `room_image`, `room_number`, `room_type`, `room_size`, `room_aminities`, `room_utilities`, `rental_rates`, `room_payfre`, `room_deporate`, `room_status`) VALUES
 (20, '674fd453c2c10_ROOM1.jpg', 'RM201', 'Family', 50, 'Bed, mattress, desk, chair, closet, shelving, mirror, curtains, trash bin, dining table, sofa, side table, wardrobe, wall hooks, bookshelf, bulletin board, rug, pillows, blanket.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 10000.00, 'Monthly', 12000.00, 'available'),
-(21, '674fd488a5ae4_ROOM2.jpg', 'RM202', 'Double', 25, 'Bed, mattress, desk, chair, closet, shelving, mirror, curtains, trash bin, dining table, sofa, side table, wardrobe, wall hooks, bookshelf, bulletin board, rug, pillows, blanket.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 5000.00, 'Monthly', 7000.00, 'available'),
-(22, '674fd4ca469ce_ROOM3.jfif', 'RM203', 'Double', 50, 'Bed, mattress, desk, chair, closet, shelving, mirror, curtains, trash bin, dining table, sofa, side table, wardrobe, wall hooks, bookshelf, bulletin board, rug, pillows, blanket.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 8000.00, 'Monthly', 10000.00, 'available'),
-(23, '674fd4f5837e4_ROOM4.jfif', 'RM204', 'Double', 60, 'Bed, mattress, desk, chair, closet, shelving, mirror, curtains, trash bin, dining table, sofa, side table, wardrobe, wall hooks, bookshelf, bulletin board, rug, pillows, blanket.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 8000.00, 'Monthly', 10000.00, 'available'),
-(24, '674fd54a351d8_ROOM5.jfif', 'RM205', 'Family', 70, 'Bed, mattress, desk, chair, closet, shelving, mirror, curtains, trash bin, dining table, sofa, side table, wardrobe, wall hooks, bookshelf, bulletin board, rug, pillows, blanket.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 12000.00, 'Monthly', 15000.00, 'available'),
-(25, '674fd5a376cd6_ROOM6.jfif', 'RM206', 'Single', 30, 'Bed, mattress, desk, chair, closet, shelving, mirror, curtains, trash bin, dining table, sofa, side table, wardrobe, wall hooks, bookshelf, bulletin board, rug, pillows, blanket.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 7000.00, 'Monthly', 7500.00, 'available'),
-(26, '674fd5e1e2774_ROOM7.jpg', 'RM207', 'Single', 20, 'Bed, mattress, desk, chair, closet, shelving, mirror, curtains, trash bin, dining table, sofa, side table, wardrobe, wall hooks, bookshelf, bulletin board, rug, pillows, blanket.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 5000.00, 'Monthly', 6000.00, 'available'),
-(27, '674fd60ff3e9b_ROOM8.jpg', 'RM208', 'Double', 40, 'Bed, mattress, desk, chair, closet, shelving, mirror, curtains, trash bin, dining table, sofa, side table, wardrobe, wall hooks, bookshelf, bulletin board, rug, pillows, blanket.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 7500.00, 'Monthly', 8300.00, 'reserved');
+(27, '674fd60ff3e9b_ROOM8.jpg', 'RM208', 'Double', 40, 'Bed, mattress, desk, chair, closet, shelving, mirror, curtains, trash bin, dining table, sofa, side table, wardrobe, wall hooks, bookshelf, bulletin board, rug, pillows, blanket.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 7500.00, 'Monthly', 8300.00, 'reserved'),
+(31, '6759519ccf008_ROOM2.jpg', 'RM202', 'Single', 25, 'Bed, mattress, desk, chair, closet, shelving, mirror, curtains, trash bin, dining table, sofa, side table, wardrobe, wall hooks, bookshelf, bulletin board, rug, pillows, blanket.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 8000.00, 'Monthly', 10000.00, 'available'),
+(32, '675951e548e5f_ROOM3.jfif', 'RM203', 'Double', 60, 'Bed, mattress, desk, chair, closet, shelving, mirror, curtains, trash bin, dining table, sofa, side table, wardrobe, wall hooks, bookshelf, bulletin board, rug, pillows, blanket.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 12000.00, 'Monthly', 13500.00, 'available'),
+(33, '675952086def5_ROOM4.jfif', 'RM204', 'Double', 60, 'Bed, mattress, desk, chair, closet, shelving, mirror, curtains, trash bin, dining table, sofa, side table, wardrobe, wall hooks, bookshelf, bulletin board, rug, pillows, blanket.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 8000.00, 'Monthly', 10000.00, 'available'),
+(34, '6759524492c1d_ROOM5.jfif', 'RM205', 'Family', 60, 'Bed, mattress, desk, chair, closet, shelving, mirror, curtains, trash bin, dining table, sofa, side table, wardrobe, wall hooks, bookshelf, bulletin board, rug, pillows, blanket.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 7000.00, 'Monthly', 8050.00, 'available'),
+(35, '6759527057186_ROOM6.jfif', 'RM206', 'Double', 49, 'Bed, mattress, desk, chair, closet, shelving, mirror, curtains, trash bin, dining table, sofa, side table, wardrobe, wall hooks, bookshelf, bulletin board, rug, pillows, blanket.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 50000.00, 'Monthly', 6000.00, 'available'),
+(36, '675952cb2a16b_ROOM9.jpg', 'RM207', 'Family', 90, 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 15000.00, 'Monthly', 18000.00, 'available');
 
 -- --------------------------------------------------------
 
@@ -338,7 +352,7 @@ ALTER TABLE `user_accounts`
 -- AUTO_INCREMENT for table `aminities_services`
 --
 ALTER TABLE `aminities_services`
-  MODIFY `amiser_id` int(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `amiser_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `booking`
@@ -386,7 +400,7 @@ ALTER TABLE `rental_payments`
 -- AUTO_INCREMENT for table `room`
 --
 ALTER TABLE `room`
-  MODIFY `room_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `room_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `tenant_details`

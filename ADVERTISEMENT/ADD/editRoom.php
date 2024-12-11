@@ -1,3 +1,7 @@
+<?php
+$room_number = isset($_GET['room_number']) ? $_GET['room_number'] : '';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,17 +14,17 @@
 <body>
     <div class="wrapper">
         <div class="room-details-form">
-            <h2>Add New Room</h2>
+            <h2>Edit Room Details</h2>
         
             <div class="modal-form">
-                <form id="addRoomForm" action="add-room.php" method="POST" enctype="multipart/form-data">
+                <form id="addRoomForm" action="edit-room.php" method="POST" enctype="multipart/form-data">
                     <!-- Form Fields -->
                     <label for="roomImage">Room Image:</label>
                     <input type="file" id="roomImage" name="roomImage" accept="image/*" required>
                     <div id="imageError" style="color: red; display: none;"></div>
                     
                     <label for="roomNumber">Room Number:</label>
-                    <input type="text" id="roomNumberInput" name="roomNumber" required>
+                    <input type="text" id="roomNumberInput" name="roomNumber" value= "<?php echo htmlspecialchars($room_number); ?>" readonly>
 
                     <label for="roomType">Room Type:</label>
                     <select id="roomTypeInput" name="roomType" required>
@@ -48,7 +52,7 @@
                     <!-- Display error messages -->
                     <div id="signup-error-message" class="error" style="color: red; font-size: small; font-weight: 300; display: none;"></div>
 
-                    <button type="submit">Add Room</button>
+                    <button type="submit">Submit Edit</button>
                 </form>
             </div>
         </div>
@@ -128,7 +132,7 @@
             }
 
             const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'add-room.php', true);  
+            xhr.open('POST', 'edit-room.php', true);  
 
             xhr.onload = function () {
                 const response = JSON.parse(xhr.responseText); 

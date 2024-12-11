@@ -63,7 +63,8 @@ if ($isLoggedIn) {
             }
         
             if ($isAdmin) {
-                echo '<a href="update_room.php?room_number=' . urlencode($room['room_number']) . '"> <i class="bx bxs-edit"></i>UPDATE</a>';
+                echo '<a href="ADD/editRoom.php?room_number=' . urlencode($room['room_number']) . '"> <i class="bx bxs-edit"></i>UPDATE</a>';
+                echo '<a href="ADD/delete-room.php?room_number=' . urlencode($room['room_number']) . '"> <i class="bx bxs-trash"></i>DELETE</a>';
             }
             
             echo '</div>';
