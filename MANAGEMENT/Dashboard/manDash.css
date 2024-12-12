@@ -48,13 +48,12 @@ html, body {
 .room {
     width: 30%;
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
 }
 
 .room-cat {
-    width: 230px;
+    width: 200px;
     height: 130px;
     margin: 5px;
     text-align: center;

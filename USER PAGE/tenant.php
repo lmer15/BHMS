@@ -23,15 +23,15 @@
         <nav class="navigator">
             <a href="javascript:void(0);" onclick="loadPage('Tenant_Dashboard/tDashboard.html', this)" aria-label="Home"><i class='bx bx-home icon'></i></a>
             <a href="javascript:void(0);" onclick="loadPage('Tenant_Profile/tProfile.php', this)" aria-label="Profile"><i class='bx bx-user icon'></i></a>
-            <a href="javascript:void(0);" onclick="loadPage('ttPayments.html', this)" aria-label="Payments"><i class='bx bx-wallet icon'></i></a>
-            <a href="javascript:void(0);" onclick="loadPage('Tenant_Maintenance/maintenance.html', this)" aria-label="Maintenance"><i class='bx bx-wrench icon'></i></a>
+            <a href="javascript:void(0);" onclick="loadPage('Payment/pay.html', this)" aria-label="Payments"><i class='bx bx-wallet icon'></i></a>
+            <a href="javascript:void(0);" onclick="loadPage('Tenant_Maintenance/maintenance.php', this)" aria-label="Maintenance"><i class='bx bx-wrench icon'></i></a>
             <a href="javascript:void(0);" onclick="loadPage('Tenant_Notification/notif.html', this)" aria-label="Notifications">
                 <i class='bx bx-bell icon'></i>
                 <span class="notification-badge">
                     <?php echo isset($_SESSION['notification_count']) ? $_SESSION['notification_count'] : '0'; ?>
                 </span>
             </a>
-            <a href="javascript:void(0);" onclick="loadPage('../ADVERTISEMENT/contact-us.html', this)" aria-label="About Us"><i class='bx bx-support icon'></i></a>
+            <a href="javascript:void(0);" onclick="loadPage('../ADVERTISEMENT/contact-us.php', this)" aria-label="About Us"><i class='bx bx-support icon'></i></a>
             <a href="Back-End/logout.php" aria-label="Logout"><i class='bx bx-log-out icon'></i></a>
         </nav>        
 

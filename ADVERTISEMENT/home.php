@@ -39,9 +39,9 @@ $logoPath = file_exists('../MANAGEMENT/uploads/' . $logo) ? '../MANAGEMENT/uploa
                 <a href="javascript:void(0);" onclick="loadPage('index.php', this)" aria-label="Home">HOME</a>
                 <a href="javascript:void(0);" onclick="loadPage('rooms.php', this)" aria-label="Rooms">ROOMS</a>
                 <a href="javascript:void(0);" onclick="loadPage('aminities.php', this)" aria-label="Aminities">AMINITIES</a>
-                <a href="javascript:void(0);" onclick="loadPage('services.html', this)" aria-label="Services">SERVICES</a>
-                <a href="javascript:void(0);" onclick="loadPage('about-us.html', this)" aria-label="About Us">ABOUT US</a>
-                <a href="javascript:void(0);" onclick="loadPage('contact-us.html', this)" aria-label="Contact Us">CONTACT US</a>
+                <a href="javascript:void(0);" onclick="loadPage('services.php', this)" aria-label="Services">SERVICES</a>
+                <a href="javascript:void(0);" onclick="loadPage('about-us.php', this)" aria-label="About Us">ABOUT US</a>
+                <a href="javascript:void(0);" onclick="loadPage('contact-us.php', this)" aria-label="Contact Us">CONTACT US</a>
             </div>
         </div>
         <div class="body">

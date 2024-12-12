@@ -69,7 +69,7 @@ if ($row = mysqli_fetch_assoc($result)) {
     <script>
         function redirectToHome() {
             const iframe = window.parent.document.getElementById('content-iframe');
-                window.location.href = '../index.html';
+                window.location.href = '../index.php';
         }
 
         function confirmCancellation(tenant_id) {

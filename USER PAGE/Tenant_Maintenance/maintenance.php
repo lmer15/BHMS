@@ -6,7 +6,7 @@
     <title>Maintenance</title>
     <script src="../../imported_links.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="maintenance.css?v=1.10">
+    <link rel="stylesheet" href="maintenance.css?v=1.0">
 </head>
 <body>
     <div class="wrapper">
@@ -87,23 +87,28 @@
     
             function populateTable(filterStatus = '') {
                 const tableBody = document.getElementById('maintenance-table-body');
-                tableBody.innerHTML = '';
+                tableBody.innerHTML = '';  // Clear the table before repopulating
 
                 let filteredData = maintenanceData;
                 if (filterStatus) {
                     filteredData = maintenanceData.filter(item => item.status === filterStatus);
                 }
 
+                // Determine if the "Pending" status is active
+                const isPendingActive = filterStatus === 'Pending' || filterStatus === '';
+
                 filteredData.forEach(item => {
                     const row = document.createElement('div');
                     row.classList.add('maintenance-table-row');
+                    row.setAttribute('data-id', item.id);  // Set the item ID as a data attribute for reference
 
                     const deleteIcon = document.createElement('i');
-                    deleteIcon.classList.add('bx', 'bx-trash', 'delete-icon'); 
-  
+                    deleteIcon.classList.add('bx', 'bx-trash', 'delete-icon'); // Add classes for styling
+
                     deleteIcon.addEventListener('click', function() {
                         if (confirm('Are you sure you want to delete this maintenance request?')) {
-                            deleteMaintenanceRequest(item.id, row);
+                            const itemId = row.getAttribute('data-id'); // Get ID from the data-id attribute
+                            deleteMaintenanceRequest(itemId, row);  // Call function to delete the item
                         }
                     });
 
@@ -113,19 +118,23 @@
                         <div class="maintenance-item">${item.details}</div>
                         <div class="maintenance-item">${item.status}</div>
                     `;
-
-                    // Add the delete icon to the last column of the row
-                    if (item.status === 'Pending') {
+                    
+                    if (isPendingActive) {
                         const buttonCell = document.createElement('div');
                         buttonCell.classList.add('maintenance-item', 'button-cell');
-                        buttonCell.appendChild(deleteIcon);  // Append the trash icon
+                        buttonCell.appendChild(deleteIcon);
                         row.appendChild(buttonCell);
                     }
-
                     tableBody.appendChild(row);
                 });
+                const actionColumnHeader = document.querySelector('.maintenance-table-header .maintenance-header-item:nth-child(5)');
+                if (actionColumnHeader) {
+                    actionColumnHeader.style.display = isPendingActive ? 'block' : 'none';
+                }
             }
 
+
+            // Function to delete the maintenance request from the database and update the UI
             function deleteMaintenanceRequest(itemId, row) {
                 fetch('delete_maintenance.php', {
                     method: 'POST',
@@ -137,9 +146,9 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        alert(data.message);
-                        row.remove();  
-                        updateNavCounts(); 
+                        alert(data.message); // Show success message
+                        row.remove();  // Remove the row from the UI
+                        updateNavCounts(); // Update the status counts
                     } else {
                         alert(`Error: ${data.message}`);
                     }
@@ -149,6 +158,7 @@
                     alert('There was an error deleting the request. Please try again later.');
                 });
             }
+
     
             fetch('get_maintenance_data.php') 
                 .then(response => response.json())

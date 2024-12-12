@@ -63,84 +63,138 @@
     </div>
 
     <script>
-       $(document).ready(function() {
-            $('.active-tenant').hide();
-            fetchGuestAccounts();
-            $('#guest-accounts-link').click(function(e) {
-                e.preventDefault();  
-                $('#guest-accounts-link').addClass('active');
-                $('#active-tenant-link').removeClass('active');
-                $('.guest-accounts').show();
-                $('.active-tenant').hide();
-                fetchGuestAccounts();
+    $(document).ready(function() {
+    // Initialize the guest accounts view
+    fetchGuestAccounts();
+
+    // Handle guest accounts link click
+    $('#guest-accounts-link').click(function(e) {
+        e.preventDefault();
+        $('#guest-accounts-link').addClass('active');
+        $('#active-tenant-link').removeClass('active');
+        $('.guest-accounts').show();
+        $('.active-tenant').hide();
+        fetchGuestAccounts();
+    });
+
+    // Handle active tenants link click
+    $('#active-tenant-link').click(function(e) {
+        e.preventDefault();
+        $('#active-tenant-link').addClass('active');
+        $('#guest-accounts-link').removeClass('active');
+        $('.active-tenant').show();
+        $('.guest-accounts').hide();
+        fetchActiveTenants();
+    });
+});
+
+// Fetch Guest Accounts Data
+function fetchGuestAccounts() {
+    console.log("Fetching guest accounts...");  // Debug log
+    $.ajax({
+        url: 'guest-accounts.php',
+        method: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            let tableBody = $('#guest-table tbody');
+            tableBody.empty();  // Clear any existing rows
+            data.forEach(function(account) {
+                console.log(account);  // Debug log to see what is being fetched
+                let row = `
+                    <tr>
+                        <td>${account.fname} ${account.lname}</td>
+                        <td>${account.booking_start_date}</td>
+                        <td>${account.room_number}</td>
+                        <td>${account.email_address}</td>
+                        <td>${account.contact_number}</td>
+                        <td>${account.status}</td>
+                        <td>
+                            <button class="approve-btn" data-id="${account.tc_id || 'N/A'}" data-room="${account.room_number}">Approve</button>
+                            <button class="cancel-btn" data-id="${account.tc_id || 'N/A'}" data-room="${account.room_number}">Cancel</button>
+                        </td>
+                    </tr>
+                `;
+                tableBody.append(row);
             });
 
-            $('#active-tenant-link').click(function(e) {
-                e.preventDefault(); 
-                $('#active-tenant-link').addClass('active');
-                $('#guest-accounts-link').removeClass('active');
-                $('.active-tenant').show();
-                $('.guest-accounts').hide();
-                fetchActiveTenants();
-            });
-        });
 
-        function fetchGuestAccounts() {
-            $.ajax({
-                url: 'guest-accounts.php',
-                method: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    let tableBody = $('#guest-table tbody');
-                    tableBody.empty();
-                    data.forEach(function(account) {
-                        let row = `
-                            <tr>
-                                <td>${account.fname} ${account.lname}</td>
-                                <td>${account.booking_start_date}</td>
-                                <td>${account.room_number}</td>
-                                <td>${account.email_address}</td>
-                                <td>${account.contact_number}</td>
-                                <td>${account.status}</td>
-                                <td>
-                                    <button>Approve</button>
-                                    <button>Cancel</button>
-                                </td>
-                            </tr>
-                        `;
-                        tableBody.append(row);
-                    });
+            // Approve Button Click Event
+            $('.approve-btn').click(function(e) {
+                e.preventDefault();
+                const tenantId = $(this).data('id');
+                const roomNumber = $(this).data('room');
+                console.log('Approve button clicked:', tenantId, roomNumber);  // Debug log
+                if (confirm('Please verify the deposit payment before approving. Do you want to approve?')) {
+                    approveTenant(tenantId, roomNumber);
                 }
             });
-        }
 
-        function fetchActiveTenants() {
-            $.ajax({
-                url: 'approved_accounts.php',
-                method: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    let tableBody = $('#active-tenant-table tbody');
-                    tableBody.empty();
-                    data.forEach(function(tenant) {
-                        let row = `
-                            <tr>
-                                <td><img src="path/to/profile-pic.png" alt="DP"></td>
-                                <td>${tenant.fname} ${tenant.lname}</td>
-                                <td>${tenant.move_in_date}</td>
-                                <td>${tenant.room_number}</td>
-                                <td>${tenant.email_address}</td>
-                                <td>${tenant.contact_number}</td>
-                                <td>${tenant.religion}</td>
-                                <td>${tenant.nationality}</td>
-                                <td>${tenant.occupation}</td>
-                            </tr>
-                        `;
-                        tableBody.append(row);
-                    });
-                }
+            // Cancel Button Click Event
+            $('.cancel-btn').click(function(e) {
+                e.preventDefault();
+                const tenantId = $(this).data('id');
+                const roomNumber = $(this).data('room');
+                console.log('Cancel button clicked:', tenantId, roomNumber);  // Debug log
+                cancelTenant(tenantId, roomNumber);
             });
+        },
+        error: function(xhr, status, error) {
+            console.log('Failed to fetch guest accounts:', error);  // Debug log
         }
+    });
+}
+
+// Approve Tenant Function
+function approveTenant(tenantId, roomNumber) {
+    console.log('Sending approval request for tenant:', tenantId, roomNumber);  // Debug log
+    $.ajax({
+        url: 'approve-tenant.php',
+        method: 'POST',
+        data: {
+            tenant_id: tenantId,
+            room_number: roomNumber
+        },
+        success: function(response) {
+            console.log('Approval response:', response);  // Debug log
+            const result = JSON.parse(response);
+            if (result.status === 'success') {
+                alert(result.message);
+                fetchGuestAccounts();  // Refresh guest accounts table
+            } else {
+                alert('Error: ' + result.message);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.log('Approval request failed:', error);  // Debug log
+        }
+    });
+}
+
+// Cancel Tenant Function
+function cancelTenant(tenantId, roomNumber) {
+    console.log('Sending cancel request for tenant:', tenantId, roomNumber);  // Debug log
+    $.ajax({
+        url: 'cancel-tenant.php',
+        method: 'POST',
+        data: {
+            tenant_id: tenantId,
+            room_number: roomNumber
+        },
+        success: function(response) {
+            console.log('Cancel response:', response);  // Debug log
+            const result = JSON.parse(response);
+            if (result.status === 'success') {
+                alert(result.message);
+                fetchGuestAccounts();  // Refresh guest accounts table
+            } else {
+                alert('Error: ' + result.message);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.log('Cancel request failed:', error);  // Debug log
+        }
+    });
+}
 
     </script>
 </body>
