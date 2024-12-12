@@ -14,7 +14,7 @@ if (!isset($_SESSION['id']) || $_SESSION['type'] !== 'admin') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MANAGEMENT DASHBOARD</title>
-    <link rel="stylesheet" href="management.css">
+    <link rel="stylesheet" href="management.css?v=1.0">
     <script src="../imported_links.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -23,7 +23,8 @@ if (!isset($_SESSION['id']) || $_SESSION['type'] !== 'admin') {
         <!-- Navigation Bar -->
         <nav class="navigator">
             <a href="javascript:void(0);" onclick="loadPage('Dashboard/manDash.html', this)" aria-label="Home"><i class='bx bx-home icon'></i></a>
-            <a href="javascript:void(0);" onclick="loadPage('Tenant_Information/tenant_info.html', this)" aria-label="Profile"><i class='bx bx-user icon'></i></a>
+            <a href="javascript:void(0);" onclick="loadPage('Tenant_Information/tenant_info.php', this)" aria-label="Profile"><i class='bx bx-user icon'></i></a>
+            <a href="javascript:void(0);" onclick="loadPage('Room/room.html', this)" aria-label="Profile"><i class='bx bx-door-open icon'></i></a>
             <a href="javascript:void(0);" onclick="loadPage('Payment/pay.html', this)" aria-label="Payments"><i class='bx bx-wallet icon'></i></a>
             <a href="javascript:void(0);" onclick="loadPage('Tenant_Maintenance/tenant_maintenance.html', this)" aria-label="Maintenance"><i class='bx bx-wrench icon'></i></a>
             <a href="javascript:void(0);" onclick="loadPage('Notification/notification.html', this)" aria-label="Notifications">

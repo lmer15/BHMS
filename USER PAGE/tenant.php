@@ -2,7 +2,6 @@
     session_start();
 
     if (!isset($_SESSION['tc_id']) || !isset($_SESSION['email_address'])) {
-        // If not logged in, redirect the user to the login page
         header("Location: login.php");
         exit();
     }

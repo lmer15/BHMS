@@ -84,43 +84,4 @@ document.addEventListener("DOMContentLoaded", function() {
         // Show the lease agreement section
         leaseAgreement.style.display = "block";
     });
-
-    // Trigger file input for profile picture upload
-    plusIcon.addEventListener("click", function() {
-        profileImageInput.click(); // Trigger file input click
-    });
-
-    // Preview the selected image before uploading
-    function previewImage(event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                profilePicture.src = e.target.result; // Update image preview
-            };
-            reader.readAsDataURL(file); // Read file as Data URL
-        }
-    }
-
-    // Handle the profile picture upload form submission
-    uploadForm.addEventListener('submit', function(event) {
-        event.preventDefault();  // Prevent normal form submission
-
-        const formData = new FormData(this);
-
-        fetch('profileUpload.php', {
-            method: 'POST',
-            body: formData,
-        })
-        .then(response => response.text())
-        .then(data => {
-            alert(data); // Show success/error message after upload
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    });
-
-    // Connect the file input's `onchange` to previewImage function
-    profileImageInput.addEventListener('change', previewImage);
 });

@@ -17,6 +17,8 @@
     mysqli_stmt_execute($tenant_stmt);
     $tenant_result = mysqli_stmt_get_result($tenant_stmt);
     $tenant = mysqli_fetch_assoc($tenant_result);
+
+    $profile = $tenant['profile'];
     $number_of_occupants =$tenant['number_of_occupants'];
     $fname = $tenant['fname'];
     $lname = $tenant['lname'];
@@ -90,19 +92,11 @@
 
     <div class="profile">
         <div class="detpro">
-            <div class="dp">
-                <img id="profilePicture" src="../image/DP.png" alt="Profile Picture">
-                <i class="bx bx-plus icon"></i>
-                <!-- The file input should be hidden and triggered by clicking the icon -->
-                <input type="file" id="profileImageInput" name="profileImage" accept="image/*" style="display: none;">
-            </div>
-
-            <!-- The upload form that will be triggered -->
-            <form id="uploadForm" action="profileUpload.php" method="POST" enctype="multipart/form-data" style="display:none;">
-                <input type="file" id="profileImageInput" name="profileImage" accept="image/*" />
-            </form>
-
-
+        <div class="dp">
+        <img id="profilePicture" 
+            src="<?php echo !empty($tenant['profile']) ? 'uploads/' . htmlspecialchars($tenant['profile']) : 'image/DP.png'; ?>" 
+            alt="Profile Picture">
+        </div>
 
                 <div class="name-user">
                     <span><?php echo htmlspecialchars($tenant['fname'] . ' ' . $tenant['lname']); ?></span>
@@ -267,46 +261,53 @@
             </div>
 
         </div>
+            <!-- Update Personal Details Modal -->
+            <div id="updateModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Update Personal Information</h2>
+                    <p class="error" id="error-message" style="color: red; display: none; font-size: small; font-weight: 500;">Invalid input. Please try again.</p>
+                    <form id="updateForm" method="post" action="updateDetails.php" enctype="multipart/form-data">
+                        <!-- Using PHP to echo session values for pre-filling -->
+                        <div class="left">
+                            <label for="profileImage">Profile Picture:</label>
+                            <input type="file" id="profileImage" name="profileImage" accept="image/*">
 
-    <!-- Update Personal Details Modal -->
-    <div id="updateModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Update Personal Information</h2>
-            <p class="error" id="error-message" style="color: red; display: none; font-size: small; font-weight: 500;">Invalid input. Please try again.</p>
-            <form id="updateForm" method="post" action="updateDetails.php">
-                <!-- Using PHP to echo session values for pre-filling -->
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($fullname); ?>">
+                            <label for="name">Name:</label>
+                            <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($fullname); ?>">
 
-                <label for="gender">Gender:</label>
-                <select id="gender" name="gender">
-                    <option value="male" <?php echo ($gender === 'male') ? 'selected' : ''; ?>>Male</option>
-                    <option value="female" <?php echo ($gender === 'female') ? 'selected' : ''; ?>>Female</option>
-                </select>
+                            <label for="gender">Gender:</label>
+                            <select id="gender" name="gender">
+                                <option value="male" <?php echo ($gender === 'male') ? 'selected' : ''; ?>>Male</option>
+                                <option value="female" <?php echo ($gender === 'female') ? 'selected' : ''; ?>>Female</option>
+                            </select>
 
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($user_account['username']); ?>">
+                            <label for="username">Username:</label>
+                            <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($user_account['username']); ?>">
+                        </div>
 
-                <label for="email">Email Address:</label>
-                <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($email_address); ?>">
+                        <div class="right">
+                            <label for="email">Email Address:</label>
+                            <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($email_address); ?>">
 
-                <label for="contact">Contact Number:</label>
-                <input type="tel" id="contact" name="contact" value="<?php echo htmlspecialchars($contact_number); ?>">
+                            <label for="contact">Contact Number:</label>
+                            <input type="tel" id="contact" name="contact" value="<?php echo htmlspecialchars($contact_number); ?>">
 
-                <label for="religion">Religion:</label>
-                <input type="text" id="religion" name="religion" value="<?php echo htmlspecialchars($religion); ?>">
+                            <label for="religion">Religion:</label>
+                            <input type="text" id="religion" name="religion" value="<?php echo htmlspecialchars($religion); ?>">
 
-                <label for="nationality">Nationality:</label>
-                <input type="text" id="nationality" name="nationality" value="<?php echo htmlspecialchars($nationality); ?>">
+                            <label for="nationality">Nationality:</label>
+                            <input type="text" id="nationality" name="nationality" value="<?php echo htmlspecialchars($nationality); ?>">
 
-                <label for="occupation">Occupation:</label>
-                <input type="text" id="occupation" name="occupation" value="<?php echo htmlspecialchars($occupation); ?>">
+                            <label for="occupation">Occupation:</label>
+                            <input type="text" id="occupation" name="occupation" value="<?php echo htmlspecialchars($occupation); ?>">
+                        </div>
 
-                <button type="submit">Save Changes</button>
-            </form>
-        </div>
-    </div>
+                        <button type="submit">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+
 
 
     </div>

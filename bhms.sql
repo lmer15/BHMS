@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 11, 2024 at 01:32 PM
+-- Generation Time: Dec 12, 2024 at 01:33 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -103,16 +103,29 @@ INSERT INTO `business_profiles` (`id`, `business_name`, `business_acronym`, `bus
 --
 
 CREATE TABLE `maintenance_requests` (
-  `request_id` int(11) NOT NULL,
-  `tenant_id` int(11) DEFAULT NULL,
-  `room_id` varchar(20) DEFAULT NULL,
-  `issue_description` text DEFAULT NULL,
-  `request_date` datetime DEFAULT current_timestamp(),
-  `status` enum('Pending','In Progress','Completed','Cancelled') DEFAULT 'Pending',
-  `assigned_staff_id` int(11) DEFAULT NULL,
-  `resolution_notes` text DEFAULT NULL,
-  `completion_date` datetime DEFAULT NULL
+  `id` int(11) NOT NULL,
+  `tenant_id` int(11) NOT NULL,
+  `date_requested` timestamp NOT NULL DEFAULT current_timestamp(),
+  `item_name` varchar(255) NOT NULL,
+  `item_desc` text NOT NULL,
+  `status` enum('Pending','Done','Ongoing','Declined') DEFAULT 'Pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `maintenance_requests`
+--
+
+INSERT INTO `maintenance_requests` (`id`, `tenant_id`, `date_requested`, `item_name`, `item_desc`, `status`) VALUES
+(6, 123, '2024-12-11 21:33:13', 'SDFGDF', 'ERTG', 'Pending'),
+(7, 123, '2024-12-11 21:44:52', 'RTYERTY', '5YR5Y', 'Pending'),
+(8, 123, '2024-12-11 21:51:47', 'FCR', 'ERT', 'Pending'),
+(9, 123, '2024-12-11 22:45:02', 'the', 'try', 'Pending'),
+(10, 123, '2024-12-11 22:47:31', '09[', '90', 'Pending'),
+(11, 123, '2024-12-11 23:12:45', 'fr', 'r', 'Pending'),
+(12, 123, '2024-12-11 23:14:27', 'ert', 'r4t', 'Pending'),
+(13, 123, '2024-12-11 23:17:10', '4tjkegngfklenklafnklsdgrnkltrnhkstnhklsef', 'efjklngrgrklkl;sghnkshml//;grl;trjojl;rl;opopml;trl;5yop5y5ptkrmfdnkl;jkdfefl;fdkl;kdgh', 'Pending'),
+(14, 123, '2024-12-11 23:51:57', 'def.rklgngncfn,, dxnmbdsnmkfb fm ,ffldknklfkgf.g/', 'sefknklsdgn,mgnfm,gn,fmgndfjkgnfm,gn,dfmgnkdfgjd.fgm,\\\';d/xdf.gm,xd.fmgsdflgjkarlgksldnr', 'Pending'),
+(15, 123, '2024-12-12 00:12:29', 'frgsdrsdfgsd', 'ghdsrbhsdfb', 'Pending');
 
 -- --------------------------------------------------------
 
@@ -222,6 +235,7 @@ INSERT INTO `room` (`room_id`, `room_image`, `room_number`, `room_type`, `room_s
 CREATE TABLE `tenant_details` (
   `tc_id` int(10) NOT NULL,
   `id` int(20) NOT NULL,
+  `profile` varchar(200) NOT NULL,
   `fname` varchar(50) NOT NULL,
   `lname` varchar(50) NOT NULL,
   `gender` varchar(20) NOT NULL,
@@ -237,9 +251,8 @@ CREATE TABLE `tenant_details` (
 -- Dumping data for table `tenant_details`
 --
 
-INSERT INTO `tenant_details` (`tc_id`, `id`, `fname`, `lname`, `gender`, `number_of_occupants`, `email_address`, `contact_number`, `religion`, `nationality`, `occupation`) VALUES
-(123, 93, 'Elmer', 'Solitario Rapon Gwapo', 'male', 2, 'raponelmer15@gmail.com', '09068387448', 'Catholic', 'Filipino', 'Student'),
-(124, 95, 'Elmer', 'Rapon', '', 0, 'raponelmer14@gmail.com', '09068387448', '', '', '');
+INSERT INTO `tenant_details` (`tc_id`, `id`, `profile`, `fname`, `lname`, `gender`, `number_of_occupants`, `email_address`, `contact_number`, `religion`, `nationality`, `occupation`) VALUES
+(123, 93, 'profile_6759b75d33c2f5.18618288.png', 'Elmer', 'Rapon', 'male', 2, 'raponelmer15@gmail.com', '09068387448', 'Catholic', 'Filipino', 'Student');
 
 -- --------------------------------------------------------
 
@@ -292,7 +305,7 @@ ALTER TABLE `business_profiles`
 -- Indexes for table `maintenance_requests`
 --
 ALTER TABLE `maintenance_requests`
-  ADD PRIMARY KEY (`request_id`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `tenant_id` (`tenant_id`);
 
 --
@@ -370,7 +383,7 @@ ALTER TABLE `business_profiles`
 -- AUTO_INCREMENT for table `maintenance_requests`
 --
 ALTER TABLE `maintenance_requests`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `notifications`

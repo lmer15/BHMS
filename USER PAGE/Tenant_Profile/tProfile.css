@@ -229,7 +229,7 @@ body {
 .modal {
     display: none;
     position: fixed; 
-    z-index: 1;
+    z-index: 2;
     left: 0;
     top: -20px;
     width: 60%; 
@@ -241,7 +241,7 @@ body {
 
 .modal-content {
     background-color: #2c2c2c;
-    margin: 10% auto;
+    margin: 100px auto;
     padding: 20px;
     border: 1px solid #888;
     width: 50%;
@@ -261,7 +261,7 @@ body {
 
 .modal-content h2{
     font-size: 1.2rem;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .modal-content .close:hover,
@@ -275,6 +275,11 @@ body {
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.right, .left{
+    display: flex;
+    flex-direction: column;
 }
 
 #gender{
@@ -300,7 +305,7 @@ body {
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-    margin-top: 50px;
+    margin-top: 10px;
 }
 
 #updateForm  button:hover {

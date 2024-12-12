@@ -1,0 +1,164 @@
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: #1a1a1a;
+    color: #f0f0f0;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.wrapper {
+    margin-top: 20px;
+    margin-bottom: 50px;
+    margin-left: 100px;
+    margin-right: 20px; 
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    background-color: #2c2c2c;
+    border-radius: 10px;
+    width: calc(100% - 120px); 
+    height: calc(100vh - 70px);
+    overflow: hidden;
+}
+
+.navigator {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    gap: 20px;
+    display: flex;
+}
+
+.navigator a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 10px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.table-container, .table-container2{
+    width: 100%;
+    max-height: 80vh; 
+    overflow-y: auto;
+    padding-bottom: 10px ;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px 10px 0 0; 
+}
+
+thead {
+    background-color: #1f1d1d;
+    color: #fff;
+    border-radius: 10px 10px 0 0; 
+    position: sticky; 
+    top: 0; 
+    z-index: 1; 
+}
+
+th, td {
+    text-align: center;
+    padding: 10px;
+    border-bottom: solid 1px #12a15f;
+}
+
+th {
+    font-weight: bold;
+}
+
+td {
+    border-radius: 0;
+    font-size: 1rem;
+    padding: 5px;
+}
+
+td button {
+    background-color: #12a15f;
+    color: white;
+    border: none;
+    border-radius: 3px; 
+    padding: 8px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s; 
+}
+
+td button:last-child {
+    background-color: red; 
+}
+
+button:hover {
+    background-color: white;
+    color: #12a15f;
+}
+
+.status {
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.navigator a.active {
+    text-decoration: underline;
+    color: #12a15f;
+}
+
+select {
+    padding: 10px 10px;
+    margin: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    background-color: #2b2b2b;
+    border-radius: 8px;
+    width: 200px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+select:hover {
+    background-color: #333;
+    border-color: #8fd9a8;
+}
+
+select:focus {
+    outline: none;
+    background-color: #333;
+    border-color: #12a15f;
+}
+
+.room-status-dropdown {
+    display: flex;
+    align-items:flex-start;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.room-status-dropdown span {
+    color: #fff;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.table-container {
+    display: none;
+}
+.table-container.active {
+    display: block;
+}
