@@ -126,20 +126,23 @@ document.addEventListener("DOMContentLoaded", function() {
                 <td>${request.item_desc}</td>
                 <td>${request.status}</td>
                 <td>
-                    ${request.status === 'Pending' ? `
-                        <button class="approve-btn" data-id="${request.id}" data-item-name="${request.item_name}">Approve</button>
-                        <button class="decline-btn" data-id="${request.id}" data-item-name="${request.item_name}">Decline</button>
+                    ${request.status === 'Pending' ? ` 
+                        <button class="approve-btn" data-id="${request.id}" data-item-name="${request.item_name}" data-tenant-name="${request.tenant_name}" data-room-number="RM${request.tenant_id}">Approve</button>
+                        <button class="decline-btn" data-id="${request.id}" data-item-name="${request.item_name}" data-tenant-name="${request.tenant_name}" data-room-number="RM${request.tenant_id}">Decline</button>
+                    ` : ''}
+                    ${request.status === 'Ongoing' ? `
+                        <button class="done-btn" data-id="${request.id}" data-item-name="${request.item_name}">Mark as Done</button>
                     ` : ''}
                 </td>
             `;
             maintenanceTableBody.appendChild(row);
         });
 
-        // Add event listeners for Approve and Decline buttons after rendering
+        // Add event listeners for Approve, Decline, and Done buttons after rendering
         document.querySelectorAll('.approve-btn').forEach(button => {
             button.addEventListener('click', function() {
                 const requestId = button.getAttribute('data-id');
-                const itemName = button.getAttribute('data-item-name');  // Get the item name (maintenance requested)
+                const itemName = button.getAttribute('data-item-name');
                 if (confirm(`Are you sure you want to approve the request for "${itemName}"?`)) {
                     updateRequestStatus(requestId, 'Ongoing', itemName); // Update the request status to Ongoing
                 }
@@ -150,8 +153,20 @@ document.addEventListener("DOMContentLoaded", function() {
             button.addEventListener('click', function() {
                 const requestId = button.getAttribute('data-id');
                 const itemName = button.getAttribute('data-item-name');
+                const tenantName = button.getAttribute('data-tenant-name');
+                const roomNumber = button.getAttribute('data-room-number');
                 if (confirm(`Are you sure you want to decline the request for "${itemName}"?`)) {
-                    showDeclineForm(requestId, itemName);
+                    showDeclineForm(requestId, itemName, tenantName, roomNumber);
+                }
+            });
+        });
+
+        document.querySelectorAll('.done-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const requestId = button.getAttribute('data-id');
+                const itemName = button.getAttribute('data-item-name');
+                if (confirm(`Are you sure you want to mark the request for "${itemName}" as done?`)) {
+                    updateRequestStatus(requestId, 'Done', itemName); // Update the request status to Done
                 }
             });
         });
@@ -170,7 +185,6 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                createNotification(requestId, itemName); 
                 fetchMaintenanceRequests(); 
             } else {
                 console.error("Failed to update request status:", data.message);
@@ -179,58 +193,31 @@ document.addEventListener("DOMContentLoaded", function() {
         .catch(error => console.error("Error updating request status:", error));
     }
 
-    // Function to create a notification
-    function createNotification(requestId, itemName) {
-        const user = 'tenant';
-        const message = `The management approved your request for "${itemName}". Please review your request immediately.`;
-
-        fetch('create_notification.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                request_id: requestId,
-                user: user,
-                type: 'maintenance-admin',
-                message: message,
-                status: 'unread',
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                console.log('Notification created successfully');
-            } else {
-                console.error("Failed to create notification.");
-            }
-        })
-        .catch(error => console.error("Error creating notification:", error));
-    }
-
-    // Function to show the decline form
-    function showDeclineForm(requestId, itemName) {
+    function showDeclineForm(requestId, itemName, tenantName, roomNumber) {
         showSection(classAddReq);
         hideSection(classDash);
 
-        document.getElementById('Tenant-Name').textContent = "Elmer Rapon"; // Dynamic data can be fetched here
-        document.getElementById('Room Number').textContent = "RM201"; // Dynamic data can be fetched here
-        document.getElementById('Item-Desc').setAttribute('data-id', requestId); // Store the requestId in the textarea for submission
+        document.getElementById('Tenant-Name').textContent = tenantName; 
+        document.getElementById('Room Number').textContent = roomNumber; 
+        document.getElementById('Item-Desc').setAttribute('data-id', requestId); 
+        document.getElementById('Item-Desc').setAttribute('data-item-name', itemName); 
     }
 
-    // Handle decline form submission
     document.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault();
 
         const requestId = document.getElementById('Item-Desc').getAttribute('data-id');
         const reason = document.getElementById('Item-Desc').value;
+        const itemName = document.getElementById('Item-Desc').getAttribute('data-item-name');
+        const tenantName = document.getElementById('Tenant-Name').textContent;
 
-        fetch('update_request_status.php', {
+        // Send the reason and other necessary info to the server
+        fetch('save_decline_reason.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ id: requestId, status: 'Declined', item_name: reason })
+            body: JSON.stringify({ id: requestId, reason: reason, item_name: itemName, tenant_name: tenantName })
         })
         .then(response => response.json())
         .then(data => {
@@ -262,7 +249,6 @@ document.addEventListener("DOMContentLoaded", function() {
             .catch(error => console.error("Error fetching request counts:", error));
     }
 
-    // Fetch maintenance requests by status
     function fetchMaintenanceRequests(status = '') {
         let url = 'get_request.php';
         if (status) {
@@ -277,11 +263,9 @@ document.addEventListener("DOMContentLoaded", function() {
             .catch(error => console.error("Error fetching maintenance requests:", error));
     }
 
-    // Fetch counts and maintenance requests on page load
     fetchRequestCounts();
     fetchMaintenanceRequests();
 
-    // Event listener for each status filter
     const navConItems = document.querySelectorAll(".nav-con");
     navConItems.forEach(item => {
         item.addEventListener("click", function() {
@@ -291,7 +275,6 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    // Event listener to show the Dashboard and hide Add Request
     dashMaintenance.addEventListener("click", function(event) {
         event.preventDefault();
         showSection(classDash);
@@ -299,7 +282,6 @@ document.addEventListener("DOMContentLoaded", function() {
         setActiveLink(dashMaintenance);
     });
 
-    // Event listener for the back arrow to show the Dashboard and hide Add Request
     backArrow.addEventListener("click", function(event) {
         event.preventDefault();
         showSection(classDash);
@@ -307,7 +289,7 @@ document.addEventListener("DOMContentLoaded", function() {
         setActiveLink(dashMaintenance);
     });
 });
+</script>
 
-    </script>
 </body>
 </html>

@@ -194,10 +194,26 @@ html, body {
     border-top-right-radius: 10px;
 }
 
-/* Table Row Styling */
 .maintenance-table-row {
-    background-color: #4e7a53;
-    border-bottom: 1px solid white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 5px;
+    background-color: #444;
+    color: #f0f0f0;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    height: 60px; 
+    overflow: hidden;    
+}
+
+/* Table Header Styling */
+.maintenance-table-header {
+    font-weight: bold;
+    background-color: #1e442e;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    height: 60px; 
 }
 
 /* Table Item Cells */
@@ -208,6 +224,15 @@ html, body {
     padding: 8px;
     font-size: 0.8rem;
     border-right: 1px solid white;
+    height: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    white-space: normal;     
+    word-wrap: break-word;                         
+}
+
+.maintenance-item {
+    height: 100%; 
 }
 
 .maintenance-table-row .maintenance-item:last-child,
@@ -215,11 +240,11 @@ html, body {
     border-right: none;
 }
 
-/* Hover Effect for Rows */
 .maintenance-table-row:hover {
     background-color: #2d6a46;
     cursor: pointer;
 }
+
 
 /* Notifications Section */
 .notification {

@@ -5,6 +5,9 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Current date
+$current_date = date('Y-m-d H:i:s');
+
 // Query to get total room count (all rooms in the room table)
 $sql_total_rooms = "SELECT COUNT(*) as count FROM room";
 $result_total_rooms = $conn->query($sql_total_rooms);
@@ -38,31 +41,38 @@ if ($result_rooms && $result_rooms->num_rows > 0) {
             case 'reserved':
                 $room_counts['reserved'] = $row['count'];
                 break;
-            // If you need additional room statuses, you can add more cases here.
         }
     }
 }
 
-// Query to get notifications excluding 'payment-admin' and 'maintenance-admin'
-$sql_notifications = "SELECT message, created_at FROM notifications WHERE type NOT IN ('maintenance-admin', 'payment-admin') ORDER BY created_at DESC LIMIT 5";
-$result_notifications = $conn->query($sql_notifications);
+// Fetch overdue payments (only those with balance > 0 and overdue)
+$overdue_sql = "SELECT rp.tenant_id, rp.rent_period_end, rp.balance, t.fname, t.lname, r.room_number 
+                FROM rental_payments rp
+                JOIN tenant_details t ON rp.tenant_id = t.tc_id
+                JOIN booking b ON rp.tenant_id = b.tenant_id
+                JOIN room r ON b.room_id = r.room_id
+                WHERE rp.balance > 0 AND rp.rent_period_end < ?";
+$overdue_stmt = $conn->prepare($overdue_sql);
+$overdue_stmt->bind_param("s", $current_date);
+$overdue_stmt->execute();
+$overdue_result = $overdue_stmt->get_result();
 
-$notifications = [];
-if ($result_notifications && $result_notifications->num_rows > 0) {
-    while ($row = $result_notifications->fetch_assoc()) {
-        $notifications[] = [
-            'message' => $row['message'],
-            'timestamp' => date('d M Y \a\t h:i A', strtotime($row['created_at']))
+$overdue_notifications = [];
+if ($overdue_result && $overdue_result->num_rows > 0) {
+    while ($row = $overdue_result->fetch_assoc()) {
+        $tenant_name = htmlspecialchars($row['fname']) . ' ' . htmlspecialchars($row['lname']);
+        $room_number = htmlspecialchars($row['room_number']);
+        $rent_period_end = date('F Y', strtotime($row['rent_period_end']));
+        $overdue_message = "$tenant_name from Room $room_number has an overdue bill from the month of $rent_period_end.";
+
+        $overdue_notifications[] = [
+            'message' => $overdue_message,
+            'timestamp' => date('d M Y \a\t h:i A', strtotime($current_date))
         ];
     }
-} else {
-    // No notifications found
-    $notifications[] = [
-        'message' => 'No notifications available.',
-        'timestamp' => ''
-    ];
 }
 
+// Fetch users (occupants)
 $sql_users = "
     SELECT td.profile, td.fname, td.lname, td.email_address, r.room_number, r.room_status
     FROM tenant_details td
@@ -87,7 +97,6 @@ if ($result_users && $result_users->num_rows > 0) {
         }
     }
 } else {
-    // No results found
     $users[] = [
         'profile' => '',
         'full_name' => 'No occupants found',
@@ -96,6 +105,7 @@ if ($result_users && $result_users->num_rows > 0) {
     ];
 }
 
+// Fetch maintenance requests
 $sql_maintenance_requests = "
     SELECT 
         mr.id AS request_id,
@@ -128,7 +138,7 @@ if ($result_maintenance_requests && $result_maintenance_requests->num_rows > 0) 
             'item_name' => $row['item_name'],
             'item_desc' => $row['item_desc'],
             'status' => $row['status'],
-            'room_number' => $row['room_number'] // Ensure this is added to the array
+            'room_number' => $row['room_number'] 
         ];
     }
 } else {
@@ -139,13 +149,20 @@ if ($result_maintenance_requests && $result_maintenance_requests->num_rows > 0) 
         'item_name' => '',
         'item_desc' => '',
         'status' => '',
-        'room_number' => '' // Make sure this is included in case of no results
+        'room_number' => '' 
     ];
 }
 
+// Query to get the total payment amount from the payment_history table
+$sql_total_payment = "SELECT SUM(payment_amount) as total_payment FROM payment_history";
+$result_total_payment = $conn->query($sql_total_payment);
+$total_payment = 0;
+if ($result_total_payment && $result_total_payment->num_rows > 0) {
+    $row = $result_total_payment->fetch_assoc();
+    $total_payment = $row['total_payment'];
+}
 
 $conn->close();
-
 ?>
 
 <!DOCTYPE html>
@@ -156,7 +173,7 @@ $conn->close();
     <title>Management Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="../../imported_links.js" defer></script>
-    <link rel="stylesheet" href="manDash.css?v=1.10">
+    <link rel="stylesheet" href="manDash.css?v=1.0">
 </head>
 <body>
     
@@ -190,8 +207,8 @@ $conn->close();
                           
             <div class="notification">
                 <span><i class='bx bx-bell icon'></i> Notifications</span>
-                <?php if (!empty($notifications)): ?>
-                    <?php foreach ($notifications as $notification): ?>
+                <?php if (!empty($overdue_notifications)): ?>
+                    <?php foreach ($overdue_notifications as $notification): ?>
                         <div class="notifi">
                             <p class="description"><?php echo $notification['message']; ?></p>
                             <div class="timestamp">
@@ -201,13 +218,13 @@ $conn->close();
                     <?php endforeach; ?>
                 <?php else: ?>
                     <div class="notifi">
-                        <p>No notifications available.</p>
+                        <p>No overdue notifications available.</p>
                     </div>
                 <?php endif; ?>
             </div>
 
             <div class="sale">
-                <h1>1,000,00.35</h1>
+                <h1><?php echo number_format($total_payment, 2); ?></h1>
                 <span>Total Sale</span>
             </div>
 

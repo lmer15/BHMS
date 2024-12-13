@@ -1,8 +1,23 @@
 <?php
+session_start(); // Start the session to access the session variables
 include_once '../DATABASE/dbConnector.php';
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+$isAdmin = false;
+$isLoggedIn = false;
+
+if (isset($_SESSION['username'])) {
+    $isLoggedIn = true;
+
+    $username = $_SESSION['username']; 
+    $query = "SELECT type FROM user_accounts WHERE username = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("s", $username); 
+    $stmt->execute();
+    $stmt->bind_result($userType);
+    $stmt->fetch();
+    $stmt->close();
+
+    $isAdmin = ($userType === 'admin');
 }
 
 // Fetch amenities from the database
@@ -42,11 +57,12 @@ $conn->close();
                     <p><?php echo nl2br(htmlspecialchars($amenity['amiser_desc'])); ?></p>
                 </div>
             <?php endforeach; ?>
-
-            <!-- Add Amenities Button -->
-            <div class="add-aminities">
-                <a href="ADD/addAminities.php"><i class='bx bx-plus icon-add'></i></a>
-            </div>
+            
+            <?php if ($isAdmin): ?>
+                <div class="add-aminities">
+                    <a href="ADD/addAminities.php"><i class='bx bx-plus icon-add'></i></a>
+                </div>
+            <?php endif; ?>
         </div>
     </section>
 </body>

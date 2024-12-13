@@ -1,38 +1,50 @@
 <?php
 
-$data = json_decode(file_get_contents("php://input"));
-$requestId = $data->id;
-$status = $data->status;
-$itemName = $data->item_name;
-
-// Check if data exists
-if (!$requestId || !$status || !$itemName) {
-    echo json_encode(['success' => false, 'message' => 'Missing data']);
-    exit;
-}
+// update_request_status.php
 
 include_once '../../DATABASE/dbConnector.php';
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+$data = json_decode(file_get_contents('php://input'), true);
+
+if (empty($data['id']) || empty($data['status'])) {
+    echo json_encode(['success' => false, 'message' => 'Required fields are missing']);
+    exit;
 }
 
-// Debugging: Log incoming data
-error_log("Updating request ID: $requestId with status: $status");
+$requestId = $data['id'];
+$newStatus = $data['status']; 
 
-// Update the status of the maintenance request
 $sql = "UPDATE maintenance_requests SET status = ? WHERE id = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("si", $status, $requestId);
+$stmt->bind_param("si", $newStatus, $requestId);
+$stmt->execute();
 
-if ($stmt->execute()) {
-    echo json_encode(['success' => true]);
+if ($stmt->affected_rows > 0) {
+    $sql = "SELECT tenant_id FROM maintenance_requests WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $requestId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $tenant = $result->fetch_assoc();
+
+    $tenantId = $tenant['tenant_id']; 
+    $sql = "SELECT item_name, item_desc FROM maintenance_requests WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $requestId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $maintenance = $result->fetch_assoc();
+
+
+    createNotification($requestId, $maintenance['item_name'], $tenantId, $newStatus);
+
+    echo json_encode(['success' => true, 'message' => 'Maintenance request updated and notification created']);
 } else {
-    echo json_encode(['success' => false, 'message' => 'Failed to update status']);
+    echo json_encode(['success' => false, 'message' => 'Failed to update maintenance request status']);
 }
 
 $stmt->close();
 $conn->close();
+
 
 ?>

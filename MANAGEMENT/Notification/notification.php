@@ -5,8 +5,22 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT * FROM notifications WHERE type NOT IN ('MAINTENANCE-ADMIN', 'PAYMENT-ADMIN') ORDER BY created_at DESC";
-$result = $conn->query($sql);
+$current_date = date('Y-m-d H:i:s');
+
+// Fetch overdue payments with tenant name and room number
+$overdue_sql = "SELECT rp.tenant_id, rp.rent_period_end, rp.balance, t.fname, t.lname, r.room_number 
+                FROM rental_payments rp
+                JOIN tenant_details t ON rp.tenant_id = t.tc_id
+                JOIN booking b ON rp.tenant_id = b.tenant_id
+                JOIN room r ON b.room_id = r.room_id
+                WHERE rp.balance > 0 AND rp.rent_period_end < ?";
+$overdue_stmt = $conn->prepare($overdue_sql);
+$overdue_stmt->bind_param("s", $current_date);
+$overdue_stmt->execute();
+$overdue_result = $overdue_stmt->get_result();
+
+$maintenance_sql = "SELECT message, created_at FROM notifications WHERE type = 'maintenance' ORDER BY created_at DESC";
+$maintenance_result = $conn->query($maintenance_sql);
 
 ?>
 
@@ -27,15 +41,29 @@ $result = $conn->query($sql);
             <h1>Notifications</h1>
 
             <?php
-            if ($result->num_rows > 0) {
-                while ($notif = $result->fetch_assoc()) {
+            // Display overdue payment notifications
+            if ($overdue_result->num_rows > 0) {
+                while ($overdue = $overdue_result->fetch_assoc()) {
+                    $tenant_name = htmlspecialchars($overdue['fname']) . ' ' . htmlspecialchars($overdue['lname']);
+                    $room_number = htmlspecialchars($overdue['room_number']);
+                    $rent_period_end = date('F Y', strtotime($overdue['rent_period_end']));
+                    $message = "$tenant_name from Room $room_number has an overdue bill from the month of $rent_period_end.";
+
                     echo '<div class="notif-container">';
-                    echo '<p><span class="data" style="font-weight: 300;">' . htmlspecialchars($notif['message']) . '</span></p>';
-                    echo '<span class="date">' . date('F d, Y', strtotime($notif['created_at'])) . '</span>';
+                    echo '<p><span class="data" style="font-weight: 300;">' . $message . '</span></p>';
+                    echo '<span class="date">' . date('F d, Y', strtotime($current_date)) . '</span>';
                     echo '</div>';
                 }
-            } else {
-                echo '<p>No notifications available.</p>';
+            }
+
+            // Display maintenance notifications
+            if ($maintenance_result->num_rows > 0) {
+                while ($maintenance = $maintenance_result->fetch_assoc()) {
+                    echo '<div class="notif-container">';
+                    echo '<p><span class="data" style="font-weight: 300;">' . htmlspecialchars($maintenance['message']) . '</span></p>';
+                    echo '<span class="date">' . date('F d, Y', strtotime($maintenance['created_at'])) . '</span>';
+                    echo '</div>';
+                }
             }
             ?>
 

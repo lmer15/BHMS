@@ -6,20 +6,23 @@
     <title>Tenant Profile</title>
     <script src="../../imported_links.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="room.css?v=1.11">
+    <link rel="stylesheet" href="room.css?v=1.0">
 </head>
 <body>
 
     <div class="wrapper">
+        <!-- Room Status Filter Dropdown -->
         <div class="room-status-dropdown">
-            <span>ROOMS</span>
+            <span>ROOM STATUS</span>
             <select id="statusFilter">
                 <option value="available">Available</option>
                 <option value="under-maintenance">Under Maintenance</option>
                 <option value="occupied">Occupied</option>
+                <option value="reserved">Reserved</option>  <!-- Added the "Reserved" option -->
             </select>
         </div>
 
+        <!-- Room Tables -->
         <div class="guest-accounts">
             <div class="table-container available active">
                 <table id="availableRooms">
@@ -85,6 +88,27 @@
                     </tbody>
                 </table>
             </div>
+
+            <div class="table-container reserved">
+                <table id="reservedRooms">
+                    <thead>
+                        <tr>
+                            <th>Room Number</th>
+                            <th>Room Type</th>
+                            <th>Room Size</th>
+                            <th>Amenities</th>
+                            <th>Utilities</th>
+                            <th>Rental Rates</th>
+                            <th>Payment Frequency</th>
+                            <th>Deposit Rate</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Reserved rooms will be injected here -->
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -101,6 +125,7 @@
                     document.getElementById('availableRooms').querySelector('tbody').innerHTML = '';
                     document.getElementById('underMaintenanceRooms').querySelector('tbody').innerHTML = '';
                     document.getElementById('occupiedRooms').querySelector('tbody').innerHTML = '';
+                    document.getElementById('reservedRooms').querySelector('tbody').innerHTML = '';
 
                     // Fill rooms based on status
                     data.forEach(room => {
@@ -128,6 +153,8 @@
                             document.getElementById('underMaintenanceRooms').querySelector('tbody').innerHTML += row;
                         } else if (room.room_status === 'occupied') {
                             document.getElementById('occupiedRooms').querySelector('tbody').innerHTML += row;
+                        } else if (room.room_status === 'reserved') {
+                            document.getElementById('reservedRooms').querySelector('tbody').innerHTML += row;
                         }
                     });
                 })
@@ -135,29 +162,29 @@
         }
 
         function updateRoomStatus(roomNumber, newStatus) {
-        const statusMessage = newStatus === 'available' 
-            ? 'Are you sure you want to change this room status to Available?'
-            : 'Are you sure you want to change this room status to Under Maintenance?';
+            const statusMessage = newStatus === 'available' 
+                ? 'Are you sure you want to change this room status to Available?'
+                : 'Are you sure you want to change this room status to Under Maintenance?';
 
-        const userConfirmed = confirm(statusMessage);
+            const userConfirmed = confirm(statusMessage);
 
-        if (userConfirmed) {
-            fetch(`update_room_status.php?room_number=${roomNumber}&new_status=${newStatus}`, {
-                method: 'POST',
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    fetchRooms(statusFilter.value); 
-                } else {
-                    alert('Error updating room status: ' + data.message);
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        } else {
-            console.log('Status change canceled');
+            if (userConfirmed) {
+                fetch(`update_room_status.php?room_number=${roomNumber}&new_status=${newStatus}`, {
+                    method: 'POST',
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        fetchRooms(statusFilter.value); 
+                    } else {
+                        alert('Error updating room status: ' + data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            } else {
+                console.log('Status change canceled');
+            }
         }
-    }
 
         statusFilter.addEventListener('change', function() {
             const selectedStatus = statusFilter.value;

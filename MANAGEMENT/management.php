@@ -1,5 +1,6 @@
 <?php
 session_start();
+include'rental.php';
 
 if (!isset($_SESSION['id']) || $_SESSION['type'] !== 'admin') {
     header("Location: ../USER PAGE/login.php");
@@ -25,7 +26,7 @@ if (!isset($_SESSION['id']) || $_SESSION['type'] !== 'admin') {
             <a href="javascript:void(0);" onclick="loadPage('Dashboard/manDash.php', this)" aria-label="Home"><i class='bx bx-home icon'></i></a>
             <a href="javascript:void(0);" onclick="loadPage('Tenant_Information/tenant_info.php', this)" aria-label="Profile"><i class='bx bx-user icon'></i></a>
             <a href="javascript:void(0);" onclick="loadPage('Room/room.php', this)" aria-label="Profile"><i class='bx bx-door-open icon'></i></a>
-            <a href="javascript:void(0);" onclick="loadPage('Payment/pay.html', this)" aria-label="Payments"><i class='bx bx-wallet icon'></i></a>
+            <a href="javascript:void(0);" onclick="loadPage('Payment/pay.php', this)" aria-label="Payments"><i class='bx bx-wallet icon'></i></a>
             <a href="javascript:void(0);" onclick="loadPage('Tenant_Maintenance/tenant_maintenance.php', this)" aria-label="Maintenance"><i class='bx bx-wrench icon'></i></a>
             <a href="javascript:void(0);" onclick="loadPage('Notification/notification.php', this)" aria-label="Notifications">
                 <i class='bx bx-bell icon'></i>
