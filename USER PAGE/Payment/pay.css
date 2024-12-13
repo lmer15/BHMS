@@ -5,8 +5,8 @@ html {
 body {
     margin: 0;
     font-family: "Poppins", sans-serif;
-    background-color: #1a1a1a;
-    color: #f0f0f0;
+    background-color: #121212; /* Dark background resembling steel or metal */
+    color: #e0e0e0; /* Light gray for text */
     height: 100%;
     overflow: hidden;
 }
@@ -23,7 +23,7 @@ body {
     margin: 35px auto;
     padding: 20px;
     padding-top: 60px;
-    background-color: #2c2c2c;
+    background-color: #2a2a2a; /* Dark industrial gray */
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -34,5 +34,80 @@ body {
     margin-right: 5%;
 }
 
+/* Notification section */
+.notif {
+    background-color: #5a6b5f; /* Muted industrial green */
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+}
 
+.notif span {
+    font-size: 24px;
+    font-weight: bold;
+    color: #f0f0f0; /* Light text for contrast */
+}
 
+.notif p {
+    font-size: 16px;
+    margin-top: 10px;
+    color: #b0b0b0; /* Lighter gray for better readability */
+}
+
+/* Payment History section */
+.payment-history {
+    background-color: #3a4d42; /* Dark green-gray */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Stronger shadow for depth */
+}
+
+.payment-history h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #8b9a72; /* Light industrial green */
+}
+
+.payment-item {
+    background-color: #333; /* Dark gray */
+    border: 1px solid #444; /* Subtle border */
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Deeper shadow for an industrial feel */
+}
+
+.payment-item p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #d0d0d0; /* Lighter gray text for readability */
+}
+
+.payment-item p strong {
+    color: #8b9a72; /* Industrial green for labels */
+}
+
+.payment-item p:last-child {
+    font-weight: bold;
+    color: #d32f2f; /* Red shade for payment status (warning or alert) */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .wrapper {
+        width: 95%;
+    }
+
+    .notif span {
+        font-size: 20px;
+    }
+
+    .payment-history h2 {
+        font-size: 20px;
+    }
+
+    .payment-item p {
+        font-size: 14px;
+    }
+}

@@ -5,6 +5,24 @@
         header("Location: login.php");
         exit();
     }
+
+    require_once '../DATABASE/dbConnector.php';
+
+    $tenant_id = $_SESSION['tc_id'];
+
+    $tenant_query = "SELECT * FROM tenant_details WHERE tc_id = ?";
+    $tenant_stmt = mysqli_prepare($conn, $tenant_query);
+    mysqli_stmt_bind_param($tenant_stmt, "i", $tenant_id); 
+    mysqli_stmt_execute($tenant_stmt);
+    $tenant_result = mysqli_stmt_get_result($tenant_stmt);
+    $tenant = mysqli_fetch_assoc($tenant_result);
+
+    if (!$tenant) {
+        echo "Tenant data not found.";
+        exit(); 
+    }
+
+    $profile = $tenant['profile'];
 ?>
 
 <!DOCTYPE html>
@@ -23,9 +41,9 @@
         <nav class="navigator">
             <a href="javascript:void(0);" onclick="loadPage('Tenant_Dashboard/tDashboard.html', this)" aria-label="Home"><i class='bx bx-home icon'></i></a>
             <a href="javascript:void(0);" onclick="loadPage('Tenant_Profile/tProfile.php', this)" aria-label="Profile"><i class='bx bx-user icon'></i></a>
-            <a href="javascript:void(0);" onclick="loadPage('Payment/pay.html', this)" aria-label="Payments"><i class='bx bx-wallet icon'></i></a>
+            <a href="javascript:void(0);" onclick="loadPage('Payment/pay.php', this)" aria-label="Payments"><i class='bx bx-wallet icon'></i></a>
             <a href="javascript:void(0);" onclick="loadPage('Tenant_Maintenance/maintenance.php', this)" aria-label="Maintenance"><i class='bx bx-wrench icon'></i></a>
-            <a href="javascript:void(0);" onclick="loadPage('Tenant_Notification/notif.html', this)" aria-label="Notifications">
+            <a href="javascript:void(0);" onclick="loadPage('Tenant_Notification/notif.php', this)" aria-label="Notifications">
                 <i class='bx bx-bell icon'></i>
                 <span class="notification-badge">
                     <?php echo isset($_SESSION['notification_count']) ? $_SESSION['notification_count'] : '0'; ?>
@@ -53,7 +71,7 @@
                 <div class="right-side">
                     <span>Hi! Welcome, <span class="username"><?php echo $_SESSION['fname'] . ' ' . $_SESSION['lname']; ?></span></span>
                     <div class="profile">
-                        <img src="<?php echo isset($_SESSION['profile_picture']) ? $_SESSION['profile_picture'] : 'image/DP.png'; ?>" alt="Profile Image" onerror="this.src='image/DP.png';" />
+                        <img src="<?php echo !empty($tenant['profile']) ? 'Tenant_Profile/uploads/' . htmlspecialchars($tenant['profile']) : 'image/DP.png'; ?>" alt="Profile Image" onerror="this.src='image/DP.png';" />
                     </div>
                 </div>
             </header>

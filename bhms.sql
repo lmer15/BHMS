@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 12, 2024 at 01:49 PM
+-- Generation Time: Dec 13, 2024 at 02:22 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -46,7 +46,10 @@ INSERT INTO `aminities_services` (`amiser_id`, `amiser_title`, `amiser_desc`, `a
 (6, 'Study Area', 'A quiet, well-lit area designed for students or professionals to focus on their studies or work.', 'aminities'),
 (7, 'Trash Disposal', 'Regular waste collection services to maintain cleanliness and hygiene in the building.', 'aminities'),
 (8, 'Room Cleaning Services', ' Regular cleaning of rooms and common areas to ensure a tidy and comfortable living space.', 'aminities'),
-(9, 'Fire Safety Equipment', 'Fire extinguishers, alarms, and other safety measures to ensure the safety of all residents in case of emergency.', 'aminities');
+(9, 'Fire Safety Equipment', 'Fire extinguishers, alarms, and other safety measures to ensure the safety of all residents in case of emergency.', 'aminities'),
+(10, 'Computer ', 'A peso computer shop', 'aminities'),
+(11, 'asdssdf', 'wtergtt', 'services'),
+(12, 'srgdfgsdf', 'sdrgdrgt', 'services');
 
 -- --------------------------------------------------------
 
@@ -69,7 +72,6 @@ CREATE TABLE `booking` (
 
 INSERT INTO `booking` (`booking_id`, `tenant_id`, `room_id`, `booking_start_date`, `booking_end_date`, `status`) VALUES
 (91, 123, 27, '2024-12-05', '2024-12-11', 'Booked'),
-(92, 125, 36, '2024-12-12', '2024-12-12', 'Booked'),
 (93, 126, 35, '2024-12-12', '2024-12-12', 'Booked');
 
 -- --------------------------------------------------------
@@ -120,8 +122,9 @@ CREATE TABLE `maintenance_requests` (
 INSERT INTO `maintenance_requests` (`id`, `tenant_id`, `date_requested`, `item_name`, `item_desc`, `status`) VALUES
 (26, 123, '2024-12-12 06:33:36', 'Bathroom', 'The bathroom is clog.', 'Done'),
 (29, 123, '2024-12-12 06:41:07', 'Table', 'The other leg of the table is broken', 'Ongoing'),
-(36, 123, '2024-12-12 07:00:27', 'Ceiling', 'There\'s a leak in the ceiling. Need immediate repair.', 'Pending'),
-(37, 123, '2024-12-12 07:05:25', 'Wifi', 'There\'s no internet connection.', 'Pending');
+(36, 123, '2024-12-12 07:00:27', 'Ceiling', 'There\'s a leak in the ceiling. Need immediate repair.', 'Ongoing'),
+(37, 123, '2024-12-12 07:05:25', 'Wifi', 'There\'s no internet connection.', 'Ongoing'),
+(39, 123, '2024-12-13 00:41:48', 'sertrshy', 'tryhfthu', 'Pending');
 
 -- --------------------------------------------------------
 
@@ -145,7 +148,10 @@ CREATE TABLE `notifications` (
 
 INSERT INTO `notifications` (`not_id`, `user`, `type`, `message`, `status`, `created_at`, `updated_at`) VALUES
 (19, 123, 'maintenance', 'Elmer Rapon from RM208 submitted a new maintenance request to fix his/her Wifi.', '', '2024-12-12 15:05:25', '2024-12-12 15:05:25'),
-(20, 123, 'maintenance', 'Elmer Rapon from RM208 deleted his request to fix his \'Clock\' that was submitted on 2024-12-12 14:41:32.', '', '2024-12-12 15:14:49', '2024-12-12 15:14:49');
+(20, 123, 'maintenance', 'Elmer Rapon from RM208 deleted his request to fix his \'Clock\' that was submitted on 2024-12-12 14:41:32.', '', '2024-12-12 15:14:49', '2024-12-12 15:14:49'),
+(21, 123, 'maintenance', 'Elmer Rapon from RM208 submitted a new maintenance request to fix his/her Mama.', '', '2024-12-13 07:55:26', '2024-12-13 07:55:26'),
+(22, 123, 'maintenance', 'Elmer Rapon from RM208 deleted his request to fix his \'Mama\' that was submitted on 2024-12-13 07:55:26.', '', '2024-12-13 07:55:55', '2024-12-13 07:55:55'),
+(23, 123, 'maintenance', 'Elmer Rapon from RM208 submitted a new maintenance request to fix his/her sertrshy.', '', '2024-12-13 08:41:48', '2024-12-13 08:41:48');
 
 -- --------------------------------------------------------
 
@@ -159,7 +165,6 @@ CREATE TABLE `payment_history` (
   `tenant_id` int(11) NOT NULL,
   `payment_date` date NOT NULL,
   `payment_amount` decimal(10,2) NOT NULL,
-  `balance` decimal(10,2) DEFAULT 0.00,
   `payment_type` varchar(20) NOT NULL,
   `payment_status` enum('Paid','Pending') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -168,8 +173,8 @@ CREATE TABLE `payment_history` (
 -- Dumping data for table `payment_history`
 --
 
-INSERT INTO `payment_history` (`history_id`, `payment_id`, `tenant_id`, `payment_date`, `payment_amount`, `balance`, `payment_type`, `payment_status`) VALUES
-(5, 11, 126, '2024-12-12', 6000.00, 0.00, 'deposit', '');
+INSERT INTO `payment_history` (`history_id`, `payment_id`, `tenant_id`, `payment_date`, `payment_amount`, `payment_type`, `payment_status`) VALUES
+(5, 11, 126, '2024-12-12', 6000.00, 'deposit', '');
 
 -- --------------------------------------------------------
 
@@ -222,13 +227,13 @@ CREATE TABLE `room` (
 
 INSERT INTO `room` (`room_id`, `room_image`, `room_number`, `room_type`, `room_size`, `room_aminities`, `room_utilities`, `rental_rates`, `room_payfre`, `room_deporate`, `room_status`) VALUES
 (20, '674fd453c2c10_ROOM1.jpg', 'RM201', 'Family', 50, 'Bed, mattress, desk, chair, closet, shelving, mirror, curtains, trash bin, dining table, sofa, side table, wardrobe, wall hooks, bookshelf, bulletin board, rug, pillows, blanket.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 10000.00, 'Monthly', 12000.00, 'available'),
-(27, '674fd60ff3e9b_ROOM8.jpg', 'RM208', 'Double', 40, 'Bed, mattress, desk, chair, closet, shelving, mirror, curtains, trash bin, dining table, sofa, side table, wardrobe, wall hooks, bookshelf, bulletin board, rug, pillows, blanket.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 7500.00, 'Monthly', 8300.00, 'reserved'),
+(27, '674fd60ff3e9b_ROOM8.jpg', 'RM208', 'Double', 40, 'Bed, mattress, desk, chair, closet, shelving, mirror, curtains, trash bin, dining table, sofa, side table, wardrobe, wall hooks, bookshelf, bulletin board, rug, pillows, blanket.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 7500.00, 'Monthly', 8300.00, 'occupied'),
 (31, '6759519ccf008_ROOM2.jpg', 'RM202', 'Single', 25, 'Bed, mattress, desk, chair, closet, shelving, mirror, curtains, trash bin, dining table, sofa, side table, wardrobe, wall hooks, bookshelf, bulletin board, rug, pillows, blanket.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 8000.00, 'Monthly', 10000.00, 'available'),
 (32, '675951e548e5f_ROOM3.jfif', 'RM203', 'Double', 60, 'Bed, mattress, desk, chair, closet, shelving, mirror, curtains, trash bin, dining table, sofa, side table, wardrobe, wall hooks, bookshelf, bulletin board, rug, pillows, blanket.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 12000.00, 'Monthly', 13500.00, 'available'),
 (33, '675952086def5_ROOM4.jfif', 'RM204', 'Double', 60, 'Bed, mattress, desk, chair, closet, shelving, mirror, curtains, trash bin, dining table, sofa, side table, wardrobe, wall hooks, bookshelf, bulletin board, rug, pillows, blanket.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 8000.00, 'Monthly', 10000.00, 'available'),
 (34, '6759524492c1d_ROOM5.jfif', 'RM205', 'Family', 60, 'Bed, mattress, desk, chair, closet, shelving, mirror, curtains, trash bin, dining table, sofa, side table, wardrobe, wall hooks, bookshelf, bulletin board, rug, pillows, blanket.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 7000.00, 'Monthly', 8050.00, 'available'),
 (35, '6759527057186_ROOM6.jfif', 'RM206', 'Double', 49, 'Bed, mattress, desk, chair, closet, shelving, mirror, curtains, trash bin, dining table, sofa, side table, wardrobe, wall hooks, bookshelf, bulletin board, rug, pillows, blanket.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 50000.00, 'Monthly', 6000.00, 'occupied'),
-(36, '675952cb2a16b_ROOM9.jpg', 'RM207', 'Family', 90, 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 15000.00, 'Monthly', 18000.00, 'reserved');
+(36, '675952cb2a16b_ROOM9.jpg', 'RM207', 'Family', 90, 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 'Electric fan, air conditioner, lighting, power outlets, Wi-Fi, internet access, private/shared bathroom, laundry area access, water heater, refrigerator, microwave, stove, sink, exhaust fan, smoke detector, fire extinguisher.', 15000.00, 'Monthly', 18000.00, 'under-maintenance');
 
 -- --------------------------------------------------------
 
@@ -257,8 +262,7 @@ CREATE TABLE `tenant_details` (
 
 INSERT INTO `tenant_details` (`tc_id`, `id`, `profile`, `fname`, `lname`, `gender`, `number_of_occupants`, `email_address`, `contact_number`, `religion`, `nationality`, `occupation`) VALUES
 (123, 93, 'profile_6759b75d33c2f5.18618288.png', 'Elmer', 'Rapon', 'male', 2, 'raponelmer15@gmail.com', '09068387448', 'Catholic', 'Filipino', 'Student'),
-(125, 96, '', 'Heizl', 'Alucard', '', 5, 'lemonjuice@gmail.com', '09107998581', '', '', ''),
-(126, 97, '', 'Josh', 'Almendras', '', 2, 'almedras@gmail.com', '09108770753', '', '', '');
+(126, 97, 'profile_675af343b58ce8.62437800.jpg', 'Josh', 'Almendras', 'male', 2, 'almedras@gmail.com', '09108770753', 'Inc', 'Filipino-American', 'Frrelancer');
 
 -- --------------------------------------------------------
 
@@ -281,7 +285,6 @@ CREATE TABLE `user_accounts` (
 INSERT INTO `user_accounts` (`id`, `username`, `password`, `status`, `type`) VALUES
 (93, 'lmer16', '$2y$10$DteacS/lwLkx7IIXg7fFFe2mcc7rrAIWZWjQMqFcpisG1qGd2xKe6', 'approved', 'tenant'),
 (95, 'lmer14', '$2y$10$/0PMwvIFPHlcK1xCmXhn5OXrcgnUIGI/O7opE7K9odUhxTJrgJN/W', 'active', 'admin'),
-(96, 'lemon', '$2y$10$9xjdP/rw9NwiilbGsz.qcebxlfUbqbR3s8ax8bfXpM6GzWyBq6KHK', 'pending', 'tenant'),
 (97, 'josh123', '$2y$10$/lWofq82Nkaie9Oqi8pkCuH9x89Ra4a0hRWvmV8FeYzIK2pmtvXEq', 'approved', 'tenant');
 
 --
@@ -366,13 +369,13 @@ ALTER TABLE `user_accounts`
 -- AUTO_INCREMENT for table `aminities_services`
 --
 ALTER TABLE `aminities_services`
-  MODIFY `amiser_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `amiser_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
 
 --
 -- AUTO_INCREMENT for table `business_profiles`
@@ -384,13 +387,13 @@ ALTER TABLE `business_profiles`
 -- AUTO_INCREMENT for table `maintenance_requests`
 --
 ALTER TABLE `maintenance_requests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `not_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `not_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `payment_history`
@@ -414,13 +417,13 @@ ALTER TABLE `room`
 -- AUTO_INCREMENT for table `tenant_details`
 --
 ALTER TABLE `tenant_details`
-  MODIFY `tc_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
+  MODIFY `tc_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
 
 --
 -- AUTO_INCREMENT for table `user_accounts`
 --
 ALTER TABLE `user_accounts`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
 
 --
 -- Constraints for dumped tables

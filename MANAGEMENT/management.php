@@ -22,12 +22,12 @@ if (!isset($_SESSION['id']) || $_SESSION['type'] !== 'admin') {
     <div class="wrapper">
         <!-- Navigation Bar -->
         <nav class="navigator">
-            <a href="javascript:void(0);" onclick="loadPage('Dashboard/manDash.html', this)" aria-label="Home"><i class='bx bx-home icon'></i></a>
+            <a href="javascript:void(0);" onclick="loadPage('Dashboard/manDash.php', this)" aria-label="Home"><i class='bx bx-home icon'></i></a>
             <a href="javascript:void(0);" onclick="loadPage('Tenant_Information/tenant_info.php', this)" aria-label="Profile"><i class='bx bx-user icon'></i></a>
-            <a href="javascript:void(0);" onclick="loadPage('Room/room.html', this)" aria-label="Profile"><i class='bx bx-door-open icon'></i></a>
+            <a href="javascript:void(0);" onclick="loadPage('Room/room.php', this)" aria-label="Profile"><i class='bx bx-door-open icon'></i></a>
             <a href="javascript:void(0);" onclick="loadPage('Payment/pay.html', this)" aria-label="Payments"><i class='bx bx-wallet icon'></i></a>
-            <a href="javascript:void(0);" onclick="loadPage('Tenant_Maintenance/tenant_maintenance.html', this)" aria-label="Maintenance"><i class='bx bx-wrench icon'></i></a>
-            <a href="javascript:void(0);" onclick="loadPage('Notification/notification.html', this)" aria-label="Notifications">
+            <a href="javascript:void(0);" onclick="loadPage('Tenant_Maintenance/tenant_maintenance.php', this)" aria-label="Maintenance"><i class='bx bx-wrench icon'></i></a>
+            <a href="javascript:void(0);" onclick="loadPage('Notification/notification.php', this)" aria-label="Notifications">
                 <i class='bx bx-bell icon'></i>
                 <span class="notification-badge">5</span> <!-- Number of notifications -->
             </a>
@@ -83,7 +83,7 @@ if (!isset($_SESSION['id']) || $_SESSION['type'] !== 'admin') {
         window.onload = function() {
             var firstNavLink = document.querySelector('.navigator a');
             if (firstNavLink) {
-                loadPage('Dashboard/manDash.html', firstNavLink);
+                loadPage('Dashboard/manDash.php', firstNavLink);
             }
             updateDateTime();
             setInterval(updateDateTime, 1000); // Update every second

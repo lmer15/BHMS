@@ -7,14 +7,12 @@ function sendError($message) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $tenant_id = $_POST['tenant_id'];  // tc_id from tenant_details
+    $tenant_id = $_POST['tenant_id']; 
     $room_number = $_POST['room_number'];
 
-    // Start database transaction
     mysqli_begin_transaction($conn);
 
     try {
-        // Fetch user account id using tenant_id (tc_id) from tenant_details
         $tenant_query = "SELECT id FROM tenant_details WHERE tc_id = ?";
         $stmt = $conn->prepare($tenant_query);
         $stmt->bind_param("i", $tenant_id);  
@@ -45,7 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Current date
         $current_date = date('Y-m-d');
 
-        // Update user status to 'approved' in user_accounts table
         $update_status = "UPDATE user_accounts SET status = 'approved' WHERE id = ?";
         $stmt = $conn->prepare($update_status);
         $stmt->bind_param("i", $user_id);  // Use user_id here, not tenant_id
@@ -85,13 +82,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $payment_id = $stmt->insert_id;
 
         // Insert payment history record
-        $payment_query = "INSERT INTO payment_history (payment_id, tenant_id, payment_date, payment_amount, balance, payment_type, payment_status) 
-                        VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $payment_query = "INSERT INTO payment_history (payment_id, tenant_id, payment_date, payment_amount, payment_type, payment_status) 
+                        VALUES (?, ?, ?, ?, ?, ?)";
         $payment_status = 'completed';
         $payment_type = 'deposit';
 
         $stmt = $conn->prepare($payment_query);
-        $stmt->bind_param("iisddss", $payment_id, $tenant_id, $current_date, $amount_paid, $balance, $payment_type, $payment_status);
+        $stmt->bind_param("iisdss", $payment_id, $tenant_id, $current_date, $amount_paid, $payment_type, $payment_status);
         if (!$stmt->execute()) {
             sendError('Failed to record payment history.');
         }

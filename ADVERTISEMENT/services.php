@@ -1,3 +1,23 @@
+<?php
+include_once '../DATABASE/dbConnector.php';
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Fetch amenities from the database
+$sql = "SELECT amiser_title, amiser_desc FROM aminities_services WHERE amiser_status = 'services'";
+$result = $conn->query($sql);
+
+$amenities = [];
+
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $amenities[] = $row;
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,95 +25,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="resetter/reset.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <script src="linkjs.js" defer></script> 
-  </head>
+</head>
 <body>
     <section id="wrapper">
         <div id="services">
-            
             <div class="services-grid">
-                <div class="card">
-                  <div class="icon-container">
-                    <img src="images/BED.png" alt="Tenant Management" class="icon">
-                  </div>
-                  <div class="card-content">
-                    <h2>Accommodation & Furnishings</h2>
-                    <p>Fully furnished rooms (bed, desk, wardrobe) with essential amenities for comfort.</p>
-                  </div>
-                </div>
-            
-                <div class="card">
-                  <div class="icon-container">
-                    <img src="images/PLATE.png" alt="Room Management" class="icon">
-                  </div>
-                  <div class="card-content">
-                    <h2>Meals & Dining</h2>
-                    <p>Meal plans or access to a communal kitchen for self-catering, providing convenience for residents.</p>
-                  </div>
-                </div>
-            
-                <div class="card">
-                  <div class="icon-container">
-                    <img src="images/ELECTRICITY.png" alt="Payment and Billing" class="icon">
-                  </div>
-                  <div class="card-content">
-                    <h2>Utilities & Internet</h2>
-                    <p>Essential utilities (electricity, water, heating) and high-speed internet access included.</p>
-                  </div>
-                </div>
-            
-                <div class="card">
-                  <div class="icon-container">
-                    <img src="images/LOCK.png" alt="Communication" class="icon">
-                  </div>
-                  <div class="card-content">
-                    <h2> Security & Safety</h2>
-                    <p>24/7 security, secure entry systems, and fire safety measures to ensure residents' safety.</p>
-                  </div>
-                </div>
-            
-                <div class="card">
-                  <div class="icon-container">
-                    <img src="images/MOP.png" alt="Security Management" class="icon">
-                  </div>
-                  <div class="card-content">
-                    <h2>Cleaning & Maintenance</h2>
-                    <p>Regular cleaning of common areas and maintenance support for repairs or issues in rooms.</p>
-                  </div>
-                </div>
-            
-                <div class="card">
-                  <div class="icon-container">
-                    <img src="images/CLOCK.png" alt="Analytics and Reporting" class="icon">
-                  </div>
-                  <div class="card-content">
-                    <h2> 24/7 On-Site Assistance</h2>
-                    <p>Availability of staff or a concierge service to assist with any questions, emergencies, or needs at any time.</p>
-                  </div>
-                </div>
-
-                <div class="card">
-                  <div class="icon-container">
-                    <img src="images/LAUNDRY.png" alt="Analytics and Reporting" class="icon">
-                  </div>
-                  <div class="card-content">
-                    <h2>Laundry Facilities</h2>
-                    <p>On-site laundry services (washing machines, dryers) or access to laundry facilities for convenience.</p>
-                  </div>
-                </div>
+                <?php 
+                foreach ($amenities as $amenity): 
+                    $imagePath = "images/monitor.png";
+                ?>
+                    <div class="card">
+                        <div class="icon-container">
+                            <img src="<?php echo $imagePath; ?>" alt="Default image" class="icon">
+                        </div>
+                        <div class="card-content">
+                            <h2><?php echo $amenity['amiser_title']; ?></h2>
+                            <p><?php echo $amenity['amiser_desc']; ?></p>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
 
                 <div class="add-services">
-                    <a href="ADD/addServices.html"><i class='bx bx-plus icon-add'></i></a>
+                    <a href="ADD/addServices.php"><i class='bx bx-plus icon-add'></i></a>
                 </div>
-            
-              </div>
+            </div>
         </div>
     </section>
-
 </body>
 </html>
