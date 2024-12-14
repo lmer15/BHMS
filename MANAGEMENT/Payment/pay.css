@@ -136,17 +136,15 @@ button:hover {
     opacity: 0.8;
 }
 
-/* Modal - Payment Form */
 .payment-form {
-    display: none; /* Initially hidden */
-    position: fixed; /* Fixed position for floating modal */
-    top: 50%; /* Centered vertically */
-    left: 50%; /* Centered horizontally */
-    transform: translate(-50%, -50%); /* Adjust for exact center */
+    display: none; 
+    position: fixed;
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%); 
     background-color: #333;
     padding: 20px;
     border-radius: 10px;
-    z-index: 1000;
     width: 80%;
     max-width: 500px;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
